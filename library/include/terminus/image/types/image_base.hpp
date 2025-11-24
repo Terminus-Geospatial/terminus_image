@@ -144,7 +144,7 @@ class Image_Base
         /**
          * Get the list of interest points
          */
-        feature::interest_point_List const& interest_points() const
+        feature::Interest_Point_List const& interest_points() const
         {
             return m_interest_points;
         }
@@ -152,7 +152,7 @@ class Image_Base
         /**
          * Get the list of interest points
          */
-        feature::interest_point_List& interest_points()
+        feature::Interest_Point_List& interest_points()
         {
             return m_interest_points;
         }
@@ -202,7 +202,7 @@ class Image_Base
         }
 
         /// List of feature points
-        feature::interest_point_List m_interest_points;
+        feature::Interest_Point_List m_interest_points;
 
         /// Image Metadata
         meta::Metadata_Container_Base::ptr_t m_metadata { std::make_shared<meta::Metadata_Container_Base>() };

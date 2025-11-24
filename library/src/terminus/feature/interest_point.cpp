@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    8/11/2023
 */
-#include "interest_point.hpp"
+#include <terminus/feature/interest_point.hpp>
 
 // Terminus Libraries
 #include <terminus/math/Point_Utilities.hpp>
@@ -22,7 +22,7 @@ namespace tmns::feature {
 /********************************/
 /*          Constructor         */
 /********************************/
-interest_point::interest_point( float px,
+Interest_Point::Interest_Point( float px,
                                 float py )
     : m_pixel_loc( { px, py } ),
       m_raster_loc( { (int) std::round( px ),
@@ -33,7 +33,7 @@ interest_point::interest_point( float px,
 /********************************/
 /*          Constructor         */
 /********************************/
-interest_point::interest_point( const math::Point2f& pixel_loc,
+Interest_Point::Interest_Point( const math::Point2f& pixel_loc,
                                 float                scale,
                                 float                angle_radians,
                                 float                response,
@@ -53,7 +53,7 @@ interest_point::interest_point( const math::Point2f& pixel_loc,
 /************************************/
 /*      Get the Interest Point      */
 /************************************/
-math::Point2f& interest_point::pixel_loc()
+math::Point2f& Interest_Point::pixel_loc()
 {
     return m_pixel_loc;
 }
@@ -61,7 +61,7 @@ math::Point2f& interest_point::pixel_loc()
 /************************************/
 /*      Get the Interest Point      */
 /************************************/
-math::Point2f const& interest_point::pixel_loc() const
+math::Point2f const& Interest_Point::pixel_loc() const
 {
     return m_pixel_loc;
 }
@@ -69,7 +69,7 @@ math::Point2f const& interest_point::pixel_loc() const
 /************************************/
 /*      Get the Interest Point      */
 /************************************/
-math::Point2i& interest_point::raster_loc()
+math::Point2i& Interest_Point::raster_loc()
 {
     return m_raster_loc;
 }
@@ -77,7 +77,7 @@ math::Point2i& interest_point::raster_loc()
 /************************************/
 /*      Get the Interest Point      */
 /************************************/
-math::Point2i const& interest_point::raster_loc() const
+math::Point2i const& Interest_Point::raster_loc() const
 {
     return m_raster_loc;
 }
@@ -85,7 +85,7 @@ math::Point2i const& interest_point::raster_loc() const
 /******************/
 /*      Scale     */
 /******************/
-float interest_point::scale() const
+float Interest_Point::scale() const
 {
     return m_scale;
 }
@@ -93,7 +93,7 @@ float interest_point::scale() const
 /******************************/
 /*      Angle in Radians      */
 /******************************/
-float interest_point::angle_radians() const
+float Interest_Point::angle_radians() const
 {
     return m_angle_radians;
 }
@@ -101,7 +101,7 @@ float interest_point::angle_radians() const
 /******************************/
 /*          Response          */
 /******************************/
-float interest_point::response() const
+float Interest_Point::response() const
 {
     return m_response;
 }
@@ -109,7 +109,7 @@ float interest_point::response() const
 /**********************/
 /*      Octave        */
 /**********************/
-int interest_point::octave() const
+int Interest_Point::octave() const
 {
     return m_octave;
 }
@@ -117,7 +117,7 @@ int interest_point::octave() const
 /**********************/
 /*      Class ID      */
 /**********************/
-int interest_point::class_id() const
+int Interest_Point::class_id() const
 {
     return m_class_id;
 }
@@ -125,7 +125,7 @@ int interest_point::class_id() const
 /************************************/
 /*      Get Feature Descriptor      */
 /************************************/
-math::VectorN<float>& interest_point::descriptors()
+math::VectorN<float>& Interest_Point::descriptors()
 {
   return m_descriptor;
 }
@@ -133,7 +133,7 @@ math::VectorN<float>& interest_point::descriptors()
 /************************************/
 /*      Get Feature Descriptor      */
 /************************************/
-math::VectorN<float> const& interest_point::descriptors() const
+math::VectorN<float> const& Interest_Point::descriptors() const
 {
   return m_descriptor;
 }

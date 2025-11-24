@@ -22,8 +22,8 @@
 #include <terminus/error.hpp>
 
 // Terminus Image Libraries
-#include <terminus/image/io/image_format.hpp>
-#include <terminus/image/io/image_resource_base.hpp>
+#include <terminus/image/types/image_format.hpp>
+#include <terminus/image/types/image_resource_base.hpp>
 
 namespace tmns::image::io{
 

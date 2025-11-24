@@ -26,26 +26,26 @@ namespace tmns::feature {
 /**
  * @brief Class for organizing feature/interest point data
 */
-class interest_point
+class Interest_Point
 {
     public:
 
         /**
          * Default Constructor
          */
-        interest_point() = default;
+        Interest_Point() = default;
 
         /**
          * Constructor
         */
-        interest_point( float px,
+        Interest_Point( float px,
                         float py );
 
-        
+
         /**
          * Constructor
         */
-        interest_point( const math::Point2f& pixel_loc,
+        Interest_Point( const math::Point2f& pixel_loc,
                         float                scale,
                         float                angle_rad,
                         float                response,
@@ -133,10 +133,10 @@ class interest_point
         /// Descriptor Vector
         math::VectorN<float> m_descriptor;
 
-}; // End of interest_point class
+}; // End of Interest_Point class
 
 
-/// Typedef for interest_point_List
-typedef std::vector<interest_point> interest_point_List;
+/// Typedef for Interest_Point_List
+typedef std::vector<Interest_Point> Interest_Point_List;
 
 } // End of tmns::feature namespace

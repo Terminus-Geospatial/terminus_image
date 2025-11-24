@@ -1,15 +1,24 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    View_Utilities.cpp
  * @author  Marvin Smith
  * @date    7/29/2023
 */
-#include "View_Utilities.hpp"
+#include <terminus/image/utility/view_utilities.hpp>
 
 // OpenCV Libraries
 #include <opencv4/opencv2/highgui.hpp>
 
 // Terminus Image Libraries
-#include "OpenCV_Utilities.hpp"
+#include "opencv_utilities.hpp"
 
 // Terminus Libraries
 #include <terminus/log/utility.hpp>

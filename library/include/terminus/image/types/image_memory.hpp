@@ -126,7 +126,7 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
                     log::error( sout.str() );
                     throw std::runtime_error( sout.str() );
                 }
-                planes = std::max( resource.planes(), resource.channels() );
+                planes = static_cast<int>( std::max( resource.planes(), resource.channels() ) );
             }
 
             // Allocate Memory

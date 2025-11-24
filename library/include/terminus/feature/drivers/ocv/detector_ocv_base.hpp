@@ -8,44 +8,44 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    interest_point_detector_OpenCV.hpp
+ * @file    interest_point_detector_opencv.hpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "../../detector_Base.hpp"
-#include "config/detector_Config_OCV_Base.hpp"
+#include <terminus/feature/detector_base.hpp>
+#include <terminus/feature/drivers/ocv/config/detector_config_ocv_base.hpp>
 
 namespace tmns::feature::ocv {
 
-class detector_OCV_Base : public detector_Base
+class Detector_OCV_Base : public Detector_Base
 {
     public:
 
         /**
          * Constructor
          */
-        detector_OCV_Base( detector_Config_Base::ptr_t config );
+        Detector_OCV_Base( Detector_Config_Base::ptr_t config );
 
         /**
          * Destructor
         */
-        ~detector_OCV_Base() override = default;
+        ~Detector_OCV_Base() override = default;
 
     protected:
 
         /**
          * Get the internal configuration instance
         */
-        detector_Config_OCV_Base::ptr_t get_ocv_detector_config() const;
+        Detector_Config_OCV_Base::ptr_t get_ocv_detector_config() const;
 
     private:
 
         /// Configuration
-        detector_Config_OCV_Base::ptr_t m_config;
+        Detector_Config_OCV_Base::ptr_t m_config;
 
-}; // End of class detector_OCV_Base
+}; // End of class Detector_OCV_Base
 
 } // End of tmns::feature::ocv namespace

@@ -8,18 +8,18 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Factory.cpp
+ * @file    detector_factory.cpp
  * @author  Marvin Smith
  * @date    8/27/2023
 */
-#include <terminus/feature/detector_Factory.hpp>
+#include <terminus/feature/detector_factory.hpp>
 
 namespace tmns::feature {
 
 /********************************************************/
 /*              Create a new feature detector           */
 /********************************************************/
-Result<detector_Base::ptr_t> detector_Factory::create_detector( detector_Config_Base::ptr_t config ) const
+Result<Detector_Base::ptr_t> Detector_Factory::create_detector( Detector_Config_Base::ptr_t config ) const
 {
     // check null
     if( !config )
@@ -34,7 +34,7 @@ Result<detector_Base::ptr_t> detector_Factory::create_detector( detector_Config_
         auto res = generator->generate( config );
         if( !res.has_error() )
         {
-            return outcome::ok<detector_Base::ptr_t>( res.value() );
+            return outcome::ok<Detector_Base::ptr_t>( res.value() );
         }
 
     }
@@ -46,7 +46,7 @@ Result<detector_Base::ptr_t> detector_Factory::create_detector( detector_Config_
 /********************************************************/
 /*              Create a new feature detector           */
 /********************************************************/
-Result<detector_Base::ptr_t> detector_Factory::create_extractor( detector_Config_Base::ptr_t config ) const
+Result<Detector_Base::ptr_t> Detector_Factory::create_extractor( Detector_Config_Base::ptr_t config ) const
 {
     // check null
     if( !config )
@@ -61,7 +61,7 @@ Result<detector_Base::ptr_t> detector_Factory::create_extractor( detector_Config
         auto res = generator->generate( config );
         if( !res.has_error() )
         {
-            return outcome::ok<detector_Base::ptr_t>( res.value() );
+            return outcome::ok<Detector_Base::ptr_t>( res.value() );
         }
 
     }

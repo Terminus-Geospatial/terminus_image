@@ -15,12 +15,12 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_Gray.hpp>
-#include <terminus/image/pixel/Pixel_GrayA.hpp>
-#include <terminus/image/pixel/Pixel_RGB.hpp>
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
-#include <terminus/image/pixel/Channel_Cast_Utilities.hpp>
-#include <terminus/math/types/Functors.hpp>
+#include <terminus/image/pixel/pixel_gray.hpp>
+#include <terminus/image/pixel/pixel_graya.hpp>
+#include <terminus/image/pixel/pixel_rgb.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/image/pixel/channel_cast_utilities.hpp>
+#include <terminus/math/types/functors.hpp>
 
 namespace tmns::image::pix {
 
@@ -52,13 +52,13 @@ struct Pixel_Has_Alpha : std::false_type {};
 /**
  * Cast the pixel such that it will now have an alpha channel
 */
-template <class PixelT> 
+template <class PixelT>
 struct Pixel_With_Alpha {};
 
 /**
  * Strip the alpha, if it has one
 */
-template <class PixelT> 
+template <class PixelT>
 struct Pixel_Without_Alpha { typedef PixelT type; };
 
 /**
@@ -89,7 +89,7 @@ struct Image_Channel_Type
 template <class PixelT>
 struct Pixel_Size_Bytes
 {
-    static const size_t value =  size_t(Pixel_Channel_Count<PixelT>::value) * 
+    static const size_t value =  size_t(Pixel_Channel_Count<PixelT>::value) *
                                  sizeof(typename Pixel_Channel_Type<PixelT>::type);
 };
 

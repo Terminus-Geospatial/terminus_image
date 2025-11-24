@@ -19,8 +19,8 @@
 #include <terminus/core/Session_Context.hpp>
 
 // Terminus Feature Libraries
-#include "utility/Interest_Detection_Queue.hpp"
-#include "detector_Factory.hpp"
+#include <terminus/feature/utility/interest_detection_queue.hpp>
+#include <terminus/feature/detector_factory.hpp>
 
 // C++ Libraries
 
@@ -30,8 +30,8 @@ namespace tmns::feature {
  * Perform feature detection on an image, returning the interest points
  */
 template <typename ImageT>
-Result<std::vector<interest_point>> detect_interest_points( const image::Image_Base<ImageT>&  image,
-                                                            const detector_Base::ptr_t        detector,
+Result<std::vector<Interest_Point>> detect_interest_points( const image::Image_Base<ImageT>&  image,
+                                                            const Detector_Base::ptr_t        detector,
                                                             const core::Session_Context&      session_context )
 {
     // Build work queue for writing jobs in order
@@ -45,19 +45,19 @@ Result<std::vector<interest_point>> detect_interest_points( const image::Image_B
                                                             ip_list,
                                                             detector->config()->tile_size_pixels(),
                                                             detector->config()->max_features() );
-  
+
     tmns::log::debug( "Waiting for threads to complete." );
-    
+
     detect_queue.join_all();
-    
+
     write_pool->join_all();
-    
+
     return ip_list;
 }
 
 /**
  * Run the detector, but store the keypoints within the image
- * 
+ *
  * @param image
  * @param detector_config
  * @param session_context
@@ -65,9 +65,9 @@ Result<std::vector<interest_point>> detect_interest_points( const image::Image_B
 */
 template <typename ImageT>
 Result<void> detect_interest_points( image::Image_Base<ImageT>&    image,
-                                     detector_Config_Base::ptr_t   detector_config,
+                                     Detector_Config_Base::ptr_t   detector_config,
                                      const core::Session_Context&  session_context,
-                                     detector_Factory::ptr_t       detector_factory = detector_Factory::create_default_instance() )
+                                     Detector_Factory::ptr_t       detector_factory = Detector_Factory::create_default_instance() )
 {
     tmns::log::trace( ADD_CURRENT_LOC(), "Start of method." );
 
@@ -75,7 +75,7 @@ Result<void> detect_interest_points( image::Image_Base<ImageT>&    image,
     auto detector = detector_factory->create_detector( detector_config );
     if( detector.has_error() )
     {
-        return outcome::fail( core::error::ErrorCode::DRIVER_NOT_FOUND,
+        return outcome::fail( error::ErrorCode::DRIVER_NOT_FOUND,
                               "Driver is not found: ", detector.error().message() );
     }
 

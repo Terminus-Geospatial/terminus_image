@@ -8,15 +8,15 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Resource_Disk_GDAL.hpp
+ * @file    image_resource_disk_gdal.hpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "../../Image_Resource_Disk.hpp"
-#include "GDAL_Codes.hpp"
+#include <terminus/image/io/image_resource_disk.hpp>
+#include <terminus/image/io/drivers/gdal/gdal_codes.hpp>
 
 // C++ Libraries
 #include <tuple>

@@ -18,10 +18,10 @@
 #include <nlohmann/json.hpp>
 
 // Terminus Libraries
-#include <terminus/core/error.hpp>
+#include <terminus/error.hpp>
 
 // Terminus Image Libraries
-#include "../../../metadata/Metadata_Container_Base.hpp"
+#include <terminus/image/metadata/metadata_container_base.hpp>
 
 namespace tmns::image::io::gdal {
 

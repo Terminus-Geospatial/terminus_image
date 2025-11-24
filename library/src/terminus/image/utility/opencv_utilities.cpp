@@ -1,15 +1,24 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    OpenCV_Utilities.cpp
  * @author  Marvin Smith
  * @date    7/29/2023
 */
-#include "OpenCV_Utilities.hpp"
+#include "openCV_utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv4/opencv2/core.hpp>
 
 // Terminus Libraries
-#include <terminus/outcome/Result.hpp>
+#include <terminus/error.hpp>
 
 namespace tmns::image::utility::ocv {
 
@@ -113,7 +122,7 @@ std::string opencv_type_to_string( int tp )
             return "CV_32FC3";
         case CV_32FC4:
             return "CV_32FC4";
-        
+
         // 64-bit float
         case CV_64FC1:
             return "CV_64FC1";
@@ -123,7 +132,7 @@ std::string opencv_type_to_string( int tp )
             return "CV_64FC3";
         case CV_64FC4:
             return "CV_64FC4";
-        
+
         // Error
         default:
             return "UNKNOWN";

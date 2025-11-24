@@ -19,7 +19,7 @@
 #include <vector>
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/geography/camera/camera_model_base.hpp>
 
 namespace tmns::image::cx::file {

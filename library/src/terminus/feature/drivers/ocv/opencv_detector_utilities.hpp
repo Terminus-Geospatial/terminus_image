@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    OpenCV_detector_Utilities.hpp
+ * @file    opencv_detector_utilities.hpp
  * @author  Marvin Smith
  * @date    8/11/2023
 */

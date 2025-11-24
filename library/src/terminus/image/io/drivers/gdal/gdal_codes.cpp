@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    7/16/2023
 */
-#include "gdal_codes.hpp"
+#include <terminus/image/io/drivers/gdal/gdal_codes.hpp>
 
 // GDAL Libraries
 #include <gdal.h>

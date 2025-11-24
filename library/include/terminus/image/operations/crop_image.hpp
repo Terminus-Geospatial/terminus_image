@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    CropView.hpp
+ * @file    crop_image.hpp
  * @author  Marvin Smith
  * @date    7/23/2023
 */
@@ -18,8 +18,8 @@
 #include <type_traits>
 
 // Terminus Libraries
-#include "../types/Image_Traits.hpp"
-#include "rasterize.hpp"
+#include <terminus/image/types/image_traits.hpp>
+#include <terminus/image/operations/rasterize.hpp>
 
 namespace tmns::image {
 namespace ops {

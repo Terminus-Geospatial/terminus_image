@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    11/9/2023
 */
-#include <terminus/image/collection/file/toml_utilities.hpp>
+#include "toml_utilities.hpp"
 
 // C++ Libraries
 #include <algorithm>

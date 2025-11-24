@@ -23,14 +23,16 @@
 
 namespace tmns::feature {
 
-class detector_Config_Base
+class Detector_Config_Base
 {
     public:
 
         /// Pointer Type
-        typedef std::shared_ptr<detector_Config_Base> ptr_t;
+        typedef std::shared_ptr<Detector_Config_Base> ptr_t;
 
-        detector_Config_Base() = default;
+        Detector_Config_Base() = default;
+
+        virtual ~Detector_Config_Base() = default;
 
         /**
          * @brief Support Feature Descriptors
@@ -39,7 +41,7 @@ class detector_Config_Base
 
         /**
          * Check if we must enforce a specific tile size.
-         * 
+         *
          * If true, the detector will ignore the specified tile size.
          * If false, the detector will chop the image into tiles, then process
          * each individually on a thread pool.
@@ -66,6 +68,6 @@ class detector_Config_Base
          */
         virtual std::string to_string( size_t offset ) const = 0;
 
-}; // End of detector_Config_Base class
+}; // End of Detector_Config_Base class
 
 } // End of tmns::feature namespace

@@ -8,11 +8,11 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Config_OCV_ORB.cpp
+ * @file    detector_config_ocv_orb.cpp
  * @author  Marvin Smith
  * @date    8/27/2023
 */
-#include "detector_Config_OCV_ORB.hpp"
+#include <terminus/feature/drivers/ocv/config/detector_config_ocv_orb.hpp>
 
 // C++ Libraries
 #include <sstream>
@@ -22,7 +22,7 @@ namespace tmns::feature::ocv {
 /*********************************/
 /*          Constructor          */
 /*********************************/
-detector_Config_OCV_ORB::detector_Config_OCV_ORB( const math::Size2i&  tile_size_pixels,
+Detector_Config_OCV_ORB::Detector_Config_OCV_ORB( const math::Size2i&  tile_size_pixels,
                                                   int                  max_features,
                                                   float                scale_factor,
                                                   int                  num_pyr_levels,
@@ -32,10 +32,10 @@ detector_Config_OCV_ORB::detector_Config_OCV_ORB( const math::Size2i&  tile_size
                                                   const std::string&   score_type,
                                                   int                  patch_size,
                                                   int                  fast_threshold )
-  : detector_Config_OCV_Base(),
+  : Detector_Config_OCV_Base(),
     m_tile_size_pixels( tile_size_pixels ),
     m_max_features( max_features ),
-    m_scale_factor( scale_factor ),
+    m_scale_factor( static_cast<double>(scale_factor) ),
     m_num_pyr_levels( num_pyr_levels ),
     m_edge_threshold( edge_threshold ),
     m_base_pyramid_level( base_pyr_level ),
@@ -49,7 +49,7 @@ detector_Config_OCV_ORB::detector_Config_OCV_ORB( const math::Size2i&  tile_size
 /**********************************************************/
 /*          Check if Descriptors are supported            */
 /**********************************************************/
-bool detector_Config_OCV_ORB::supports_feature_descriptors() const
+bool Detector_Config_OCV_ORB::supports_feature_descriptors() const
 {
     return true;
 }
@@ -57,7 +57,7 @@ bool detector_Config_OCV_ORB::supports_feature_descriptors() const
 /************************************/
 /*      Allow Custom Tile Size      */
 /************************************/
-bool detector_Config_OCV_ORB::allow_custom_tile_size() const
+bool Detector_Config_OCV_ORB::allow_custom_tile_size() const
 {
     return true;
 }
@@ -65,7 +65,7 @@ bool detector_Config_OCV_ORB::allow_custom_tile_size() const
 /********************************/
 /*      Tile Size in Pixels     */
 /********************************/
-math::Size2i  detector_Config_OCV_ORB::tile_size_pixels() const
+math::Size2i  Detector_Config_OCV_ORB::tile_size_pixels() const
 {
     return m_tile_size_pixels;
 }
@@ -73,7 +73,7 @@ math::Size2i  detector_Config_OCV_ORB::tile_size_pixels() const
 /*****************************/
 /*      Get Max Features     */
 /*****************************/
-int detector_Config_OCV_ORB::max_features() const
+int Detector_Config_OCV_ORB::max_features() const
 {
     return m_max_features;
 }
@@ -81,15 +81,15 @@ int detector_Config_OCV_ORB::max_features() const
 /*******************************/
 /*      Get Scale Factor       */
 /*******************************/
-float detector_Config_OCV_ORB::scale_factor() const
+float Detector_Config_OCV_ORB::scale_factor() const
 {
-    return m_scale_factor;
+    return static_cast<float>(m_scale_factor);
 }
 
 /***********************************/
 /*      Number Pyramid Levels      */
 /***********************************/
-int detector_Config_OCV_ORB::num_pyr_levels() const
+int Detector_Config_OCV_ORB::num_pyr_levels() const
 {
     return m_num_pyr_levels;
 }
@@ -97,7 +97,7 @@ int detector_Config_OCV_ORB::num_pyr_levels() const
 /****************************/
 /*      Edge Threshold      */
 /****************************/
-int detector_Config_OCV_ORB::edge_threshold() const
+int Detector_Config_OCV_ORB::edge_threshold() const
 {
     return m_edge_threshold;
 }
@@ -105,7 +105,7 @@ int detector_Config_OCV_ORB::edge_threshold() const
 /*****************************************/
 /*          Base Pyramid Level           */
 /*****************************************/
-int detector_Config_OCV_ORB::base_pyramid_level() const
+int Detector_Config_OCV_ORB::base_pyramid_level() const
 {
     return m_base_pyramid_level;
 }
@@ -113,7 +113,7 @@ int detector_Config_OCV_ORB::base_pyramid_level() const
 /******************/
 /*      WTA-K     */
 /******************/
-int detector_Config_OCV_ORB::wta_k() const
+int Detector_Config_OCV_ORB::wta_k() const
 {
     return m_wta_k;
 }
@@ -121,7 +121,7 @@ int detector_Config_OCV_ORB::wta_k() const
 /*********************************/
 /*          Score Type           */
 /*********************************/
-std::string detector_Config_OCV_ORB::score_type() const
+std::string Detector_Config_OCV_ORB::score_type() const
 {
     return m_score_type;
 }
@@ -129,7 +129,7 @@ std::string detector_Config_OCV_ORB::score_type() const
 /*********************************/
 /*          Patch Size           */
 /*********************************/
-int detector_Config_OCV_ORB::patch_size() const
+int Detector_Config_OCV_ORB::patch_size() const
 {
     return m_patch_size;
 }
@@ -137,7 +137,7 @@ int detector_Config_OCV_ORB::patch_size() const
 /*************************************/
 /*          Fast Threshold           */
 /*************************************/
-int detector_Config_OCV_ORB::fast_threshold() const
+int Detector_Config_OCV_ORB::fast_threshold() const
 {
     return m_fast_threshold;
 }
@@ -145,7 +145,7 @@ int detector_Config_OCV_ORB::fast_threshold() const
 /**************************************/
 /*      Print to logging string       */
 /**************************************/
-std::string detector_Config_OCV_ORB::logger_name() const
+std::string Detector_Config_OCV_ORB::logger_name() const
 {
     return "detector_OCV_ORB";
 }
@@ -153,7 +153,7 @@ std::string detector_Config_OCV_ORB::logger_name() const
 /********************************************/
 /*          Print to Logger String          */
 /********************************************/
-std::string detector_Config_OCV_ORB::to_string( size_t offset ) const
+std::string Detector_Config_OCV_ORB::to_string( size_t offset ) const
 {
     std::string gap( offset, ' ' );
     std::stringstream sout;

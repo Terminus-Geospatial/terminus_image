@@ -8,18 +8,18 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_OCV_ORB.cpp
+ * @file    detector_ocv_orb.cpp
  * @author  Marvin Smith
  * @date    8/27/2023
 */
-#include "detector_OCV_ORB.hpp"
+#include <terminus/feature/drivers/ocv/detector_ocv_orb.hpp>
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 
 // Terminus Image Libraries
-#include "../../utility/detector_Image_Utilities.hpp"
-#include "../../../image/utility/OpenCV_Utilities.hpp"
+#include "../../utility/detector_image_utilities.hpp"
+#include "../../../image/utility/opencv_utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv2/core/types.hpp>
@@ -31,27 +31,27 @@ namespace tmns::feature::ocv {
 /************************************/
 /*      Default Constructor         */
 /************************************/
-detector_OCV_ORB::detector_OCV_ORB()
-    : detector_OCV_Base( std::make_shared<detector_Config_OCV_ORB>() ),
-      m_config( std::dynamic_pointer_cast<detector_Config_OCV_ORB>( this->get_ocv_detector_config() ) )
+Detector_OCV_ORB::Detector_OCV_ORB()
+    : Detector_OCV_Base( std::make_shared<Detector_Config_OCV_ORB>() ),
+      m_config( std::dynamic_pointer_cast<Detector_Config_OCV_ORB>( this->get_ocv_detector_config() ) )
 {
 }
 
 /****************************************/
 /*      Parameterized Constructor       */
 /****************************************/
-detector_OCV_ORB::detector_OCV_ORB( const detector_Config_Base::ptr_t config )
-    : detector_OCV_Base( config ),
-      m_config( std::dynamic_pointer_cast<detector_Config_OCV_ORB>( config ) )
+Detector_OCV_ORB::Detector_OCV_ORB( const Detector_Config_Base::ptr_t config )
+    : Detector_OCV_Base( config ),
+      m_config( std::dynamic_pointer_cast<Detector_Config_OCV_ORB>( config ) )
 {
 }
 
 /**********************************/
 /*    Run tracker on image data   */
 /**********************************/
-Result<interest_point_List> detector_OCV_ORB::process_image( const image::Image_Buffer& buffer,
+Result<Interest_Point_List> Detector_OCV_ORB::process_image( const image::Image_Buffer& buffer,
                                                              bool                       cast_if_ctype_unsupported,
-                                                             int                        max_points_override = 0 )
+                                                             int                        max_points_override )
 {
     // Process the image
     auto proc_res = utility::prepare_image_buffer( buffer,
@@ -79,8 +79,8 @@ Result<interest_point_List> detector_OCV_ORB::process_image( const image::Image_
                               type_code.error().message() );
     }
 
-    cv::Mat image( detect_buffer.rows(),
-                   detect_buffer.cols(),
+    cv::Mat image( static_cast<int>(detect_buffer.rows()),
+                   static_cast<int>(detect_buffer.cols()),
                    type_code.value(),
                    detect_buffer.data() );
     tmns::log::info( ADD_CURRENT_LOC(), image::utility::ocv::opencv_type_to_string( type_code.value() ) );
@@ -113,14 +113,14 @@ Result<interest_point_List> detector_OCV_ORB::process_image( const image::Image_
                                      m_config->patch_size(),
                                      m_config->fast_threshold() );
 
-    
+
     // Run detect
     tmns::log::trace( "Calling detect" );
     std::vector<cv::KeyPoint> kps;
     detector->detect( image, kps );
     tmns::log::trace( "Located ", kps.size(), " keypoints" );
 
-    interest_point_List points( kps.size() );
+    Interest_Point_List points( kps.size() );
     for( size_t i = 0; i < kps.size(); i++ )
     {
         points.emplace_back( math::Point2f( { kps[i].pt.x, kps[i].pt.y } ),
@@ -130,14 +130,14 @@ Result<interest_point_List> detector_OCV_ORB::process_image( const image::Image_
                              kps[i].octave,
                              kps[i].class_id );
     }
-    return outcome::ok<interest_point_List>( points );
+    return outcome::ok<Interest_Point_List>( points );
 }
 
 /****************************************/
 /*      Perform Feature Extraction      */
 /****************************************/
-Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Buffer&    image_buffer,
-                                                           std::vector<interest_point>&  interest_points,
+Result<void> Detector_OCV_ORB::perform_feature_extraction( const image::Image_Buffer&    image_buffer,
+                                                           std::vector<Interest_Point>&  interest_points,
                                                            bool                          cast_if_ctype_unsupported )
 {
     // Process the image
@@ -166,8 +166,8 @@ Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
                               type_code.error().message() );
     }
 
-    cv::Mat image( detect_buffer.rows(),
-                   detect_buffer.cols(),
+    cv::Mat image( static_cast<int>(detect_buffer.rows()),
+                   static_cast<int>(detect_buffer.cols()),
                    type_code.value(),
                    detect_buffer.data() );
     tmns::log::info( ADD_CURRENT_LOC(),
@@ -200,7 +200,7 @@ Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
                                      m_config->patch_size(),
                                      m_config->fast_threshold() );
 
-    
+
     // Run opencv compute method
     {
         std::unique_lock<std::mutex> lck( m_log_mtx );
@@ -220,17 +220,17 @@ Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
     }
     detector->compute( image, kps, descriptors );
 
-    if( kps.size() != descriptors.rows )
+    if( kps.size() != static_cast<size_t>(descriptors.rows) )
     {
         return outcome::fail( error::Error_Code::UNKNOWN,
                               "Descriptors not the same size as keypoints" );
     }
 
     // Check keypoints
-    std::vector<interest_point> output_ips;
+    std::vector<Interest_Point> output_ips;
     for( size_t x = 0; x < kps.size(); x++ )
     {
-        output_ips.push_back( interest_point( math::Point2f( { kps[x].pt.x,
+        output_ips.push_back( Interest_Point( math::Point2f( { kps[x].pt.x,
                                                                kps[x].pt.y } ),
                                               kps[x].size,
                                               kps[x].angle,
@@ -241,7 +241,7 @@ Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
         output_ips.back().descriptors().clear();
         for( int c = 0; c < descriptors.cols; c++ )
         {
-            output_ips.back().descriptors().push_back( descriptors.at<float>( x, c ) );
+            output_ips.back().descriptors().push_back( descriptors.at<float>( static_cast<int>(x), c ) );
         }
     }
 
@@ -256,21 +256,21 @@ Result<void> detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
 /****************************/
 /*    Get the class name    */
 /****************************/
-std::string detector_OCV_ORB::class_name() const
+std::string Detector_OCV_ORB::class_name() const
 {
-    return "detector_OCV_ORB";
+    return "Detector_OCV_ORB";
 }
 
 /************************************/
 /*      Generate New Instance       */
 /************************************/
-Result<detector_Base::ptr_t> detector_Generator_OCV_ORB::generate( detector_Config_Base::ptr_t config )
+Result<Detector_Base::ptr_t> Detector_Generator_OCV_ORB::generate( Detector_Config_Base::ptr_t config )
 {
     // Check if the detector config ORB
-    bool same = ( dynamic_cast<detector_Config_OCV_ORB*>( config.get() ) != nullptr );
+    bool same = ( dynamic_cast<Detector_Config_OCV_ORB*>( config.get() ) != nullptr );
     if( same )
     {
-        return outcome::ok<detector_Base::ptr_t>( std::make_shared<detector_OCV_ORB>( config ) );
+        return outcome::ok<Detector_Base::ptr_t>( std::make_shared<Detector_OCV_ORB>( config ) );
     }
     else
     {

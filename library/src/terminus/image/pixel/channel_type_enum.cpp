@@ -1,13 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Channel_Type_Enum.cpp
  * @author  Marvin Smith
- * @file    7/13/2023
+ * @date    7/13/2023
 */
-#include "Channel_Type_Enum.hpp"
+#include <terminus/image/pixel/channel_type_enum.hpp>
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
-#include <terminus/outcome/Result.hpp>
+#include <terminus/error.hpp>
 
 namespace tmns::image {
 

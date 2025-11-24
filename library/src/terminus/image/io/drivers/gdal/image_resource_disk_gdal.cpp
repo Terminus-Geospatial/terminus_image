@@ -16,7 +16,7 @@
 
 // Terminus Libraries
 #include <terminus/image/pixel/pixel_format_enum.hpp>
-#include <terminus/image/io/drivers/gdal/gdal_disk_image_impl.hpp>
+#include "gdal_disk_image_impl.hpp"
 
 namespace tmns::image::io::gdal {
 

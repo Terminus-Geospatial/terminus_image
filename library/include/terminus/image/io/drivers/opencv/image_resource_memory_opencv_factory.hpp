@@ -8,15 +8,15 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Resource_Memory_OpenCV_Factory.hpp
+ * @file    image_resource_memory_opencv_factory.hpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
 #pragma once
 
 /// Terminus Libraries
-#include "../Driver_Factory_Base.hpp"
-#include "Image_Resource_Memory_OpenCV.hpp"
+#include <terminus/image/io/drivers/driver_factory_base.hpp>
+#include <terminus/image/io/drivers/opencv/image_resource_memory_opencv.hpp>
 
 namespace tmns::image::io::ocv {
 

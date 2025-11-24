@@ -18,7 +18,7 @@
 #include <memory>
 
 // Terminus Libraries
-#include "../../Image_Resource_Memory.hpp"
+#include <terminus/image/io/image_resource_memory.hpp>
 
 namespace tmns::image::io::ocv {
 

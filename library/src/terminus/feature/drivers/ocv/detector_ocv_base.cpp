@@ -8,19 +8,19 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_OCV_Base.cpp
+ * @file    detector_ocv_base.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
-#include "detector_OCV_Base.hpp"
+#include <terminus/feature/drivers/ocv/detector_ocv_base.hpp>
 
 namespace tmns::feature::ocv {
 
 /*********************************/
 /*          Constructor          */
 /*********************************/
-detector_OCV_Base::detector_OCV_Base( detector_Config_Base::ptr_t config )
-  : detector_Base( config ),
+Detector_OCV_Base::Detector_OCV_Base( Detector_Config_Base::ptr_t config )
+  : Detector_Base( config ),
     m_config( config )
 {
 }
@@ -28,7 +28,7 @@ detector_OCV_Base::detector_OCV_Base( detector_Config_Base::ptr_t config )
 /********************************************/
 /*    Get the OCV Detector Config Object    */
 /********************************************/
-detector_Config_OCV_Base::ptr_t detector_OCV_Base::get_ocv_detector_config() const
+Detector_Config_OCV_Base::ptr_t Detector_OCV_Base::get_ocv_detector_config() const
 {
     return m_config;
 }

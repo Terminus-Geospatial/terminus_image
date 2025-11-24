@@ -19,7 +19,7 @@ namespace tmns::geo::cam {
 /************************************/
 /*          Constructor             */
 /************************************/
-camera_model_Adjusted::camera_model_Adjusted( camera_model_base::ptr_t camera_model,
+camera_model_adjusted::camera_model_adjusted( camera_model_base::ptr_t camera_model,
                                               const math::Vector3d&    translation,
                                               const math::Quaternion&  rotation,
                                               const math::Point2d&     pixel_offset )

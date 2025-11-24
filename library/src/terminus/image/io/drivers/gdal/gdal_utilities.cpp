@@ -8,11 +8,11 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    GDAL_Utilities.cpp
+ * @file    gdal_utilities.cpp
  * @author  Marvin Smith
  * @date    7/15/2023
 */
-#include <terminus/image/io/drivers/gdal/gdal_utilities.hpp>
+#include "gdal_utilities.hpp"
 
 // External Terminus Libraries
 #include <terminus/log/Logger.hpp>
@@ -42,19 +42,7 @@ static void CPL_STDCALL GDAL_Error_Handler( CPLErr      eErrClass,
                                             int         nError,
                                             const char* pszErrorMsg )
 {
-    boost::log::trivial::severity_level lvl;
     auto& logger = get_master_gdal_logger();
-
-    switch(eErrClass)
-    {
-        case CE_Debug:
-        case CE_Warning:
-            lvl = boost::log::trivial::severity_level::warning;
-            break;
-        default:
-            lvl = boost::log::trivial::severity_level::error;
-            break;
-    }
 
     std::string message;
     if( pszErrorMsg )
@@ -119,7 +107,6 @@ void GDAL_Deleter_Null_Okay( GDALDatasetH dataset )
 Result<Pixel_Format_Enum> gdal_driver_to_pixel_type( const std::vector<std::tuple<std::vector<int>,Pixel_Format_Enum>>& reference_lut,
                                                      const std::vector<int>&                                            channel_codes )
 {
-    size_t counter = 0;
     for( const auto& ref_tup : reference_lut )
     {
         if( std::get<0>( ref_tup ) == channel_codes )

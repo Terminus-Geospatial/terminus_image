@@ -15,9 +15,9 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../pixel/Channel_Cast_Utilities.hpp"
-#include "../pixel/Pixel_Cast_Utilities.hpp"
-#include "per_pixel_views/Per_Pixel_View_Unary.hpp"
+#include <terminus/image/pixel/channel_cast_utilities.hpp>
+#include <terminus/image/pixel/pixel_cast_utilities.hpp>
+#include <terminus/image/per_pixel_views/per_pixel_view_unary.hpp>
 
 namespace tmns::image::ops {
 

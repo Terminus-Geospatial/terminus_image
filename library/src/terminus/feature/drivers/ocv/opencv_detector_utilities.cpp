@@ -8,14 +8,13 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    OpenCV_detector_Utilities.cpp
+ * @file    opencv_detector_utilities.cpp
  * @author  Marvin Smith
  * @date    8/11/2023
 */
-#include "OpenCV_detector_Utilities.hpp"
+#include "opencv_detector_utilities.hpp"
 
 namespace tmns::feature::ocv {
-
 
 
 } // End of tmns::feature::ocv namespace

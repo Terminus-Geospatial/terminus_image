@@ -18,7 +18,7 @@
 #include <terminus/log/Logger.hpp>
 
 // Terminus Image Libraries
-#include "../../../image/pixel/convert.hpp"
+#include <terminus/image/pixel/convert.hpp>
 
 namespace tmns::feature::utility {
 
@@ -36,10 +36,10 @@ Result<image::Image_Buffer> prepare_image_buffer( const image::Image_Buffer& inp
     // From testing, we know that ORB only likes integer images
     if( !cast_if_ctype_unsupported && input_buffer.channel_type() != output_channel_type )
     {
-        return outcome::fail( core::error::ErrorCode::INVALID_CHANNEL_TYPE,
+        return outcome::fail( error::Error_Code::INVALID_CHANNEL_TYPE,
                               detector_name,
-                              " module only support ", image::enum_to_string( output_channel_type ), 
-                              " imagery.  You must enable casting.  Detected Channel-Type: ", 
+                              " module only support ", image::enum_to_string( output_channel_type ),
+                              " imagery.  You must enable casting.  Detected Channel-Type: ",
                               image::enum_to_string( input_buffer.channel_type() ) );
     }
 
@@ -47,7 +47,7 @@ Result<image::Image_Buffer> prepare_image_buffer( const image::Image_Buffer& inp
     auto num_channels = image::num_channels( input_buffer.pixel_type() );
     if( num_channels.has_error() )
     {
-        return outcome::fail( core::error::ErrorCode::INVALID_PIXEL_TYPE,
+        return outcome::fail( error::Error_Code::INVALID_PIXEL_TYPE,
                               "Unable to determine input pixel type from buffer.",
                               " Detected Type: ", image::enum_to_string( input_buffer.pixel_type() ) );
     }
@@ -83,9 +83,9 @@ Result<image::Image_Buffer> prepare_image_buffer( const image::Image_Buffer& inp
 
         {
             std::unique_lock<std::mutex> lck( logger_mtx );
-            logger.trace( "Casting image buffer data. \nInput: ", 
-                          input_buffer.to_string(), 
-                          "\nOutput: ", 
+            logger.trace( "Casting image buffer data. \nInput: ",
+                          input_buffer.to_string(),
+                          "\nOutput: ",
                           detect_buffer.to_string() );
         }
         auto cast_result = image::convert( detect_buffer,
@@ -93,14 +93,14 @@ Result<image::Image_Buffer> prepare_image_buffer( const image::Image_Buffer& inp
                                            DO_RESCALE );
         if( cast_result.has_error() )
         {
-            return outcome::fail( core::error::ErrorCode::CONVERSION_ERROR,
+            return outcome::fail( error::Error_Code::CONVERSION_ERROR,
                                   "Unable to convert image-buffer to grayscale for processing." );
         }
     }
     else
     {
         std::unique_lock<std::mutex> lck( logger_mtx );
-        logger.trace( "No need to cast buffer data. ", 
+        logger.trace( "No need to cast buffer data. ",
                       detect_buffer.to_string() );
     }
 

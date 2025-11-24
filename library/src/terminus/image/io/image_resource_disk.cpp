@@ -1,9 +1,18 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Read_Image_Resource_Disk.cpp
+ * @file    image_resource_disk.cpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
-#include "Image_Resource_Disk.hpp"
+#include <terminus/image/io/image_resource_disk.hpp>
 
 namespace tmns::image::io {
 

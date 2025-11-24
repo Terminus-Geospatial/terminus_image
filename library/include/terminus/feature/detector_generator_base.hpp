@@ -18,20 +18,20 @@
 #include <memory>
 
 // Terminus Feature Libraries
-#include "detector_base.hpp"
+#include <terminus/feature/detector_base.hpp>
 
 // Terminus Libraries
 #include <terminus/error.hpp>
 
 namespace tmns::feature {
 
-class detector_Generator_Base
+class Detector_Generator_Base
 {
     public:
 
-        typedef std::shared_ptr<detector_Generator_Base> ptr_t;
+        typedef std::shared_ptr<Detector_Generator_Base> ptr_t;
 
-        virtual Result<detector_Base::ptr_t> generate( detector_Config_Base::ptr_t config ) = 0;
+        virtual Result<Detector_Base::ptr_t> generate( Detector_Config_Base::ptr_t config ) = 0;
 
 }; // End of detector_Generator_Base class
 

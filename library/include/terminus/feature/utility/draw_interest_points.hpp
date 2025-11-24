@@ -16,6 +16,6 @@
 
 namespace tmns::feature::utility {
 
-image::Sparse_Image<
+
 
 } // End of tmns::feature::utility namespace

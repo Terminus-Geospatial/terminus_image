@@ -1,23 +1,32 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Config_OCV_GFTT.hpp
+ * @file    detector_config_ocv_gftt.hpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #pragma once
 
 // Terminus Feature Libraries
-#include "detector_Config_OCV_Base.hpp"
+#include "detector_config_ocv_base.hpp"
 
 namespace tmns::feature::ocv {
 
 /**
  * Configuration options for the Shi-Thomasi GFTT Library
 */
-class detector_Config_OCV_GFTT : public detector_Config_OCV_Base
+class Detector_Config_OCV_GFTT : public Detector_Config_OCV_Base
 {
     public:
 
-        typedef std::shared_ptr<detector_Config_OCV_GFTT> ptr_t;
+        typedef std::shared_ptr<Detector_Config_OCV_GFTT> ptr_t;
 
         /**
          * OpenCV Shi-Thomasi Good-Features-To-Track configuration.
@@ -25,7 +34,7 @@ class detector_Config_OCV_GFTT : public detector_Config_OCV_Base
          * These parameters are lifted from the OpenCV documentation.
          * @see https://docs.opencv.org/4.x/df/d21/classcv_1_1GFTTDetector.html
         */
-        detector_Config_OCV_GFTT( const math::Size2i&  tile_size_pixels    = math::Size2i( { 2048, 2048 } ),
+        Detector_Config_OCV_GFTT( const math::Size2i&  tile_size_pixels    = math::Size2i( { 2048, 2048 } ),
                                   int                  max_corners         = 1000,
                                   double               quality_level       = 0.01,
                                   double               min_distance        = 1,
@@ -40,10 +49,10 @@ class detector_Config_OCV_GFTT : public detector_Config_OCV_Base
 
         /**
          * @brief Check if we allow custom tile sizes.(Yes this does)
-         * 
+         *
          * This always returns TRUE
          */
-        bool allow_custom_tile_size() const override; 
+        bool allow_custom_tile_size() const override;
 
         /**
          * @brief Get the custom tile size in pixels
@@ -94,7 +103,7 @@ class detector_Config_OCV_GFTT : public detector_Config_OCV_Base
 
         /// Tile Size in Pixels
         math::Size2i m_tile_size_pixels { math::Size2i( { 2048, 2048 } ) };
-        
+
         /// Max corners to create
         int m_max_features { 1000 };
 
@@ -113,6 +122,6 @@ class detector_Config_OCV_GFTT : public detector_Config_OCV_Base
         /// Harris Detector Free Parameter
         double m_k { 0.04 };
 
-}; // End of detector_Config_OCV_GFTT class
+}; // End of Detector_Config_OCV_GFTT class
 
 } // End of tmns::feature::ocv namespace

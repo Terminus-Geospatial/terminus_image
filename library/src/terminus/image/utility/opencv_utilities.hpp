@@ -6,11 +6,11 @@
 #pragma once
 
 // Terminus Image Libraries
-#include <terminus/image/pixel/Channel_Type_Enum.hpp>
-#include <terminus/image/pixel/Pixel_Format_Enum.hpp>
+#include <terminus/image/pixel/channel_type_enum.hpp>
+#include <terminus/image/pixel/pixel_format_enum.hpp>
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 
 
 namespace tmns::image::utility::ocv {

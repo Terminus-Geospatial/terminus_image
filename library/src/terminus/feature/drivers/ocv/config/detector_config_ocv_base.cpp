@@ -8,23 +8,20 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Config_OCV_Base.cpp
+ * @file    detector_config_ocv_base.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
-#include "detector_Config_OCV_Base.hpp"
+#include <terminus/feature/drivers/ocv/config/detector_config_ocv_base.hpp>
 
 namespace tmns::feature::ocv {
 
 /********************************/
 /*          Constructor         */
 /********************************/
-detector_Config_OCV_Base::detector_Config_OCV_Base()
- : detector_Config_Base()
+Detector_Config_OCV_Base::Detector_Config_OCV_Base()
+ : Detector_Config_Base()
 {
 }
-
-
-
 
 } // End of tmns::feature::ocv namespace

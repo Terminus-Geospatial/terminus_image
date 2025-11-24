@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Base.cpp
+ * @file    detector_base.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
@@ -19,7 +19,7 @@ namespace tmns::feature {
 /********************************/
 /*          Constructor         */
 /********************************/
-detector_Base::detector_Base( detector_Config_Base::ptr_t config )
+Detector_Base::Detector_Base( Detector_Config_Base::ptr_t config )
  : m_logger( config->logger_name() ),
    m_config( config )
 {
@@ -28,12 +28,12 @@ detector_Base::detector_Base( detector_Config_Base::ptr_t config )
 /****************************************/
 /*      Perform Feature Extraction      */
 /****************************************/
-Result<void> detector_Base::perform_feature_extraction( [[maybe_unused]] const image::Image_Buffer&    image_data,
-                                                        [[maybe_unused]] std::vector<interest_point>&  interest_point,
+Result<void> Detector_Base::perform_feature_extraction( [[maybe_unused]] const image::Image_Buffer&    image_data,
+                                                        [[maybe_unused]] std::vector<Interest_Point>&  interest_point,
                                                         [[maybe_unused]] bool                          cast_if_ctype_unsupported )
 {
     return outcome::fail( error::Error_Code::NOT_IMPLEMENTED,
-                          "detector_Base class does not implement 'perform_feature_extraction()'",
+                          "Detector_Base class does not implement 'perform_feature_extraction()'",
                           "Select a supported feature detector." );
 }
 

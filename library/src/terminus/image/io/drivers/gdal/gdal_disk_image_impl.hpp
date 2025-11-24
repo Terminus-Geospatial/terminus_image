@@ -31,11 +31,11 @@
 #include <terminus/math/Size.hpp>
 
 // Terminus Libraries
-#include <terminus/metadata/metadata_container_base.hpp>
-#include <terminus/pixel/channel_type_enum.hpp>
-#include <terminus/pixel/pixel_rgba.hpp>
-#include <terminus/types/image_buffer.hpp>
-#include <terminus/types/image_format.hpp>
+#include <terminus/image/metadata/metadata_container_base.hpp>
+#include <terminus/image/pixel/channel_type_enum.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/image/types/image_buffer.hpp>
+#include <terminus/image/types/image_format.hpp>
 
 namespace tmns::image::io::gdal {
 

@@ -8,14 +8,14 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    interest_point_Detection_Task.hpp
+ * @file    interest_point_detection_task.hpp
  * @author  Marvin Smith
  * @date    8/28/2023
 */
 #pragma once
 
 // Terminus Feature Libraries
-#include "interest_point_Write_Task.hpp"
+#include "interest_point_write_task.hpp"
 
 // Terminus Libraries
 #include <terminus/image/operations/crop_image.hpp>
@@ -28,17 +28,17 @@ namespace tmns::feature::utility {
  *  - After IPs are found, they are passed to an interest_point_Write_Task object.
  */
 template <typename ImageT>
-class interest_point_Detection_Task : public core::work::Task,
-                                      private boost::noncopyable 
+class Interest_Point_Detection_Task : public core::work::Task,
+                                      private boost::noncopyable
 {
     public:
 
         /**
          * Constructor
          */
-        interest_point_Detection_Task( const image::Image_Base<ImageT>&  image,
+        Interest_Point_Detection_Task( const image::Image_Base<ImageT>&  image,
                                        detector_Base::ptr_t              detector,
-                                       const math::Rect2i&               bbox, 
+                                       const math::Rect2i&               bbox,
                                        int                               desired_num_ip,
                                        int                               id,
                                        int                               max_id,
@@ -55,9 +55,9 @@ class interest_point_Detection_Task : public core::work::Task,
         {
         }
 
-        ~interest_point_Detection_Task() override = default;
+        ~Interest_Point_Detection_Task() override = default;
 
-        interest_point_List interest_point_list()
+        Interest_Point_List interest_point_list()
         {
             return m_global_points;
         }
@@ -69,8 +69,8 @@ class interest_point_Detection_Task : public core::work::Task,
         {
             {
                 std::stringstream sout;
-                sout << "Locating interest points in block " << m_id + 1 << "/" 
-                     << m_max_id << "   [ " << m_bbox.to_string() << " ] with " << m_desired_num_ip 
+                sout << "Locating interest points in block " << m_id + 1 << "/"
+                     << m_max_id << "   [ " << m_bbox.to_string() << " ] with " << m_desired_num_ip
                      << " ip.";
                 tmns::log::debug( sout.str() );
             }
@@ -83,8 +83,8 @@ class interest_point_Detection_Task : public core::work::Task,
 
             auto& new_ip_list = detection_results.value();
 
-            for( auto pt = new_ip_list.begin(); 
-                 pt != new_ip_list.end(); 
+            for( auto pt = new_ip_list.begin();
+                 pt != new_ip_list.end();
                  ++pt )
             {
                 pt->pixel_loc()  += m_bbox.min();
@@ -93,7 +93,7 @@ class interest_point_Detection_Task : public core::work::Task,
 
             // Append these interest points to the master list
             // owned by the detect_interest_points() function.
-            auto write_task = std::make_shared<interest_point_Write_Task>( new_ip_list, m_global_points );
+            auto write_task = std::make_shared<Interest_Point_Write_Task>( new_ip_list, m_global_points );
             m_write_queue.add_task( write_task, m_id );
 
             {
@@ -107,28 +107,28 @@ class interest_point_Detection_Task : public core::work::Task,
 
         /// @brief  Source Image
         ImageT m_image;
-    
+
         /// @brief Feature Detector Instance
         detector_Base::ptr_t m_detector;
-    
+
         /// @brief Region of image to render
         math::Rect2i  m_bbox;
-    
+
         /// @brief Desired number of interest points
-        int m_desired_num_ip; 
+        int m_desired_num_ip;
 
         /// Task ID
         int m_id;
 
         /// Max Task ID
         int m_max_id;
-        
+
         /// @brief  List of global points
         interest_point_List& m_global_points;
 
         /// @brief  Work Queue for Writing
         core::work::Work_Queue_Ordered& m_write_queue;
-    
+
 };
 
 

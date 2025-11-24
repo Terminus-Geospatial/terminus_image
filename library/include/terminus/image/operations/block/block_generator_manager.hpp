@@ -19,7 +19,7 @@
 
 // External Terminus Libraries
 #include <terminus/core/cache/Cache_Local.hpp>
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/Rectangle.hpp>
 #include <terminus/math/Point_Utilities.hpp>
 #include <terminus/math/Size.hpp>

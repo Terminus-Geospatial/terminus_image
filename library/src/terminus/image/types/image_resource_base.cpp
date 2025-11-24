@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Resource_Base.cpp
+ * @file    image_resource_base.cpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
-#include "Image_Resource_Base.hpp"
+#include <terminus/image/types/image_resource_base.hpp>
 
 // Terminus Image Libraries
-#include "../pixel/Channel_Type_Enum.hpp"
+#include <terminus/image/pixel/channel_type_enum.hpp>
 
 namespace tmns::image {
 

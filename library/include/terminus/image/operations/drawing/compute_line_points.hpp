@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/log/utility.hpp>
 #include <terminus/math/Point.hpp>
 #include <terminus/math/Rectangle.hpp>

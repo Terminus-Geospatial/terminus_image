@@ -33,29 +33,29 @@ namespace tmns::feature {
 /**
  * Base class for all feature point detection modules.
 */
-class detector_Base
+class Detector_Base
 {
     public:
 
         /// Pointer Type
-        typedef std::shared_ptr<detector_Base> ptr_t;
+        typedef std::shared_ptr<Detector_Base> ptr_t;
 
         /**
          * Constructor given a configuration.  Null configuration will be bad,
          * so always provide a valid and usable configuration.
         */
-        detector_Base( detector_Config_Base::ptr_t config );
+        Detector_Base( Detector_Config_Base::ptr_t config );
 
         /**
          * Destructor
         */
-        virtual ~detector_Base() = default;
+        virtual ~Detector_Base() = default;
 
         /**
          * Function / Call Operator
         */
         template <typename PixelT>
-        Result<interest_point_List> operator()( const image::Image_Memory<PixelT>&  image,
+        Result<Interest_Point_List> operator()( const image::Image_Memory<PixelT>&  image,
                                                 bool                                cast_if_ptype_unsupported = true,
                                                 int                                 max_points_override = 0)
         {
@@ -75,7 +75,7 @@ class detector_Base
          * Function / Call Operator
          */
         template <typename ImageT>
-        Result<interest_point_List> operator()( const image::Image_Base<ImageT>&  image,
+        Result<Interest_Point_List> operator()( const image::Image_Base<ImageT>&  image,
                                                 bool                              cast_if_ctype_unsupported = true,
                                                 int                               max_points_override = 0 )
         {
@@ -96,7 +96,7 @@ class detector_Base
         /**
          * Process the image and detect keypoints
          */
-        virtual Result<interest_point_List> process_image( const image::Image_Buffer& image_data,
+        virtual Result<Interest_Point_List> process_image( const image::Image_Buffer& image_data,
                                                            bool                       cast_if_ctype_unsupported,
                                                            int                        max_points_override ) = 0;
 
@@ -104,7 +104,7 @@ class detector_Base
          * Process the image to extract feature descriptors
          */
         virtual Result<void> perform_feature_extraction( const image::Image_Buffer&    image_data,
-                                                         std::vector<interest_point>&  interest_point,
+                                                         std::vector<Interest_Point>&  interest_point,
                                                          bool                          cast_if_ctype_unsupported );
 
 
@@ -113,7 +113,7 @@ class detector_Base
         */
         template <typename PixelT>
         Result<void> extract_descriptors( const image::Image_Memory<PixelT>&  image,
-                                          std::vector<interest_point>&        interest_points,
+                                          std::vector<Interest_Point>&        interest_points,
                                           bool                                cast_if_ctype_unsupported = true )
         {
             {
@@ -133,7 +133,7 @@ class detector_Base
          */
         template <typename ImageT>
         Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
-                                          std::vector<interest_point>&      interest_points,
+                                          std::vector<Interest_Point>&      interest_points,
                                           bool                              cast_if_ctype_unsupported = true )
         {
             image::Image_Memory<typename ImageT::pixel_type> dest_image = image.impl();
@@ -146,7 +146,7 @@ class detector_Base
         /**
          * Get the configuration
          */
-        detector_Config_Base::ptr_t config() const
+        Detector_Config_Base::ptr_t config() const
         {
             return m_config;
         }
@@ -167,8 +167,8 @@ class detector_Base
     private:
 
         /// Internal Configuration Options
-        detector_Config_Base::ptr_t m_config;
+        Detector_Config_Base::ptr_t m_config;
 
-}; // End of detector_Base class
+}; // End of Detector_Base class
 
 } // End of tmns::feature namespace

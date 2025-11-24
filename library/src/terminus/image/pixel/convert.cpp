@@ -1,9 +1,18 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    convert.cpp
  * @author  Marvin Smith
  * @date    7/16/2023
 */
-#include "convert.hpp"
+#include <terminus/image/pixel/convert.hpp>
 
 // C++ Libraries
 #include <map>
@@ -13,8 +22,8 @@
 #include <boost/integer_traits.hpp>
 
 // Terminus Libraries
-#include "Channel_Conversion_Utilities.hpp"
-#include "Channel_Type_ID.hpp"
+#include <terminus/image/pixel/channel_conversion_utilities.hpp>
+#include <terminus/image/pixel/channel_type_id.hpp>
 
 // External Terminus Libraries
 #include <terminus/log/utility.hpp>

@@ -15,9 +15,9 @@
 #pragma once
 
 // Terminus Libraries
-#include "../pixel/Pixel_Cast_Utilities.hpp"
-#include "per_pixel_views/Per_Pixel_View_Unary.hpp"
-#include "statistics/channel_operations.hpp"
+#include <terminus/image/pixel/pixel_cast_utilities.hpp>
+#include <terminus/image/per_pixel_views/per_pixel_view_unary.hpp>
+#include <terminus/image/statistics/channel_operations.hpp>
 
 namespace tmns::image::ops {
 
@@ -61,7 +61,7 @@ class Channel_Normalize_Functor: public math::Unary_Return_Same_Type
 }; // End of Channel_Normalize_Functor class
 
 /**
- * Normalizes pixel data to specified range, but does not touch alpha 
+ * Normalizes pixel data to specified range, but does not touch alpha
  * channels
 */
 template <typename PixelT>
@@ -70,9 +70,9 @@ class Channel_Normalize_Retain_Alpha_Functor: public math::Unary_Return_Same_Typ
     public:
 
         typedef typename math::Compound_Channel_Type<PixelT>::type      channel_type;
-        
+
         typedef typename pix::Pixel_Without_Alpha<PixelT>::type   non_alpha_type;
-        
+
         typedef Channel_Normalize_Functor<non_alpha_type>         norm_func_type;
 
         Channel_Normalize_Retain_Alpha_Functor( channel_type old_min,
@@ -157,23 +157,23 @@ Per_Pixel_View_Unary<ImageT, cmp::Unary_Compound_Functor<Channel_Normalize_Funct
 {
     typedef cmp::Unary_Compound_Functor<Channel_Normalize_Functor<typename ImageT::pixel_type>,
                                         typename ImageT::pixel_type> func_type;
-    
+
     typename pix::Image_Channel_Type<ImageT>::type old_min;
     typename pix::Image_Channel_Type<ImageT>::type old_max;
-    
+
     min_max_channel_values( image, old_min, old_max );
 
     func_type func( Channel_Normalize_Functor<typename ImageT::pixel_type>( old_min,
                                                                             old_max,
                                                                             low,
                                                                             high ) );
-    
+
     return Per_Pixel_View_Unary<ImageT, func_type >( image.impl(), func );
 }
 
 /**
  * Renormalize the values in an image to fall within the range [0,high).
- * The low end of the range is actually determined by the ChannelRange 
+ * The low end of the range is actually determined by the ChannelRange
  * type trait but is generally zero.
  */
 template <typename ImageT>
@@ -184,19 +184,19 @@ Per_Pixel_View_Unary<ImageT, cmp::Unary_Compound_Functor<Channel_Normalize_Funct
 {
     typedef cmp::Unary_Compound_Functor<Channel_Normalize_Functor<typename ImageT::pixel_type>,
                                         typename ImageT::pixel_type> func_type;
-    
+
     typedef Channel_Range<typename pix::Image_Channel_Type<ImageT>::type> range_type;
-    
+
     typename pix::Image_Channel_Type<ImageT>::type old_min;
     typename pix::Image_Channel_Type<ImageT>::type old_max;
-    
+
     min_max_channel_values( image, old_min, old_max );
 
     func_type func( Channel_Normalize_Functor<typename ImageT::pixel_type>( old_min,
                                                                             old_max,
                                                                             range_type::min(),
                                                                             high ) );
-    
+
     return Per_Pixel_View_Unary<ImageT, func_type >( image.impl(), func );
 }
 
@@ -215,12 +215,12 @@ Per_Pixel_View_Unary<ImageT, cmp::Unary_Compound_Functor<Channel_Normalize_Funct
                                         typename ImageT::pixel_type> func_type;
 
     typedef Channel_Range<typename pix::Image_Channel_Type<ImageT>::type> range_type;
-    
+
     typename pix::Image_Channel_Type<ImageT>::type old_min;
     typename pix::Image_Channel_Type<ImageT>::type old_max;
-    
+
     min_max_channel_values( image, old_min, old_max );
-    
+
     func_type func( Channel_Normalize_Functor<typename ImageT::pixel_type>( old_min,
                                                                             old_max,
                                                                             range_type::min(),

@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Metadata_Container_Base.hpp
+ * @file    metadata_container_base.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
@@ -40,6 +40,8 @@ class Metadata_Container_Base
         using tree_type = boost::property_tree::ptree;
 
         Metadata_Container_Base() = default;
+
+        virtual ~Metadata_Container_Base() = default;
 
         /**
          * Get the number of child nodes

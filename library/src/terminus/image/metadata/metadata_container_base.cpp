@@ -1,9 +1,18 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Metadata_Container_Base.cpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
-#include "Metadata_Container_Base.hpp"
+#include <terminus/image/metadata/metadata_container_base.hpp>
 
 // Terminus Libraries
 #include <terminus/core/thirdparty/boost/ptree_utilities.hpp>
@@ -30,10 +39,10 @@ Result<void> Metadata_Container_Base::insert( const Metadata_Container_Base::ptr
                               "Input container is null." );
     }
 
-    return core::thirdparty::boost::merge_ptrees( m_tree, 
+    return core::thirdparty::boost::merge_ptrees( m_tree,
                                                   container->m_tree,
                                                   overwrite_matches );
-    
+
 }
 
 /********************************************/
@@ -43,8 +52,8 @@ std::string Metadata_Container_Base::to_log_string( size_t offset ) const
 {
     std::stringstream sout;
 
-    sout << core::thirdparty::boost::print_ptree( m_tree, 
-                                                  offset );
+    sout << core::thirdparty::boost::print_ptree( m_tree,
+                                                  static_cast<int>(offset) );
 
     return sout.str();
 }

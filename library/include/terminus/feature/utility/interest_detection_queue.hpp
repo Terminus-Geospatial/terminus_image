@@ -15,15 +15,15 @@
 #pragma once
 
 /// Feature Detector
-#include "../detector_Base.hpp"
-#include "interest_point_Detection_Task.hpp"
+#include <terminus/feature/detector_Base.hpp>
+#include <terminus/feature/utility/interest_point_detection_task.hpp>
 
 namespace tmns::feature::utility {
 
 /**
- * Specialized thread pool for interest point detection. 
- * 
- * Breaks the image into tiles, allowing for more control over memory 
+ * Specialized thread pool for interest point detection.
+ *
+ * Breaks the image into tiles, allowing for more control over memory
  * usage as well as the potential for multi-threading.
  */
 template <typename ImageT>
@@ -31,16 +31,16 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
 {
     public:
 
-        typedef interest_point_Detection_Task<ImageT> task_type;
+        typedef Interest_Point_Detection_Task<ImageT> task_type;
 
         /**
          * Constructor
-         * 
+         *
          * @param image
          * @param detector
         */
         Interest_Detection_Queue( const image::Image_Base<ImageT>&       image,
-                                  detector_Base::ptr_t                   detector,
+                                  Detector_Base::ptr_t                   detector,
                                   core::work::Work_Queue_Ordered::ptr_t  write_queue,
                                   interest_point_List&                   ip_list,
                                   const math::Size2i&                    tile_size,
@@ -60,7 +60,7 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
          * Get the number of bounding boxes to process
          */
         size_t size() const
-        { 
+        {
             return m_bboxes.size();
         }
 
@@ -76,9 +76,9 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
             }
 
             m_index++;
-                
+
             // The default value means let the detector pick the IP count.
-            int num_ip = 0; 
+            int num_ip = 0;
 
             if( m_desired_num_ip > 0 )
             {
@@ -115,26 +115,26 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
         ImageT  m_image;
 
         /// @brief Feature-Detector
-        detector_Base::ptr_t m_detector;
+        Detector_Base::ptr_t m_detector;
 
         /// @brief Feature Point Write Queue
         core::work::Work_Queue_Ordered::ptr_t  m_write_queue;
-    
+
         /// @brief Interest Point List
         interest_point_List& m_ip_list;
-    
-        /// @brief Bounding Boxes 
+
+        /// @brief Bounding Boxes
         std::vector<math::Rect2i> m_bboxes;
 
         /// @brief Tile size
         math::Size2i m_tile_size;
-    
+
         /// @brief Desired number of interest points
         int m_desired_num_ip;
 
         /// @brief Internal mutex lock
         core::conc::Mutex m_mutex;
-    
+
         /// Tile Index
         size_t m_index { 0 };
 

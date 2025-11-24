@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Feature Libraries
-#include "detector_Factory.hpp"
+#include <terminus/feature/detector_factory.hpp>
 
 // C++ Libraries
 
@@ -26,13 +26,13 @@ namespace tmns::feature {
  */
 template <typename ImageT>
 Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
-                                  const detector_Base::ptr_t        detector,
+                                  const Detector_Base::ptr_t        detector,
                                   const core::Session_Context&      session_context,
-                                  std::vector<interest_point>&      interest_points )
+                                  std::vector<Interest_Point>&      interest_points )
 {
     if( !detector )
     {
-        return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+        return outcome::fail( error::Error_Code::UNINITIALIZED,
                               "Detector is unitialized." );
     }
     return detector->extract_descriptors( image.impl(),
@@ -42,7 +42,7 @@ Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
 
 /**
  * Run the feature-extraction algorithm, but store the keypoints within the image
- * 
+ *
  * @param image
  * @param detector_config
  * @param session_context
@@ -50,9 +50,9 @@ Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
 */
 template <typename ImageT>
 Result<void> extract_descriptors( image::Image_Base<ImageT>&    image,
-                                  detector_Config_Base::ptr_t   detector_config,
+                                  Detector_Config_Base::ptr_t   detector_config,
                                   const core::Session_Context&  session_context,
-                                  detector_Factory::ptr_t       detector_factory = detector_Factory::create_default_instance() )
+                                  Detector_Factory::ptr_t       detector_factory = Detector_Factory::create_default_instance() )
 {
     tmns::log::trace( ADD_CURRENT_LOC(), "Start of method." );
 
@@ -60,7 +60,7 @@ Result<void> extract_descriptors( image::Image_Base<ImageT>&    image,
     auto detector = detector_factory->create_extractor( detector_config );
     if( detector.has_error() )
     {
-        return outcome::fail( core::error::ErrorCode::DRIVER_NOT_FOUND,
+        return outcome::fail( error::Error_Code::DRIVER_NOT_FOUND,
                               "Driver is not found: ", detector.error().message() );
     }
 

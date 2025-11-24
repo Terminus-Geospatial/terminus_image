@@ -17,12 +17,12 @@
 namespace tmns::feature {
 
 
-class detector_Driver_Manager
+class Detector_Driver_Manager
 {
     public:
 
-        
 
-}; // End of detector_Driver_Manager
+
+}; // End of Detector_Driver_Manager
 
 } // End of tmns::feature namespace

@@ -8,14 +8,14 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Resource_Memory.hpp
+ * @file    image_resource_memory.hpp
  * @author  Marvin Smith
  * @date    7/13/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "../types/Image_Resource_Base.hpp"
+#include <terminus/image/types/image_resource_base.hpp>
 
 // Boost Libraries
 #include <boost/utility.hpp>

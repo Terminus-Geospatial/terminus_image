@@ -12,14 +12,14 @@
  * @author  Marvin Smith
  * @date    9/2/2023
 */
-#include "detector_Config_Base.hpp"
+#include <terminus/feature/detector_config_base.hpp>
 
 namespace tmns::feature {
 
 /**********************************************************/
 /*          Check if Descriptors are supported            */
 /**********************************************************/
-bool detector_Config_Base::supports_feature_descriptors() const
+bool Detector_Config_Base::supports_feature_descriptors() const
 {
     return false;
 }

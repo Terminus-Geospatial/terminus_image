@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Resource_Disk_NITF.cpp
+ * @file    image_resource_disk_nitf.cpp
  * @author  Marvin Smith
  * @date    7/19/2024
 */
@@ -31,9 +31,9 @@ Image_Resource_Disk_NITF::Image_Resource_Disk_NITF( const std::filesystem::path&
 /*          Constructor         */
 /********************************/
 Image_Resource_Disk_NITF::Image_Resource_Disk_NITF( const std::filesystem::path&             pathname,
-                                                    const Image_Format&                      output_format,
-                                                    const std::map<std::string,std::string>& write_options,
-                                                    const math::Size2i&                      block_size )
+                                                    [[maybe_unused]] const Image_Format&                      output_format,
+                                                    [[maybe_unused]] const std::map<std::string,std::string>& write_options,
+                                                    [[maybe_unused]] const math::Size2i&                      block_size )
   : Image_Resource_Disk( pathname )
 {
 }
@@ -66,7 +66,8 @@ Result<Image_Resource_Disk_NITF::ParentPtrT>
         Image_Resource_Disk_NITF::create(  const std::filesystem::path&             pathname,
                                            const Image_Format&                      output_format,
                                            const std::map<std::string,std::string>& write_options,
-                                           const math::Size2i&                      block_size  )
+                                           const math::Size2i&                      block_size,
+                                           const ColorCodeLookupT&                  color_reference_lut [[maybe_unused]] )
 {
     auto driver = std::make_shared<Image_Resource_Disk_NITF>( pathname,
                                                               output_format,

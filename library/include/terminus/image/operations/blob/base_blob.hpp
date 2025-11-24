@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 
 // C++ Libraries
 #include <memory>

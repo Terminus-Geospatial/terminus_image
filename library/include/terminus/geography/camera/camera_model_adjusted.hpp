@@ -31,7 +31,7 @@ namespace tmns::geo::cam {
  * Here, P is in the world coordinate system. P is a point on the unadjusted camera,
  * and it becomes after the transform a point on the adjusted camera.
  */
-class camera_model_Adjusted : public camera_model_base
+class camera_model_adjusted : public camera_model_base
 {
     public:
 
@@ -43,7 +43,7 @@ class camera_model_Adjusted : public camera_model_base
          * @param rotation    Initial starting rotation (in 3d space)
          * @param pixel_offset Initial principle point offset (in 2d space)
         */
-        camera_model_Adjusted( camera_model_base::ptr_t camera_model,
+        camera_model_adjusted( camera_model_base::ptr_t camera_model,
                                const math::Vector3d&    translation  = math::Vector3d(),
                                const math::Quaternion&  rotation     = math::Quaternion::from_matrix( math::Matrix_3x3::identity() ),
                                const math::Point2d&     pixel_offset = math::Point2d() );
@@ -65,6 +65,6 @@ class camera_model_Adjusted : public camera_model_base
         /// Pixel Offset
         math::Point2d m_pixel_offset { math::Point2d( { 0, 0 } ) };
 
-}; // End of camera_model_Adjusted class
+}; // End of camera_model_adjusted class
 
 } // End of tmns::geo::cam namespace

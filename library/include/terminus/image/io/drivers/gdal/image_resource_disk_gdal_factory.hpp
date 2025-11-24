@@ -15,8 +15,8 @@
 #pragma once
 
 /// Terminus Libraries
-#include "../Driver_Factory_Base.hpp"
-#include "Image_Resource_Disk_GDAL.hpp"
+#include <terminus/image/io/drivers/driver_factory_base.hpp>
+#include <terminus/image/io/drivers/gdal/image_resource_disk_gdal.hpp>
 
 namespace tmns::image::io::gdal {
 

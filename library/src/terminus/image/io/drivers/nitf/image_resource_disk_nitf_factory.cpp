@@ -89,7 +89,8 @@ Result<Image_Resource_Base::ptr_t>
     auto result = Image_Resource_Disk_NITF::create( pathname,
                                                     output_format,
                                                     write_options,
-                                                    block_size );
+                                                    block_size,
+                                                    Use_Default_Color_LUT() );
     if( result.has_error() )
     {
         return outcome::fail( result.assume_error() );

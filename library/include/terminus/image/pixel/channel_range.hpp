@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Channel_Range.hpp
+ * @file    channel_range.hpp
  * @author  Marvin Smith
  * @date    8/2/2023
 */
@@ -18,7 +18,8 @@
 #include <complex>
 
 // Terminus Libraries
-#include <terminus/math/types/Compound_Types.hpp>
+#include <terminus/image/types/compound_utilities.hpp>
+#include <terminus/math/types/compound_types.hpp>
 
 
 namespace tmns::image {

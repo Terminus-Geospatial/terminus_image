@@ -16,8 +16,15 @@
 
 // Terminus Libraries
 #include <terminus/image/io/image_resource_disk.hpp>
+#include <terminus/image/types/image_format.hpp>
 
 // C++ Libraries
+#include <filesystem>
+#include <map>
+
+// Forward declarations
+typedef std::vector<std::tuple<std::vector<int>,tmns::image::Pixel_Format_Enum>> ColorCodeLookupT;
+ColorCodeLookupT Use_Default_Color_LUT();
 
 namespace tmns::image::io::nitf {
 

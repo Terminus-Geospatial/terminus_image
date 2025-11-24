@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    9/30/2023
  */
-#include <terminus/image/io/drivers/gdal/isis_json_parser.hpp>
+#include "isis_json_parser.hpp"
 
 namespace tmns::image::io::gdal {
 

@@ -22,7 +22,7 @@
 #include "../types/Image_Memory.hpp"
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 
 namespace tmns::image::utility {
 

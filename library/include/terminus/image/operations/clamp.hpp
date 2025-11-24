@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "per_pixel_views/Per_Pixel_View_Unary.hpp"
+#include <terminus/image/per_pixel_views/per_pixel_view_unary.hpp>
 
 
 namespace tmns::image::ops {
@@ -40,9 +40,9 @@ class Channel_Clamp_Functor: public Unary_Return_Same_Type
             else if (value < m_low ) { return m_low;  }
             else                     { return value;  }
         }
-    
+
     private:
-    
+
         channel_type m_low, m_high;
 }; // End of Channel_Clamp_Functor class
 
@@ -52,13 +52,13 @@ class Channel_Clamp_Functor: public Unary_Return_Same_Type
 template <typename ImageT,
           typename LowT,
           typename HighT>
-Per_Pixel_View_Unary<ImageT,Unary_Compound_Functor<Channel_Clamp_Functor<typename ImageT::pixel_type>, 
+Per_Pixel_View_Unary<ImageT,Unary_Compound_Functor<Channel_Clamp_Functor<typename ImageT::pixel_type>,
                                                    typename ImageT::pixel_type > >
     clamp( const Image_Base<ImageT>& image,
            LowT                      low,
            HighT                     high )
 {
-    typedef Unary_Compound_Functor<Channel_Clamp_Functor<typename ImageT::pixel_type>, 
+    typedef Unary_Compound_Functor<Channel_Clamp_Functor<typename ImageT::pixel_type>,
                                    typename ImageT::pixel_type> func_type;
     func_type func( Channel_Clamp_Functor<typename ImageT::pixel_type>(low,high) );
     return Per_Pixel_View_Unary<ImageT,func_type>( image.impl(), func );
@@ -100,14 +100,14 @@ Per_Pixel_View_Unary<ImageT,Unary_Compound_Functor<Channel_Clamp_Functor<typenam
 {
     typedef Unary_Compound_Functor<Channel_Clamp_Functor<typename ImageT::pixel_type>,
                                    typename ImageT::pixel_type> func_type;
-    
+
     typedef Channel_Range<typename Compound_Channel_Type<typename ImageT::pixel_type>::type> range_type;
-    
+
     typename Compound_Channel_Type<typename ImageT::pixel_type>::type min_val = range_type::min();
     typename Compound_Channel_Type<typename ImageT::pixel_type>::type max_val = range_type::max();
 
     func_type func( Channel_Clamp_Functor<typename ImageT::pixel_type>( min_val, max_val ) );
-    
+
     return Per_Pixel_View_Unary<ImageT,func_type>( image.impl(), func );
 }
 

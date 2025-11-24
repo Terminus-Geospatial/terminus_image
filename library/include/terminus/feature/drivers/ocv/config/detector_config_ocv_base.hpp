@@ -1,32 +1,46 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Config_OCV_Base.hpp
+ * @file    detector_config_ocv_base.hpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #pragma once
 
 // Terminus Feature Libraries
-#include "../../../detector_Config_Base.hpp"
+#include <terminus/feature/detector_config_base.hpp>
 
 namespace tmns::feature::ocv {
 
 /**
- * @class detector_Config_OCV_Base
+ * @class Detector_Config_OCV_Base
  *
  * Base configuration for all OpenCV-based feature detectors
 */
-class detector_Config_OCV_Base : public detector_Config_Base
+class Detector_Config_OCV_Base : public Detector_Config_Base
 {
     public:
 
         /**
          * Constructor
         */
-        detector_Config_OCV_Base();
+        Detector_Config_OCV_Base();
+
+        /**
+         * Virtual Destructor
+         */
+        ~Detector_Config_OCV_Base() override = default;
 
     private:
 
 
-}; // End of class detector_Config_OCV_Base
+}; // End of class Detector_Config_OCV_Base
 
 } // End of tmns::feature::ocv namespace

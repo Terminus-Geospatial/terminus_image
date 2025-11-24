@@ -1,9 +1,18 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Pixel_Format_Enum.cpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
-#include "Pixel_Format_Enum.hpp"
+#include <terminus/image/pixel/pixel_format_enum.hpp>
 
 // Terminus Libraries
 #include <terminus/outcome/macros.hpp>

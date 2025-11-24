@@ -8,19 +8,19 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    interest_point_Write_Task.cpp
+ * @file    interest_point_write_task.cpp
  * @author  Marvin Smith
  * @date    8/31/2023
 */
-#include "interest_point_Write_Task.hpp"
+#include <terminus/feature/utility/interest_point_write_task.hpp>
 
 namespace tmns::feature::utility {
 
 /************************************/
 /*          Constructor             */
 /************************************/
-interest_point_Write_Task::interest_point_Write_Task( interest_point_List  local_points,
-                                                      interest_point_List& global_points )
+Interest_Point_Write_Task::Interest_Point_Write_Task( Interest_Point_List  local_points,
+                                                      Interest_Point_List& global_points )
     : m_points(local_points),
       m_global_points(global_points)
 {
@@ -29,7 +29,7 @@ interest_point_Write_Task::interest_point_Write_Task( interest_point_List  local
 /********************************/
 /*      Function Operator       */
 /********************************/
-void interest_point_Write_Task::operator()()
+void Interest_Point_Write_Task::operator()()
 {
     m_global_points.insert( m_global_points.end(),
                             m_points.begin(),

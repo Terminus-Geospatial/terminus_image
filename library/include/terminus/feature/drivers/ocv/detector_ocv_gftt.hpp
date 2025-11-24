@@ -25,29 +25,29 @@ namespace tmns::feature::ocv {
  * OpenCV implementation of the Shi-Thomasi Good-Features-To-Track
  * algorithm.
 */
-class detector_OCV_GFTT : public detector_OCV_Base
+class Detector_OCV_GFTT : public Detector_OCV_Base
 {
     public:
 
         /**
          * Default Constructor
          */
-        detector_OCV_GFTT();
+        Detector_OCV_GFTT();
 
         /**
          * Parameterized Constructor
         */
-        detector_OCV_GFTT( detector_Config_Base::ptr_t config );
+        Detector_OCV_GFTT( Detector_Config_Base::ptr_t config );
 
         /**
          * Destructor
         */
-        ~detector_OCV_GFTT() override = default;
+        ~Detector_OCV_GFTT() override = default;
 
         /**
          * Process the image and detect keypoints
          */
-        Result<interest_point_List> process_image( const image::Image_Buffer& image,
+        Result<Interest_Point_List> process_image( const image::Image_Buffer& image,
                                                    bool                       cast_if_ctype_unsupported,
                                                    int                        max_points_override ) override;
 
@@ -59,20 +59,25 @@ class detector_OCV_GFTT : public detector_OCV_Base
     private:
 
         /// Configuration
-        detector_Config_OCV_GFTT::ptr_t m_config { nullptr };
+        Detector_Config_OCV_GFTT::ptr_t m_config { nullptr };
 
-}; // End of detector_OCV_GFTT class
+}; // End of Detector_OCV_GFTT class
 
 
-class detector_Generator_OCV_GFTT : public detector_Generator_Base
+class Detector_Generator_OCV_GFTT : public Detector_Generator_Base
 {
     public:
 
         /**
          * Build a new instance of the feature detector
         */
-        Result<detector_Base::ptr_t> generate( detector_Config_Base::ptr_t config ) override;
+        Result<Detector_Base::ptr_t> generate( Detector_Config_Base::ptr_t config ) override;
 
-}; // End of detector_Generator_OCV_GFTT
+        /**
+         * Virtual Destructor
+         */
+        virtual ~Detector_Generator_OCV_GFTT() = default;
+
+}; // End of Detector_Generator_OCV_GFTT
 
 } // End of tmns::feature::ocv namespace

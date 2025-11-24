@@ -19,7 +19,7 @@
 
 // Terminus Image Libraries
 #include <terminus/image/pixel/convert.hpp>
-#include <terminus/image/utility/opencv_utilities.hpp>
+#include "../../../image/utility/opencv_utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv2/features2d.hpp>
@@ -30,25 +30,25 @@ namespace tmns::feature::ocv {
 /************************************/
 /*      Default Constructor         */
 /************************************/
-detector_OCV_GFTT::detector_OCV_GFTT()
-    : detector_OCV_Base( std::make_shared<detector_Config_OCV_GFTT>() ),
-      m_config( std::dynamic_pointer_cast<detector_Config_OCV_GFTT>( this->get_ocv_detector_config() ) )
+Detector_OCV_GFTT::Detector_OCV_GFTT()
+    : Detector_OCV_Base( std::make_shared<Detector_Config_OCV_GFTT>() ),
+      m_config( std::dynamic_pointer_cast<Detector_Config_OCV_GFTT>( this->get_ocv_detector_config() ) )
 {
 }
 
 /****************************************/
 /*      Parameterized Constructor       */
 /****************************************/
-detector_OCV_GFTT::detector_OCV_GFTT( const detector_Config_Base::ptr_t config )
-    : detector_OCV_Base( config ),
-      m_config( std::dynamic_pointer_cast<detector_Config_OCV_GFTT>( config ) )
+Detector_OCV_GFTT::Detector_OCV_GFTT( const Detector_Config_Base::ptr_t config )
+    : Detector_OCV_Base( config ),
+      m_config( std::dynamic_pointer_cast<Detector_Config_OCV_GFTT>( config ) )
 {
 }
 
 /**********************************/
 /*    Run tracker on image data   */
 /**********************************/
-Result<interest_point_List> detector_OCV_GFTT::process_image( const image::Image_Buffer& buffer,
+Result<Interest_Point_List> Detector_OCV_GFTT::process_image( const image::Image_Buffer& buffer,
                                                               bool                       cast_if_ctype_unsupported,
                                                               int                        max_points_override )
 {
@@ -132,8 +132,8 @@ Result<interest_point_List> detector_OCV_GFTT::process_image( const image::Image
                               type_code.error().message() );
     }
 
-    cv::Mat image( detect_buffer.rows(),
-                   detect_buffer.cols(),
+    cv::Mat image( static_cast<int>(detect_buffer.rows()),
+                   static_cast<int>(detect_buffer.cols()),
                    type_code.value(),
                    detect_buffer.data() );
     tmns::log::info( ADD_CURRENT_LOC(), image::utility::ocv::opencv_type_to_string( type_code.value() ) );
@@ -154,32 +154,32 @@ Result<interest_point_List> detector_OCV_GFTT::process_image( const image::Image
     detector->detect( image, kps );
     tmns::log::trace( "Located ", kps.size(), " keypoints" );
 
-    interest_point_List points( kps.size() );
+    Interest_Point_List points( kps.size() );
     for( size_t i = 0; i < kps.size(); i++ )
     {
         points.emplace_back( kps[i].pt.x, kps[i].pt.y );
     }
-    return outcome::ok<interest_point_List>( points );
+    return outcome::ok<Interest_Point_List>( points );
 }
 
 /****************************/
 /*    Get the class name    */
 /****************************/
-std::string detector_OCV_GFTT::class_name() const
+std::string Detector_OCV_GFTT::class_name() const
 {
-    return "detector_OCV_GFTT";
+    return "Detector_OCV_GFTT";
 }
 
 /************************************/
 /*      Generate New Instance       */
 /************************************/
-Result<detector_Base::ptr_t> detector_Generator_OCV_GFTT::generate( detector_Config_Base::ptr_t config )
+Result<Detector_Base::ptr_t> Detector_Generator_OCV_GFTT::generate( Detector_Config_Base::ptr_t config )
 {
     // Check if the detector config GFTT
-    bool same = ( dynamic_cast<detector_Config_OCV_GFTT*>( config.get() ) != nullptr );
+    bool same = ( dynamic_cast<Detector_Config_OCV_GFTT*>( config.get() ) != nullptr );
     if( same )
     {
-        return outcome::ok<detector_Base::ptr_t>( std::make_shared<detector_OCV_GFTT>( config ) );
+        return outcome::ok<Detector_Base::ptr_t>( std::make_shared<Detector_OCV_GFTT>( config ) );
     }
     else
     {

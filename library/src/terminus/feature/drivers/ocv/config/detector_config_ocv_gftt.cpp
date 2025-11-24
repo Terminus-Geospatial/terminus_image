@@ -8,11 +8,11 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    detector_Config_OCV_GFTT.cpp
+ * @file    detector_config_ocv_gftt.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
-#include "detector_Config_OCV_GFTT.hpp"
+#include <terminus/feature/drivers/ocv/config/detector_config_ocv_gftt.hpp>
 
 // C++ Libraries
 #include <sstream>
@@ -22,14 +22,14 @@ namespace tmns::feature::ocv {
 /*********************************/
 /*          Constructor          */
 /*********************************/
-detector_Config_OCV_GFTT::detector_Config_OCV_GFTT( const math::Size2i&  tile_size_pixels,
+Detector_Config_OCV_GFTT::Detector_Config_OCV_GFTT( const math::Size2i&  tile_size_pixels,
                                                     int                  max_features,
                                                     double               quality_level,
                                                     double               min_distance,
                                                     int                  block_size,
                                                     bool                 use_harris_detector,
                                                     double               k )
-  : detector_Config_OCV_Base(),
+  : Detector_Config_OCV_Base(),
     m_tile_size_pixels( tile_size_pixels ),
     m_max_features( max_features ),
     m_quality_level( quality_level ),
@@ -43,7 +43,7 @@ detector_Config_OCV_GFTT::detector_Config_OCV_GFTT( const math::Size2i&  tile_si
 /************************************/
 /*      Allow Custom Tile Size      */
 /************************************/
-bool detector_Config_OCV_GFTT::allow_custom_tile_size() const
+bool Detector_Config_OCV_GFTT::allow_custom_tile_size() const
 {
     return true;
 }
@@ -51,7 +51,7 @@ bool detector_Config_OCV_GFTT::allow_custom_tile_size() const
 /********************************/
 /*      Tile Size in Pixels     */
 /********************************/
-math::Size2i  detector_Config_OCV_GFTT::tile_size_pixels() const
+math::Size2i Detector_Config_OCV_GFTT::tile_size_pixels() const
 {
     return m_tile_size_pixels;
 }
@@ -59,7 +59,7 @@ math::Size2i  detector_Config_OCV_GFTT::tile_size_pixels() const
 /****************************/
 /*      Get Max Corners     */
 /****************************/
-int detector_Config_OCV_GFTT::max_features() const
+int Detector_Config_OCV_GFTT::max_features() const
 {
     return m_max_features;
 }
@@ -67,7 +67,7 @@ int detector_Config_OCV_GFTT::max_features() const
 /*******************************/
 /*      Get Quality Level      */
 /*******************************/
-double detector_Config_OCV_GFTT::quality_level() const
+double Detector_Config_OCV_GFTT::quality_level() const
 {
     return m_quality_level;
 }
@@ -75,7 +75,7 @@ double detector_Config_OCV_GFTT::quality_level() const
 /**************************/
 /*      Min Distance      */
 /**************************/
-double detector_Config_OCV_GFTT::min_distance() const
+double Detector_Config_OCV_GFTT::min_distance() const
 {
     return m_min_distance;
 }
@@ -83,7 +83,7 @@ double detector_Config_OCV_GFTT::min_distance() const
 /************************/
 /*      Block Size      */
 /************************/
-int detector_Config_OCV_GFTT::block_size() const
+int Detector_Config_OCV_GFTT::block_size() const
 {
     return m_block_size;
 }
@@ -91,7 +91,7 @@ int detector_Config_OCV_GFTT::block_size() const
 /*****************************************/
 /*          Use Harris Detector          */
 /*****************************************/
-bool detector_Config_OCV_GFTT::use_harris_detector() const
+bool Detector_Config_OCV_GFTT::use_harris_detector() const
 {
     return m_use_harris_detector;
 }
@@ -99,7 +99,7 @@ bool detector_Config_OCV_GFTT::use_harris_detector() const
 /******************/
 /*      Get K     */
 /******************/
-double detector_Config_OCV_GFTT::k() const
+double Detector_Config_OCV_GFTT::k() const
 {
     return m_k;
 }
@@ -107,7 +107,7 @@ double detector_Config_OCV_GFTT::k() const
 /**************************************/
 /*      Print to logging string       */
 /**************************************/
-std::string detector_Config_OCV_GFTT::logger_name() const
+std::string Detector_Config_OCV_GFTT::logger_name() const
 {
     return "detector_OCV_GFTT";
 }
@@ -115,7 +115,7 @@ std::string detector_Config_OCV_GFTT::logger_name() const
 /********************************************/
 /*          Print to Logger String          */
 /********************************************/
-std::string detector_Config_OCV_GFTT::to_string( size_t offset ) const
+std::string Detector_Config_OCV_GFTT::to_string( size_t offset ) const
 {
     std::string gap( offset, ' ' );
     std::stringstream sout;

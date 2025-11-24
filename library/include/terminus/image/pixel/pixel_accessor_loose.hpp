@@ -8,7 +8,7 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Pixel_Accessor_Loose.hpp
+ * @file    pixel_accessor_loose.hpp
  * @author  Marvin Smith
  * @date    7/23/2023
 */

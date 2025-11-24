@@ -1,13 +1,22 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2025 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Image_Format.cpp
+ * @file    image_format.cpp
  * @author  Marvin Smith
  * @date    7/13/2023
 */
-#include "Image_Format.hpp"
+#include <terminus/image/types/image_format.hpp>
 
 // Terminus Libraries
-#include "../pixel/Channel_Type_Enum.hpp"
-#include "../pixel/Pixel_Format_Enum.hpp"
+#include <terminus/image/pixel/channel_type_enum.hpp>
+#include <terminus/image/pixel/pixel_format_enum.hpp>
 
 // C++ Libraries
 #include <iostream>
