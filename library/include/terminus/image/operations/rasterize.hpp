@@ -16,10 +16,10 @@
 
 // Terminus Methods
 #include <terminus/log/utility.hpp>
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/math/rectangle.hpp>
 
 // Terminus Image Methods
-#include "../types/Image_Traits.hpp"
+#include <terminus/image/types/image_traits.hpp>
 
 namespace tmns::image::ops {
 

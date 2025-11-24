@@ -54,45 +54,9 @@ LIST( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 include( "${PROJECT_SOURCE_DIR}/cmake/scripts/Find_Dependencies.cmake" )
 
 #  Add Interfaces
-add_subdirectory( include/terminus )
-add_subdirectory( src/terminus )
+add_subdirectory( library )
 
-#  Create Library
-add_library( ${PROJECT_NAME} SHARED
-    ${TERMINUS_IMAGE_INCLUDE_HEADERS}
-    $<TARGET_OBJECTS:TERMINUS_GEOGRAPHY_CAMERA>
-    $<TARGET_OBJECTS:TERMINUS_FEATURE_BASE>
-    $<TARGET_OBJECTS:TERMINUS_FEATURE_DRV_OCV>
-    $<TARGET_OBJECTS:TERMINUS_FEATURE_DRV_OCV_CFG>
-    $<TARGET_OBJECTS:TERMINUS_FEATURE_UTIL>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_COLLECT_FILE>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_IO>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_IO_DRIVERS>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_IO_DRIVERS_GDAL>
-#    $<TARGET_OBJECTS:TERMINUS_IMAGE_IO_DRIVERS_NITF>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_METADATA>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_PIXEL>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_TYPES>
-    $<TARGET_OBJECTS:TERMINUS_IMAGE_UTIL>
-)
 
-#  Link in dependencies
-target_link_libraries( ${PROJECT_NAME} PUBLIC
-     Boost::headers
-     Boost::log
-     Boost::log_setup
-     Boost::stacktrace
-     Boost::system
-     GDAL::GDAL
-     nlohmann_json::nlohmann_json
-     ${OpenCV_LIBS}
-     terminus_core::terminus_core
-     terminus_log::terminus_log
-     terminus_math::terminus_math
-     terminus_outcome::terminus_outcome
-)
-
-install( TARGETS ${PROJECT_NAME} )
 
 terminus_lib_configure( ${PROJECT_NAME} )
 
@@ -106,4 +70,4 @@ if( TERMINUS_IMAGE_ENABLE_TESTS )
     add_subdirectory( tests )
 endif()
 
-install( DIRECTORY include/terminus DESTINATION include)
+install( DIRECTORY library/include/terminus DESTINATION include)

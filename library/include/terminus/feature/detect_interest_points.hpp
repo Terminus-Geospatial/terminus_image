@@ -20,7 +20,7 @@
 
 // Terminus Feature Libraries
 #include "utility/Interest_Detection_Queue.hpp"
-#include "Detector_Factory.hpp"
+#include "detector_Factory.hpp"
 
 // C++ Libraries
 
@@ -30,14 +30,14 @@ namespace tmns::feature {
  * Perform feature detection on an image, returning the interest points
  */
 template <typename ImageT>
-Result<std::vector<Interest_Point>> detect_interest_points( const image::Image_Base<ImageT>&  image,
-                                                            const Detector_Base::ptr_t        detector,
+Result<std::vector<interest_point>> detect_interest_points( const image::Image_Base<ImageT>&  image,
+                                                            const detector_Base::ptr_t        detector,
                                                             const core::Session_Context&      session_context )
 {
     // Build work queue for writing jobs in order
     auto write_pool = std::make_shared<core::work::Work_Queue_Ordered>( 1 );
 
-    Interest_Point_List ip_list;
+    interest_point_List ip_list;
 
     utility::Interest_Detection_Queue<ImageT> detect_queue( image,
                                                             detector,
@@ -65,9 +65,9 @@ Result<std::vector<Interest_Point>> detect_interest_points( const image::Image_B
 */
 template <typename ImageT>
 Result<void> detect_interest_points( image::Image_Base<ImageT>&    image,
-                                     Detector_Config_Base::ptr_t   detector_config,
+                                     detector_Config_Base::ptr_t   detector_config,
                                      const core::Session_Context&  session_context,
-                                     Detector_Factory::ptr_t       detector_factory = Detector_Factory::create_default_instance() )
+                                     detector_Factory::ptr_t       detector_factory = detector_Factory::create_default_instance() )
 {
     tmns::log::trace( ADD_CURRENT_LOC(), "Start of method." );
 

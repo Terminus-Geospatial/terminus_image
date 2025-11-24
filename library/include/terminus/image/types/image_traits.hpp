@@ -8,39 +8,47 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    convert.hpp
+ * @file    image_traits.hpp
  * @author  Marvin Smith
- * @date    7/16/2023
+ * @date    7/21/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include <terminus/error.hpp>
+#include <terminus/image/types/image_base.hpp>
 
-// Terminus Image Libraries
-#include <terminus/image/types/image_buffer.hpp>
+// C++ Libraries
+#include <type_traits>
 
 namespace tmns::image {
 
-/// Convert any integer into a float in the -1 to +1 range.
-template <class SrcT, class DestT>
-void channel_convert_int_to_float( SrcT* src, DestT* dest )
+/// Indicates whether a view can be resized via <B>set_size()</B>.
+template <class ImplT>
+struct Is_Resizable
 {
-  *dest = DestT(*src) * ( DestT( 1.0 ) / static_cast<DestT>( std::numeric_limits<SrcT>::max() ) );
-}
+    typedef std::false_type value;
+};
 
-/**
- * Convert pixel data from input buffer-type to output type
- *
- * This is a big method under the hood, so it's a separate file to keep things
- * from spiraling out of control.  All other methods in this file are supporting.
- *
- * @param dst Destination pixel container
- * @param src Source pixel data
- * @param rescale Flag if we need to scale imagery
-*/
-Result<void> convert( const Image_Buffer&  dst,
-                      const Image_Buffer&  src,
-                      bool                 rescale = false );
+/// Indicates whether a view type can be accessed at floating-point positions.
+template <class ImplT>
+struct Is_Floating_Point_Indexable
+{
+    static consteval bool value(){ return false; }
+};
+
+/// Indicates whether or not a type is an image base type.
+template <class ImageT>
+struct Is_Image_Base
+{
+    typedef typename std::is_base_of<Image_Base<ImageT>,ImageT>::type value;
+};
+
+/// Indicates whether or not a view can be accessed multiple times
+/// just as efficiently as a locally-cached version.
+template <class ImplT>
+struct Is_Multiply_Accessible
+{
+    typedef std::false_type value;
+};
 
 } // End of tmns::image namespace

@@ -8,39 +8,50 @@
 /*                                                                                    */
 /**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    convert.hpp
+ * @file    Channel_Type_Enum.hpp
  * @author  Marvin Smith
- * @date    7/16/2023
+ * @date    7/13/2023
 */
 #pragma once
 
 // Terminus Libraries
 #include <terminus/error.hpp>
 
-// Terminus Image Libraries
-#include <terminus/image/types/image_buffer.hpp>
-
 namespace tmns::image {
 
-/// Convert any integer into a float in the -1 to +1 range.
-template <class SrcT, class DestT>
-void channel_convert_int_to_float( SrcT* src, DestT* dest )
+enum Channel_Type_Enum
 {
-  *dest = DestT(*src) * ( DestT( 1.0 ) / static_cast<DestT>( std::numeric_limits<SrcT>::max() ) );
-}
+    UNKNOWN     =  0 /**< Error condition.*/,
+    UINT8       =  1,
+    UINT12      =  2,
+    UINT14      =  3,
+    UINT16      =  4,
+    UINT32      =  5,
+    UINT64      =  6,
+    INT8        =  7,
+    INT16       =  8,
+    INT32       =  9,
+    INT64       = 10,
+    FLOAT32     = 11,
+    FLOAT64     = 12,
+    FLOAT32Free = 13,
+    FLOAT64Free = 14,
+}; // end of Channel_Type_Enum enumeration
 
 /**
- * Convert pixel data from input buffer-type to output type
- *
- * This is a big method under the hood, so it's a separate file to keep things
- * from spiraling out of control.  All other methods in this file are supporting.
- *
- * @param dst Destination pixel container
- * @param src Source pixel data
- * @param rescale Flag if we need to scale imagery
+ * Convert Channel_Type_Enum to a string
 */
-Result<void> convert( const Image_Buffer&  dst,
-                      const Image_Buffer&  src,
-                      bool                 rescale = false );
+std::string enum_to_string( Channel_Type_Enum val );
 
-} // End of tmns::image namespace
+/**
+ * Return true if enumeration is "integer" type (aka not float)
+*/
+bool is_integer_type( Channel_Type_Enum value );
+
+/**
+ * Function to get the size of the channel in bytes.
+ * Throws an error if value is unknown.
+*/
+Result<size_t> channel_size_bytes( Channel_Type_Enum val );
+
+} // end of tmns::image namespace

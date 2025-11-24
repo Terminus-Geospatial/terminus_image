@@ -429,7 +429,7 @@ Result<void> convert( const Image_Buffer&  dst,
     if( dst.format().cols() != src.format().cols() ||
         dst.format().rows() != src.format().rows() )
     {
-        return outcome::fail( core::error::ErrorCode::INVALID_CONFIGURATION,
+        return outcome::fail( error::Error_Code::INVALID_CONFIGURATION,
                               "Destination buffer has incorrect size." );
     }
 
@@ -509,7 +509,7 @@ Result<void> convert( const Image_Buffer&  dst,
                  << enum_to_string( src.format().pixel_type() ) << " vs. "
                  << enum_to_string( dst.format().pixel_type() ) << ").";
             tmns::log::error( sout.str() );
-            return outcome::fail( core::error::ErrorCode::INVALID_PIXEL_TYPE,
+            return outcome::fail( error::Error_Code::INVALID_PIXEL_TYPE,
                                   sout.str() );
         }
     }
@@ -560,7 +560,7 @@ Result<void> convert( const Image_Buffer&  dst,
 
     if( !conv_func || !max_func || !avg_func || !unpremultiply_src_func || !premultiply_dst_func || !premultiply_src_func )
     {
-        return outcome::fail( core::error::ErrorCode::INVALID_CHANNEL_TYPE,
+        return outcome::fail( error::Error_Code::INVALID_CHANNEL_TYPE,
                               "Unsupported channel-type combination in conversion ( ", src.format().channel_type(),
                               " -> ", dst.format().channel_type(), " )" );
     }

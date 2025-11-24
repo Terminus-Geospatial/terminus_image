@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Feature Libraries
-#include "Detector_Factory.hpp"
+#include "detector_Factory.hpp"
 
 // C++ Libraries
 
@@ -26,9 +26,9 @@ namespace tmns::feature {
  */
 template <typename ImageT>
 Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
-                                  const Detector_Base::ptr_t        detector,
+                                  const detector_Base::ptr_t        detector,
                                   const core::Session_Context&      session_context,
-                                  std::vector<Interest_Point>&      interest_points )
+                                  std::vector<interest_point>&      interest_points )
 {
     if( !detector )
     {
@@ -50,9 +50,9 @@ Result<void> extract_descriptors( const image::Image_Base<ImageT>&  image,
 */
 template <typename ImageT>
 Result<void> extract_descriptors( image::Image_Base<ImageT>&    image,
-                                  Detector_Config_Base::ptr_t   detector_config,
+                                  detector_Config_Base::ptr_t   detector_config,
                                   const core::Session_Context&  session_context,
-                                  Detector_Factory::ptr_t       detector_factory = Detector_Factory::create_default_instance() )
+                                  detector_Factory::ptr_t       detector_factory = detector_Factory::create_default_instance() )
 {
     tmns::log::trace( ADD_CURRENT_LOC(), "Start of method." );
 

@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "rasterize.hpp"
+#include <terminus/image/operations/rasterize.hpp>
 
 namespace tmns::image::ops {
 
