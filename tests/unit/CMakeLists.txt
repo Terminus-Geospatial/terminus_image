@@ -30,6 +30,7 @@ add_executable( ${TEST}
     image/io/drivers/gdal/TEST_Image_Resource_Disk_GDAL.cpp
     image/io/drivers/gdal/TEST_Image_Resource_Disk_GDAL_Factory.cpp
     image/operations/drawing/TEST_compute_line_points.cpp
+    image/operations/drawing/TEST_compute_circle_points.cpp
     image/operations/drawing/TEST_drawing_functions.cpp
     image/operations/TEST_crop_image.cpp
     image/operations/TEST_select_plane.cpp
@@ -40,7 +41,7 @@ add_executable( ${TEST}
     image/types/TEST_Image_Resource_View.cpp
     image/types/TEST_Fundamental_Types.cpp
     image/types/TEST_Image_Memory.cpp
-    UNIT_TEST_ONLY/Image_Datastore.cpp 
+    UNIT_TEST_ONLY/Image_Datastore.cpp
     UNIT_TEST_ONLY/Image_Datastore.hpp
     UNIT_TEST_ONLY/Options.cpp
     UNIT_TEST_ONLY/Options.hpp
@@ -65,4 +66,4 @@ file( COPY ${CMAKE_SOURCE_DIR}/data/unit-test-data/images
 
 file( COPY ${CMAKE_SOURCE_DIR}/data/unit-test-data/test_images.ini
       DESTINATION ${CMAKE_BINARY_DIR}/data )
-      
+

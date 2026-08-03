@@ -22,7 +22,7 @@ namespace tmns::image {
 /****************************************************/
 /*          Get the number of image columns         */
 /****************************************************/
-size_t Read_Image_Resource_Base::cols() const
+int Read_Image_Resource_Base::cols() const
 {
     return format().cols();
 }
@@ -30,7 +30,7 @@ size_t Read_Image_Resource_Base::cols() const
 /*************************************************/
 /*          Get the number of image rows         */
 /*************************************************/
-size_t Read_Image_Resource_Base::rows() const
+int Read_Image_Resource_Base::rows() const
 {
     return format().rows();
 }
@@ -38,7 +38,7 @@ size_t Read_Image_Resource_Base::rows() const
 /****************************************************/
 /*          Get the number of image planes          */
 /****************************************************/
-size_t Read_Image_Resource_Base::planes() const
+int Read_Image_Resource_Base::planes() const
 {
     return format().planes();
 }
@@ -48,7 +48,7 @@ size_t Read_Image_Resource_Base::planes() const
 /********************************************************/
 size_t Read_Image_Resource_Base::channels() const
 {
-    return num_channels( pixel_type() ).assume_value();
+    return static_cast<size_t>( num_channels( pixel_type() ).assume_value() );
 }
 
 /************************************************/
@@ -80,8 +80,7 @@ Channel_Type_Enum Read_Image_Resource_Base::channel_type() const
 /********************************************/
 math::Size2i Read_Image_Resource_Base::block_read_size() const
 {
-    return math::Size2i( { (int)cols(),
-                           (int)rows() } );
+    return math::Size2i( { cols(), rows() } );
 }
 
 /********************************************/
@@ -110,7 +109,8 @@ std::shared_ptr<const uint8_t[]> Read_Image_Resource_Base::native_ptr() const
 size_t Read_Image_Resource_Base::native_size() const
 {
     return channel_size_bytes( channel_type() ).value() *
-            num_channels( pixel_type() ).value() * cols() * rows() * planes();
+           static_cast<size_t>( num_channels( pixel_type() ).value() ) *
+           static_cast<size_t>( cols() ) * static_cast<size_t>( rows() ) * static_cast<size_t>( planes() );
 }
 
 /*********************************************/
@@ -124,7 +124,7 @@ math::Size2i Write_Image_Resource_Base::block_write_size() const
 /********************************************/
 /*      Set a specific block write size     */
 /********************************************/
-void Write_Image_Resource_Base::set_block_write_size( const math::Size2i& sz )
+void Write_Image_Resource_Base::set_block_write_size( [[maybe_unused]] const math::Size2i& sz )
 {
     throw std::runtime_error( "This resource does not support block writes." );
 }
@@ -132,7 +132,7 @@ void Write_Image_Resource_Base::set_block_write_size( const math::Size2i& sz )
 /****************************************/
 /*      Set a specific nodata value     */
 /****************************************/
-void Write_Image_Resource_Base::set_nodata_write( double value )
+void Write_Image_Resource_Base::set_nodata_write( [[maybe_unused]] double value )
 {
     throw std::runtime_error( "This resource does not support block writes." );
 }

@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    7/29/2023
 */
-#include "openCV_utilities.hpp"
+#include "opencv_utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv4/opencv2/core.hpp>

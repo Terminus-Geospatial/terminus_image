@@ -40,138 +40,187 @@ class Image_Format
          * @param pixel_type Pixel format
          * @param channel_type
         */
-        Image_Format( size_t            cols,
-                      size_t            rows,
-                      size_t            planes,
+        Image_Format( int               cols,
+                      int               rows,
+                      int               planes,
                       Pixel_Format_Enum pixel_type,
                       Channel_Type_Enum channel_type,
                       bool              premultiply );
 
         /**
-         * Get the number of image columns
-        */
-        size_t cols() const;
+         * @brief Get the number of image columns
+         *
+         * @return int Number of image columns
+         */
+        int cols() const;
 
         /**
-         * Set the number of image columns
-        */
-        void set_cols( size_t cols );
+         * @brief Set the number of image columns
+         *
+         * @param cols Number of image columns
+         */
+        void set_cols( int cols );
 
         /**
-         * Get the number of image rows
-        */
-        size_t rows() const;
+         * @brief Get the number of image rows
+         *
+         * @return int Number of image rows
+         */
+        int rows() const;
 
         /**
-         * Set the nubmer of image rows
-        */
-        void set_rows( size_t rows );
+         * @brief Set the number of image rows
+         *
+         * @param rows Number of image rows
+         */
+        void set_rows( int rows );
 
         /**
-         * Get an image bounding box
-        */
+         * @brief Get the number of image planes
+         *
+         * @return int Number of image planes
+         */
+        int planes() const;
+
+        /**
+         * @brief Set the number of image planes
+         *
+         * @param planes Number of image planes
+         */
+        void set_planes( int planes );
+
+        /**
+         * @brief Get an image bounding box
+         *
+         * @return math::Rect2i Bounding box
+         */
         math::Rect2i bbox() const;
 
         /**
-         * Get the number of image planes
-        */
-        size_t planes() const;
+         * @brief Get the number of image planes
+         *
+         * @return int Number of image planes
+         */
+        int planes() const;
 
         /**
-         * Set the number of image planes
-        */
-        void set_planes( size_t planes );
+         * @brief Set the number of image planes
+         *
+         * @param planes Number of image planes
+         */
+        void set_planes( int planes );
 
         /**
-         * Get the image pixel type
-        */
+         * @brief Get the image pixel type
+         *
+         * @return Pixel_Format_Enum Pixel type
+         */
         Pixel_Format_Enum pixel_type() const;
 
         /**
-         * Set the image pixel type
-        */
+         * @brief Set the image pixel type
+         *
+         * @param tp Pixel type
+         */
         void set_pixel_type( Pixel_Format_Enum tp );
 
         /**
-         * Get the image channel type
-        */
+         * @brief Get the image channel type
+         *
+         * @return Channel_Type_Enum Channel type
+         */
         Channel_Type_Enum channel_type() const;
 
         /**
-         * Set the image channel type
-        */
+         * @brief Set the image channel type
+         *
+         * @param tp Channel type
+         */
         void set_channel_type( Channel_Type_Enum tp );
 
         /**
-         * Get the number of channels
-        */
+         * @brief Get the number of channels
+         *
+         * @return int Number of channels
+         */
         int channels() const;
 
         /**
-         * Check if we should apply alpha channel adjustments
-        */
+         * @brief Check if we should apply alpha channel adjustments
+         */
         bool premultiply() const;
 
         /**
-         * Check if the data is fully structured.
-        */
+         * @brief Check if the data is fully structured
+         */
         bool complete() const;
 
         /**
-         * Get the column stride.  Note this does no error or bounds checking.
+         * @brief Get the column stride.  Note this does no error or bounds checking.
          * Do not use this until the format class is fully initialized.
-        */
-        size_t cstride  () const;
+         */
+        ssize_t cstride() const;
 
         /**
-         * Get the row stride.  Note this does no error or bounds checking.
+         * @brief Get the row stride.  Note this does no error or bounds checking.
          * Do not use this until the format class is fully initialized.
-        */
-        size_t rstride  () const;
+         */
+        ssize_t rstride() const;
 
         /**
-         * Get the plane stride.  Note this does no error or bounds checking.
+         * @brief Get the plane stride.  Note this does no error or bounds checking.
          * Do not use this until the format class is fully initialized.
-        */
-        size_t pstride  () const;
+         *
+         * @return ssize_t Plane stride
+         */
+        ssize_t pstride() const;
 
         /**
-         * Get the raster size in bytes.  Note this does no error or bounds
+         * @brief Get the raster size in bytes.  Note this does no error or bounds
          * checking.  Do not use this until the format class is fully
          * initialized
-        */
+         *
+         * @return size_t Raster size in bytes
+         */
         size_t raster_size_bytes() const;
 
 
         /**
-         * Print to log-friendly string
-        */
+         * @brief Print to log-friendly string
+         *
+         * @param offset Offset to add to the string
+         * @return std::string Log-friendly string
+         */
         std::string to_string( size_t offset = 0 ) const;
 
         /**
-         * Check if we can convert the two image format types.
-        */
+         * @brief Check if we can convert the two image format types.
+         *
+         * @param dest Destination image format
+         * @param source Source image format
+         * @return Result<void> Result of the conversion check
+         */
         static Result<void> can_convert( const Image_Format&  dest,
                                          const Image_Format&  source );
 
     private:
 
-        /// Image Cols
-        size_t m_cols { 0 };
+        /// @brief Image Cols
+        int m_cols { 0 };
 
-        /// Image Rows
-        size_t m_rows { 0 };
+        /// @brief Image Rows
+        int m_rows { 0 };
 
-        /// Planes
-        size_t m_planes { 0 };
+        /// @brief Number of planes
+        int m_planes { 0 };
 
-        /// Pixel Format
+        /// @brief Pixel Format
         Pixel_Format_Enum m_pixel_type { Pixel_Format_Enum::UNKNOWN };
 
-        /// Channel-Type
+        /// @brief Channel-Type
         Channel_Type_Enum m_channel_type { Channel_Type_Enum::UNKNOWN };
 
-        /// Premultiply
+        /// @brief Premultiply
         bool m_premultiply { true };
 
 }; // End of Image_Format Class

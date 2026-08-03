@@ -34,8 +34,8 @@ Image_Buffer::Image_Buffer( Image_Format format,
                             void*        data )
   : m_data( data ),
    m_format( std::move( format ) ),
-   m_cstride( channel_size_bytes( format.channel_type() ).assume_value() *
-              num_channels( format.pixel_type() ).assume_value() ),
+   m_cstride( static_cast<ssize_t>( channel_size_bytes( format.channel_type() ).assume_value() *
+              static_cast<size_t>( num_channels( format.pixel_type() ).assume_value() ) ) ),
    m_rstride( m_cstride * format.cols() ),
    m_pstride( m_rstride * format.rows() )
 {}
@@ -50,9 +50,9 @@ Image_Buffer::Image_Buffer( void*                data,
                             size_t               pstride )
   : m_data( data ),
     m_format( std::move( format ) ),
-    m_cstride( cstride ),
-    m_rstride( rstride ),
-    m_pstride( pstride )
+    m_cstride( static_cast<ssize_t>( cstride ) ),
+    m_rstride( static_cast<ssize_t>( rstride ) ),
+    m_pstride( static_cast<ssize_t>( pstride ) )
 {}
 
 /********************************/
@@ -66,7 +66,7 @@ void* Image_Buffer::data() const
 /************************************/
 /*          Get Buffer Cols         */
 /************************************/
-size_t Image_Buffer::cols() const
+int Image_Buffer::cols() const
 {
     return m_format.cols();
 }
@@ -74,7 +74,7 @@ size_t Image_Buffer::cols() const
 /************************************/
 /*          Get Buffer Rows         */
 /************************************/
-size_t Image_Buffer::rows() const
+int Image_Buffer::rows() const
 {
     return m_format.rows();
 }
@@ -82,7 +82,7 @@ size_t Image_Buffer::rows() const
 /********************************/
 /*      Get Buffer Planes       */
 /********************************/
-size_t Image_Buffer::planes() const
+int Image_Buffer::planes() const
 {
     return m_format.planes();
 }

@@ -22,7 +22,6 @@
 #include <boost/integer_traits.hpp>
 
 // Terminus Libraries
-#include <terminus/image/pixel/channel_conversion_utilities.hpp>
 #include <terminus/image/pixel/channel_type_id.hpp>
 
 // External Terminus Libraries
@@ -282,9 +281,9 @@ typedef void (*channel_average_func)(void* src, void* dest, int32_t len);
 template <class T>
 void channel_average( T* src, T* dest, int len )
 {
-    typename Accumulator_Type<T>::type accum = typename Accumulator_Type<T>::type();
+    typename math::Accumulator_Type<T>::type accum = typename math::Accumulator_Type<T>::type();
     for( int32_t i=0; i<len; ++i ) accum += src[i];
-    *dest = accum / len;
+    *dest = static_cast<T>( accum / len );
 }
 
 // The map, class, and entry setting mirror the previous section.
@@ -460,13 +459,13 @@ Result<void> convert( const Image_Buffer&  dst,
         // We freely convert between multi-channel and multi-plane images,
         // by aliasing the multi-channel buffer as a multi-plane buffer.
         if( src.format().pixel_type() == Pixel_Format_Enum::SCALAR &&
-            dst.format().planes()     == 1  &&
+            dst.format().planes()     == 1 &&
             src.format().planes()     == num_channels( dst.format().pixel_type() ).value() )
         {
             Image_Buffer new_dst          = dst;
             new_dst.format().set_pixel_type( Pixel_Format_Enum::SCALAR );
             new_dst.format().set_planes( src.format().planes() );
-            new_dst.set_pstride( channel_size_bytes( dst.format().channel_type() ).value() );
+            new_dst.set_pstride( static_cast<ssize_t>( channel_size_bytes( dst.format().channel_type() ).value() ) );
             return convert( new_dst, src );
         }
         else if( dst.format().pixel_type() == Pixel_Format_Enum::SCALAR &&
@@ -476,7 +475,7 @@ Result<void> convert( const Image_Buffer&  dst,
             Image_Buffer new_src          = src;
             new_src.format().set_pixel_type( Pixel_Format_Enum::SCALAR );
             new_src.format().set_planes( dst.format().planes() );
-            new_src.set_pstride( channel_size_bytes( src.format().channel_type() ).value() );
+            new_src.set_pstride( static_cast<ssize_t>( channel_size_bytes( src.format().channel_type() ).value() ) );
             return convert( dst, new_src );
         }
 
@@ -524,13 +523,13 @@ Result<void> convert( const Image_Buffer&  dst,
     }
 
     // Gather some stats
-    size_t src_channels = num_channels( src.format().pixel_type() ).value();
-    size_t dst_channels = num_channels( dst.format().pixel_type() ).value();
+    size_t src_channels = static_cast<size_t>( num_channels( src.format().pixel_type() ).value() );
+    size_t dst_channels = static_cast<size_t>( num_channels( dst.format().pixel_type() ).value() );
     size_t src_chstride = channel_size_bytes( src.format().channel_type() ).value();
     size_t dst_chstride = channel_size_bytes( dst.format().channel_type() ).value();
 
     size_t copy_length = ( src_channels == dst_channels ) ?
-                          src_channels : ( src_channels<3 ) ? 1 : (dst_channels>=3) ? 3 : 0;
+                          src_channels : ( src_channels < size_t(3) ) ? size_t(1) : ( dst_channels >= size_t(3) ) ? size_t(3) : size_t(0);
 
     // Decide how alpha handling and other issues will be done
     bool unpremultiply_src = false;
@@ -574,7 +573,7 @@ Result<void> convert( const Image_Buffer&  dst,
                               " -> ", dst.format().channel_type(), " )" );
     }
 
-    int max_channels = std::max( src_channels, dst_channels );
+    size_t max_channels = std::max( src_channels, dst_channels );
 
     std::shared_ptr<uint8_t[]> src_buf(new uint8_t[ max_channels * src_chstride ] );
     std::shared_ptr<uint8_t[]> dst_buf(new uint8_t[ max_channels * dst_chstride ] );
@@ -584,56 +583,56 @@ Result<void> convert( const Image_Buffer&  dst,
     uint8_t*  src_ptr_p = (uint8_t*)src.data();
     uint8_t*  dst_ptr_p = (uint8_t*)dst.data();
 
-    for( uint32_t p=0; p < src.format().planes(); ++p )
+    for( int p=0; p < src.format().planes(); ++p )
     {
         uint8_t *src_ptr_r = src_ptr_p;
         uint8_t *dst_ptr_r = dst_ptr_p;
-        for( uint32_t r=0; r<src.format().rows(); ++r )
+        for( int r=0; r<src.format().rows(); ++r )
         {
             uint8_t *src_ptr_c = src_ptr_r;
             uint8_t *dst_ptr_c = dst_ptr_r;
-            for( uint32_t c=0; c < src.format().cols(); ++c )
+            for( int c=0; c < src.format().cols(); ++c )
             {
                 // Setup the buffers, adjusting premultiplication if needed
                 uint8_t *src_ptr = src_ptr_c;
                 uint8_t *dst_ptr = dst_ptr_c;
                 if( unpremultiply_src )
                 {
-                    unpremultiply_src_func( src_ptr, src_buf.get(), src_channels );
+                    unpremultiply_src_func( src_ptr, src_buf.get(), static_cast<int>( src_channels ) );
                     src_ptr = src_buf.get();
                 }
                 else if( premultiply_src )
                 {
-                    premultiply_src_func( src_ptr, src_buf.get(), src_channels );
+                    premultiply_src_func( src_ptr, src_buf.get(), static_cast<int>( src_channels ) );
                     src_ptr = src_buf.get();
                 }
 
                 // Copy/convert, unrolling the common multi-channel cases
-                if( copy_length == 4 )
+                if( copy_length == size_t(4) )
                 {
                     conv_func( src_ptr,                dst_ptr );
                     conv_func( src_ptr+  src_chstride, dst_ptr+  dst_chstride );
-                    conv_func( src_ptr+2*src_chstride, dst_ptr+2*dst_chstride );
-                    conv_func( src_ptr+3*src_chstride, dst_ptr+3*dst_chstride );
+                    conv_func( src_ptr + size_t(2) * src_chstride, dst_ptr + size_t(2) * dst_chstride );
+                    conv_func( src_ptr + size_t(3) * src_chstride, dst_ptr + size_t(3) * dst_chstride );
                 }
-                else if( copy_length == 3 )
+                else if( copy_length == size_t(3) )
                 {
                     conv_func( src_ptr,                dst_ptr );
                     conv_func( src_ptr+  src_chstride, dst_ptr+  dst_chstride );
-                    conv_func( src_ptr+2*src_chstride, dst_ptr+2*dst_chstride );
+                    conv_func( src_ptr + size_t(2) * src_chstride, dst_ptr + size_t(2) * dst_chstride );
                 }
-                else if( copy_length == 2 )
+                else if( copy_length == size_t(2) )
                 {
                     conv_func( src_ptr,              dst_ptr );
                     conv_func( src_ptr+src_chstride, dst_ptr+dst_chstride );
                 }
-                else if( copy_length == 1 )
+                else if( copy_length == size_t(1) )
                 {
                     conv_func( src_ptr, dst_ptr );
                 }
                 else
                 {
-                    for( int32_t ch=0; ch < copy_length; ++ch )
+                    for( size_t ch=0; ch < copy_length; ++ch )
                     {
                         conv_func( src_ptr+ch*src_chstride, dst_ptr+ch*dst_chstride );
                     }
@@ -648,7 +647,7 @@ Result<void> convert( const Image_Buffer&  dst,
                 }
                 else if( average )
                 {
-                    for( int ch=0; ch<3; ++ch )
+                    for( size_t ch=0; ch < size_t(3); ++ch )
                     {
                         conv_func( src_ptr+ch*src_chstride, dst_buf.get()+ch*dst_chstride );
                     }
@@ -666,7 +665,7 @@ Result<void> convert( const Image_Buffer&  dst,
                 // Finally, adjust destination premultiplication if needed
                 if( premultiply_dst )
                 {
-                    premultiply_dst_func( dst_ptr, dst_ptr, dst_channels );
+                    premultiply_dst_func( dst_ptr, dst_ptr, static_cast<int>( dst_channels ) );
                 }
                 // Advance pointers by the appropriate size in bytes
                 src_ptr_c += src.cstride();

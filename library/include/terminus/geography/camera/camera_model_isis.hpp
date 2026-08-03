@@ -14,11 +14,8 @@
  */
 #pragma once
 
-// Terminus GEO Namespace
-#include <terminus/coordinate/Datum.hpp>
-#include "camera_model_base.hpp"
-
 // Terminus Libraries
+#include <terminus/geography/camera/camera_model_base.hpp>
 #include <terminus/image/metadata/metadata_container_base.hpp>
 
 // C++ Libraries
@@ -107,11 +104,6 @@ class camera_model_ISIS : public camera_model_base
          * Spheroid name
          */
         std::string target_name() const;
-
-        /**
-         * The datum
-         */
-        coordinate::Datum get_datum( bool use_sphere_for_non_earth ) const;
 
         /**
          * Print to string

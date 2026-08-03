@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "Base_Blob.hpp"
+#include <terminus/image/operations/blob/base_blob.hpp>
 
 // Terminus Libraries
 #include <terminus/error.hpp>
@@ -66,47 +66,63 @@ class Uniform_Blob : public Base_Blob<Uniform_Blob<PixelT>>
         /**
          * Clear the blob
          */
-        void clear() 
+        void clear()
         {
             m_pixels.clear();
         }
 
         /**
          * Check if the pixel is inside
+         *
+         * @param col
+         * @param row
+         * @param plane
+         *
+         * @return true if the pixel is inside, false otherwise
          */
         bool is_inside( size_t col,
                         size_t row,
-                        size_t plane ) const
+                        [[maybe_unused]] size_t plane ) const
         {
             auto riter = m_pixels.find( row );
             if( riter == m_pixels.end() )
             {
                 return false;
             }
-            return ( riter->second.find( col ) != riter->second.end() );            
+            return ( riter->second.find( col ) != riter->second.end() );
         }
 
         /**
          * Get the color registered for the pixel location
-        */
+         *
+         * @param col
+         * @param row
+         * @param plane
+         *
+         * @return the color registered for the pixel location
+         */
         Result<PixelT> get_pixel( size_t col,
                                   size_t row,
                                   size_t plane ) const
         {
             if( !is_inside( col, row, plane ) )
             {
-                return outcome::fail( core::error::ErrorCode::OUT_OF_BOUNDS,
+                return outcome::fail( error::Error_Code::OUT_OF_BOUNDS,
                                       "Pixel is not registered in the blob." );
             }
             return outcome::ok<PixelT>( m_color );
         }
 
         /**
-         * Insert an entry into the blob
+         * @brief Insert an entry into the blob
+         *
+         * @param col
+         * @param row
+         * @param plane
          */
         void insert( size_t col,
                      size_t row,
-                     size_t plane )
+                     [[maybe_unused]] size_t plane )
         {
             // Check if row has entry
             if( m_pixels.find( row ) == m_pixels.end() )
@@ -117,14 +133,14 @@ class Uniform_Blob : public Base_Blob<Uniform_Blob<PixelT>>
         }
 
         /**
-         * Insert an entry into the blob
-         * 
-         * @param col 
+         * @brief Insert an entry into the blob
+         *
+         * @param col
          * @param row
          * @param plane
          * @param color
          * @param override_color - If set to true, color is overriden internally.
-         * 
+         *
          * Besides optionally setting the color, this method is a pass-through to the
          * primary insert method.
          */
@@ -143,12 +159,12 @@ class Uniform_Blob : public Base_Blob<Uniform_Blob<PixelT>>
         }
 
         /**
-         * Insert an entry into the blob
-         * 
+         * @brief Insert an entry into the blob
+         *
          * @param pixel_loc
          * @param color
          * @param override_color - If set to true, color is overriden internally.
-         * 
+         *
          * Besides optionally setting the color, this method is a pass-through to the
          * primary insert method.
          */
@@ -164,8 +180,10 @@ class Uniform_Blob : public Base_Blob<Uniform_Blob<PixelT>>
         }
 
         /**
-         * Get list of pixels
-        */
+         * @brief Get list of pixels
+         *
+         * @return list of pixels
+         */
         std::vector<math::Point2i> get_pixel_list() const
         {
             std::vector<math::Point2i> pixels;

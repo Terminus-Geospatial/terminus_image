@@ -15,10 +15,10 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../../pixel/Pixel_Accessor_Loose.hpp"
-#include "../../types/Image_Base.hpp"
+#include "../../pixel/pixel_accessor_loose.hpp"
+#include "../../types/image_base.hpp"
 #include "../rasterize.hpp"
-#include "Base_Blob.hpp"
+#include "base_blob.hpp"
 
 // C++ Libraries
 #include <deque>
@@ -34,17 +34,20 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
 {
     public:
 
-        /// Pixel-Type
+        /// @brief Pixel-Type
         typedef typename ImageT::pixel_type pixel_type;
 
-        /// Result of pixel operations
+        /// @brief Result of pixel operations
         typedef pixel_type result_type;
 
-        /// Pixel Accessor
+        /// @brief Pixel Accessor
         typedef Pixel_Accessor_Loose<Sparse_Image_View<ImageT,BlobT>> pixel_accessor;
 
         /**
-         * Constructor
+         * @brief Constructor
+         *
+         * @param under_image Underlying image
+         * @param blobs List of blobs
          */
         Sparse_Image_View( const Image_Base<ImageT>&          under_image,
                            std::deque<std::shared_ptr<BlobT>> blobs )
@@ -54,15 +57,19 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Get the list of blobs
-        */
+         * @brief Get the list of blobs
+         *
+         * @return std::deque<std::shared_ptr<BlobT>> List of blobs
+         */
         std::deque<std::shared_ptr<BlobT>> blobs() const
         {
             return m_blobs;
         }
 
         /**
-         * Image Columns
+         * @brief Image Columns
+         *
+         * @return size_t Number of columns
          */
         size_t cols() const
         {
@@ -70,7 +77,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Image Rows
+         * @brief Image Rows
+         *
+         * @return size_t Number of rows
          */
         size_t rows() const
         {
@@ -78,7 +87,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Image Planes
+         * @brief Image Planes
+         *
+         * @return size_t Number of planes (always 1 for sparse images)
          */
         size_t planes() const
         {
@@ -86,7 +97,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Get the origin of the image
+         * @brief Get the origin of the image
+         *
+         * @return pixel_accessor Origin pixel accessor
          */
         pixel_accessor origin() const
         {
@@ -94,9 +107,14 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Function Operator
+         * @brief Function Operator
+         *
+         * @param col Column index
+         * @param row Row index
+         * @param plane Plane index
+         * @return Pixel value at the specified location
          */
-        result_type operator()( size_t col, 
+        result_type operator()( size_t col,
                                 size_t row,
                                 size_t plane ) const
         {
@@ -114,20 +132,26 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         }
 
         /**
-         * Pre-Rasterize Method
+         * @brief Pre-Rasterize Method
+         *
+         * @param bbox Bounding box to pre-rasterize
+         * @return prerasterize_type Pre-rasterized view
          */
         typedef Sparse_Image_View<ImageT,BlobT> prerasterize_type;
-        prerasterize_type prerasterize( const tmns::math::Rect2i& bbox ) const
+        prerasterize_type prerasterize( [[maybe_unused]] const math::Rect2i& bbox ) const
         {
             return (*this);
         }
 
         /**
-         * Rasterize Method
+         * @brief Rasterize Method
+         *
+         * @param dest Destination image
+         * @param bbox Bounding box to rasterize
          */
         template <typename DestImageT>
-        void rasterize( const DestImageT&         dest,
-                        const tmns::math::Rect2i& bbox ) const
+        void rasterize( const DestImageT&   dest,
+                        const math::Rect2i& bbox ) const
         {
             ops::rasterize( prerasterize( bbox ),
                             dest,
@@ -136,10 +160,10 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
 
     private:
 
-        /// Underlying Image
+        /// @brief Underlying Image
         ImageT m_under_image;
 
-        /// Pixel Data
+        /// @brief Pixel Data
         std::deque<std::shared_ptr<BlobT>> m_blobs;
 }; // End of Sparse_Image_View Class
 

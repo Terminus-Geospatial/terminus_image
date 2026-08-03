@@ -15,10 +15,10 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../../types/Image_Base.hpp"
-#include "../../types/Image_Traits.hpp"
+#include "../../types/image_base.hpp"
+#include "../../types/image_traits.hpp"
 #include "../rasterize.hpp"
-#include "Per_Pixel_Accessor_Unary.hpp"
+#include "per_pixel_accessor_unary.hpp"
 
 // C++ Libraries
 #include <type_traits>

@@ -36,9 +36,9 @@ Result<void> compute_circle_points( const tmns::math::Point2i&                  
                                     std::shared_ptr<blob::Uniform_Blob<PixelT>> output )
 {
     tmns::log::trace( ADD_CURRENT_LOC(),
-                      "Start of Method.\n  Center: ", 
+                      "Start of Method.\n  Center: ",
                       center.to_string(),
-                      "\n  Radius: ", 
+                      "\n  Radius: ",
                       radius,
                       "\n  Thickness: ",
                       thickness );
@@ -48,14 +48,14 @@ Result<void> compute_circle_points( const tmns::math::Point2i&                  
     {
         output = std::make_shared<blob::Uniform_Blob<PixelT>>( color );
     }
-    
+
     // For each segment, compute start and end points
     double angle = 0;
-    double angle_step = std::atan2( max_circle_segment_length, 
+    double angle_step = std::atan2( max_circle_segment_length,
                                    radius );
 
-    math::Point2i start_pos( { (int) std::round( std::cos( angle ) * radius + center.x() ),
-                               (int) std::round( std::sin( angle ) * radius + center.y() ) } );
+    math::Point2i start_pos( { static_cast<int>( std::round( std::cos( angle ) * radius + center.x() ) ),
+                               static_cast<int>( std::round( std::sin( angle ) * radius + center.y() ) ) } );
     math::Point2i end_pos;
 
     while( angle < ( 2 * M_PI ) )
@@ -63,12 +63,12 @@ Result<void> compute_circle_points( const tmns::math::Point2i&                  
         angle += angle_step + 0.1;
 
         // Create ending position
-        end_pos.x() = std::round( std::cos( angle ) * radius + center.x() );
-        end_pos.y() = std::round( std::sin( angle ) * radius + center.y() );
+        end_pos.x() = static_cast<int>( std::round( std::cos( angle ) * radius + center.x() ) );
+        end_pos.y() = static_cast<int>( std::round( std::sin( angle ) * radius + center.y() ) );
 
-        auto dist = math::Point2i::distance( start_pos,
-                                             end_pos );
-        
+        (void)math::Point2i::distance( start_pos,
+                                       end_pos );
+
         // Set the new line segment
         auto result = compute_line_points( start_pos,
                                            end_pos,

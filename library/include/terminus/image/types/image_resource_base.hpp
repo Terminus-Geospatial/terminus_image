@@ -38,142 +38,197 @@ class Read_Image_Resource_Base
 {
     public:
 
+
+        /// @brief Shared pointer type
         typedef std::shared_ptr<Read_Image_Resource_Base> ptr_t;
 
+        /**
+         * @brief Virtual destructor
+         */
         virtual ~Read_Image_Resource_Base() = default;
 
         /**
-         * Get the number of columns in the image
-        */
-        virtual size_t cols() const;
+         * @brief Get the number of columns in the image
+         *
+         * @return int Number of columns
+         */
+        virtual int cols() const;
 
         /**
-         * Get the number of rows in the image
-        */
-        virtual size_t rows() const;
+         * @brief Get the number of rows in the image
+         *
+         * @return int Number of rows
+         */
+        virtual int rows() const;
 
         /**
-         * Get the number of planes in the image.
-        */
-        virtual size_t planes() const;
+         * @brief Get the number of planes in the image
+         *
+         * @return int Number of planes
+         */
+        virtual int planes() const;
 
         /**
-         * Get the number of channels in the image
-        */
+         * @brief Get the number of channels in the image
+         *
+         * @return size_t Number of channels
+         */
         virtual size_t channels() const;
 
         /**
-         * Get a full-size image bounding box.
-        */
+         * @brief Get a full-size image bounding box
+         *
+         * @return math::Rect2i Full image bounding box
+         */
         math::Rect2i full_bbox() const;
 
         /**
-         * Get the native pixel type for the image resource
-        */
+         * @brief Get the native pixel type for the image resource
+         *
+         * @return Pixel_Format_Enum Native pixel type
+         */
         virtual Pixel_Format_Enum pixel_type() const;
 
         /**
-         * Get the underlying channel type for the image
-        */
+         * @brief Get the underlying channel type for the image
+         *
+         * @return Channel_Type_Enum Underlying channel type
+         */
         virtual Channel_Type_Enum channel_type() const;
 
         /**
-         * Get the image format object
-        */
+         * @brief Get the image format
+         *
+         * @return Image_Format Image format
+         */
         virtual Image_Format format() const = 0;
 
         /**
-         * Read the image data from disk
-        */
+         * @brief Read the image data from disk
+         *
+         * @param dest Destination buffer
+         * @param bbox Bounding box to read
+         *
+         * @return Result<void> Result of the read operation
+         */
         virtual Result<void> read( const Image_Buffer& dest,
                                    const math::Rect2i& bbox ) const = 0;
 
         /**
-         * Check if the resource supports block reads.
+         * @brief Check if the resource supports block reads
+         *
+         * @return bool True if block reads are supported
          */
         virtual bool has_block_read() const = 0;
 
         /**
-         * Return the preferred block size / alignment for partial reads.
+         * @brief Return the preferred block size / alignment for partial reads
          */
         virtual math::Size2i block_read_size() const;
 
         /**
-         * Check if the resource supports nodata values for the loaded file.
-        */
+         * @brief Check if the resource supports nodata values for the loaded file
+         *
+         * @return bool True if nodata values are supported
+         */
         virtual bool has_nodata_read() const = 0;
 
         /**
-         * Fetch the nodata value.
+         * @brief Fetch the nodata value
+         *
+         * @return double Nodata value
          */
         virtual double nodata_read() const;
 
-        /// Return a pointer to the data in the same format as format(). This
-        /// might cause a copy, depending on implementation. The shared_ptr will
-        /// handle cleanup.
+        /**
+         * @brief Return a pointer to the data in the same format as format()
+         *
+         * This might cause a copy, depending on implementation. The shared_ptr will
+         * handle cleanup.
+         */
         virtual std::shared_ptr<const uint8_t[]> native_ptr() const;
 
         /**
-         * Get the native size of the resource.
-        */
+         * @brief Get the native size of the resource
+         *
+         * @return size_t Native size
+         */
         virtual size_t native_size() const;
 
 }; // End of Read_Image_Resource_Base Class
 
+/**
+ * @brief Base class for write-only image resources
+ */
 class Write_Image_Resource_Base
 {
     public:
 
+        /// @brief Shared pointer type
         typedef std::shared_ptr<Write_Image_Resource_Base> ptr_t;
 
         /// @brief  Destructor
         virtual ~Write_Image_Resource_Base() = default;
 
+        /**
+         * @brief Write image data to the resource
+         *
+         * @param buf Source buffer
+         * @param bbox Bounding box to write
+         *
+         * @return Result<void> Result of the write operation
+         */
         virtual Result<void> write( const Image_Buffer& buf,
                                     const math::Rect2i& bbox ) = 0;
 
 
         /**
-         * Check if the resource supports block write operations.
-        */
+         * @brief Check if the resource supports block write operations
+         *
+         * @return bool True if block write operations are supported
+         */
         virtual bool has_block_write() const = 0;
 
         /**
-         * Return the preferred block size / alignment for partial reads.
+         * @brief Return the preferred block size / alignment for partial reads
          */
         virtual math::Size2i block_write_size() const;
 
         /**
-         * Set a specific block write size
-        */
-       virtual void set_block_write_size(const math::Size2i& sz );
+         * @brief Set a specific block write size
+         *
+         * @param sz Block size
+         */
+        virtual void set_block_write_size( const math::Size2i& sz );
 
         /**
-         * Check if resource supports nodata values
+         * @brief Check if resource supports nodata values
          */
         virtual bool has_nodata_write() const = 0;
 
         /**
-         * Set the nodata value to be written for the file.
-        */
+         * @brief Set the nodata value to be written for the file
+         *
+         * @param value Nodata value
+         */
         virtual void set_nodata_write( double value );
 
         /**
-         * Command resource to write everything.
-        */
+         * @brief Command resource to write everything
+         */
         virtual void flush() = 0;
 
 }; // End of Write_Image_Resource_Base Class
 
 /**
- * Resource which can load and save an image
-*/
+ * @brief Resource which can load and save an image
+ */
 class Image_Resource_Base : public Read_Image_Resource_Base,
                             public Write_Image_Resource_Base
 {
     public:
 
-        /// Pointer Type
+        /// @brief Shared pointer type
         typedef std::shared_ptr<Image_Resource_Base> ptr_t;
 
         /**
@@ -186,7 +241,7 @@ class Image_Resource_Base : public Read_Image_Resource_Base,
 
     protected:
 
-        /// Internal Metadata
+        /// @brief Internal Metadata
         meta::Metadata_Container_Base::ptr_t m_metadata { std::make_shared<meta::Metadata_Container_Base>()  };
 };
 

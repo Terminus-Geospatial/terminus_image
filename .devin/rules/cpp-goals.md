@@ -3,6 +3,7 @@ trigger: always_on
 ---
 
 * I like my #includes to be organized
+  * Use angle brackets (`<...>`) for all includes, unless there is a specific reason not to (e.g. a private / generated file in the same directory).
   * I always order them with **C++ Standard Libraries first**, then **other/third‑party libraries** (Boost, GoogleTest, etc.), and **Terminus libraries last**.
   * Within each group, I prefer to organize `#include`s alphabetically, unless there is a strong reason not to.
 

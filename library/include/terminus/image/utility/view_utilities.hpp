@@ -15,11 +15,11 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../operations/drawing/drawing_functions.hpp"
-#include "../operations/pixel_cast.hpp"
-#include "../types/Image_Base.hpp"
-#include "../types/Image_Buffer.hpp"
-#include "../types/Image_Memory.hpp"
+#include <terminus/image/operations/drawing/drawing_functions.hpp>
+#include <terminus/image/operations/pixel_cast.hpp>
+#include <terminus/image/types/image_base.hpp>
+#include <terminus/image/types/image_buffer.hpp>
+#include <terminus/image/types/image_memory.hpp>
 
 // Terminus Libraries
 #include <terminus/error.hpp>
@@ -52,7 +52,7 @@ Result<void> view_image( const std::string&          window_name,
     {
         // Create a blob to write to.
         auto uniform_blob = std::make_shared<ops::blob::Uniform_Blob<DestPixelT>>( draw_color );
-        
+
         // Draw circles for every feature-point
         for( const auto& ip : image.interest_points() )
         {
@@ -69,7 +69,7 @@ Result<void> view_image( const std::string&          window_name,
         blobs.push_back( uniform_blob );
 
         auto sparse_img = ops::blob::Sparse_Image_View<Image_Memory<DestPixelT>,
-                                                       ops::blob::Uniform_Blob<DestPixelT>>( temp, 
+                                                       ops::blob::Uniform_Blob<DestPixelT>>( temp,
                                                                                              blobs );
 
         temp = sparse_img;
@@ -97,7 +97,7 @@ Result<void> view_image( const std::string&  window_name,
     // Convert to Image_Memory
     Image_Memory<typename math::Compound_Channel_Cast<typename ImageT::pixel_type,uint8_t>::type> temp;
     temp = image;
-    return view_image( window_name, 
+    return view_image( window_name,
                        temp,
                        window_sleep,
                        draw_interest_points,

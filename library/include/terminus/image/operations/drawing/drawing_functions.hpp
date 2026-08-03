@@ -18,8 +18,8 @@
 #include <terminus/math/Point.hpp>
 
 // Terminus Image Libraries
-#include "../blob/Sparse_Image_View.hpp"
-#include "../blob/Uniform_Blob.hpp"
+#include "../blob/sparse_image_view.hpp"
+#include "../blob/uniform_blob.hpp"
 #include "compute_circle_points.hpp"
 #include "compute_line_points.hpp"
 
@@ -30,17 +30,17 @@ namespace tmns::image::ops {
 
 /**
  * Draw a line on the image
- * 
+ *
  * @param input_image
  * @param p1
  * @param p2
  * @param color
  * @param thickness
- * 
+ *
  * @returns Image with line drawn on it.
 */
 template <typename ImageT>
-blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>> 
+blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
         draw_line( const ImageT&                      input_image,
                    const tmns::math::Point2i&         p1,
                    const tmns::math::Point2i&         p2,
@@ -62,23 +62,23 @@ blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
     blobs.push_back( uniform_blob );
 
     return blob::Sparse_Image_View<ImageT,
-                                   blob::Uniform_Blob<PixelT>>( input_image, 
+                                   blob::Uniform_Blob<PixelT>>( input_image,
                                                                 blobs );
 }
 
 /**
  * Draw a circle on the image
- * 
+ *
  * @param input_image
  * @param center
  * @param radius
  * @param color
  * @param thickness
- * 
+ *
  * @returns Image with line drawn on it.
 */
 template <typename ImageT>
-blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>> 
+blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
         draw_circle( const ImageT&                      input_image,
                      const tmns::math::Point2i&         center,
                      double                             radius,
@@ -102,23 +102,23 @@ blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
     blobs.push_back( uniform_blob );
 
     return blob::Sparse_Image_View<ImageT,
-                                   blob::Uniform_Blob<PixelT>>( input_image, 
+                                   blob::Uniform_Blob<PixelT>>( input_image,
                                                                 blobs );
 }
 
 /**
  * Draw a circle on the image
- * 
+ *
  * @param input_image
  * @param center
  * @param radius
  * @param color
  * @param thickness
- * 
+ *
  * @returns Image with line drawn on it.
 */
 template <typename ImageT>
-blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>> 
+blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
         draw_rectangle( const ImageT&                      input_image,
                         const tmns::math::Rect2i&          bbox,
                         const typename ImageT::pixel_type& color,
@@ -189,7 +189,7 @@ blob::Sparse_Image_View<ImageT,blob::Uniform_Blob<typename ImageT::pixel_type>>
     blobs.push_back( uniform_blob );
 
     return blob::Sparse_Image_View<ImageT,
-                                   blob::Uniform_Blob<PixelT>>( input_image, 
+                                   blob::Uniform_Blob<PixelT>>( input_image,
                                                                 blobs );
 }
 

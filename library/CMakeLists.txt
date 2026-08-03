@@ -57,6 +57,14 @@ add_library( ${PROJECT_NAME} SHARED
     #src/terminus/image/io/drivers/nitf/image_resource_disk_nitf.cpp
     #src/terminus/image/io/drivers/nitf/image_resource_disk_nitf_factory.cpp
     src/terminus/image/metadata/metadata_container_base.cpp
+    src/terminus/image/pixel/channel_type_enum.cpp
+    src/terminus/image/pixel/convert.cpp
+    src/terminus/image/pixel/pixel_format_enum.cpp
+    src/terminus/image/types/image_buffer.cpp
+    src/terminus/image/types/image_format.cpp
+    src/terminus/image/types/image_resource_base.cpp
+    src/terminus/image/utility/opencv_utilities.cpp
+    src/terminus/image/utility/view_utilities.cpp
 )
 
 #  Link in dependencies

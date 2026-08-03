@@ -17,23 +17,23 @@
 // Terminus Libraries
 #include <terminus/error.hpp>
 #include <terminus/log/utility.hpp>
-#include <terminus/math/Point.hpp>
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/math/point.hpp>
+#include <terminus/math/rectangle.hpp>
 
 // Terminus Image Libraries
-#include "../blob/Uniform_Blob.hpp"
+#include <terminus/image/operations/blob/uniform_blob.hpp>
 
 namespace tmns::image::ops::drawing {
 
 /**
  * Compute the points of a line for a 1-pixel thin line.
- * 
+ *
  * @param point1
  * @param point2
  * @param color
  * @param overlap_mode
  * @param[out] output
- * 
+ *
  * @returns status of the operation.
 */
 template <typename PixelT>
@@ -43,9 +43,9 @@ Result<void> compute_line_points_thin( const tmns::math::Point2i&               
                                        std::shared_ptr<blob::Uniform_Blob<PixelT>>& output )
 {
     tmns::log::trace( ADD_CURRENT_LOC(),
-                      "Start of Method.\n  P1: ", 
+                      "Start of Method.\n  P1: ",
                       point1.to_string(),
-                      "\n  P2: ", 
+                      "\n  P2: ",
                       point2.to_string() );
     int error;
     auto p1 = point1;
@@ -80,10 +80,10 @@ Result<void> compute_line_points_thin( const tmns::math::Point2i&               
             delta.y() = -delta.y();
             step.y() = -1;
         }
-        
+
         tmns::math::Point2i delta_x2( { delta.x() << 1,
                                         delta.y() << 1 } );
-    
+
         // Add starting pixel
         output->insert( p1, color );
 
@@ -91,7 +91,7 @@ Result<void> compute_line_points_thin( const tmns::math::Point2i&               
         {
             // start value represents a half step in Y direction
             error = delta_x2.y() - delta.x();
-        
+
             while ( p1.x() != p2.x() )
             {
                 // step in main direction
@@ -102,7 +102,7 @@ Result<void> compute_line_points_thin( const tmns::math::Point2i&               
 
                     // change Y
                     p1.y() += step.y();
-                
+
                     // draw pixel in minor direction before changing
                     output->insert( tmns::math::Point2i( { p1.x() - step.x(),
                                                            p1.y() } ),
@@ -140,7 +140,7 @@ Result<void> compute_line_points_thin( const tmns::math::Point2i&               
 
 /**
  * Compute the list of points which fall on a line.
- * 
+ *
  * Custom method based on computing normals of the line, in order to generate thickness.
 */
 template <typename PixelT>
@@ -151,9 +151,9 @@ Result<void> compute_line_points( const math::Point2i&                         p
                                   std::shared_ptr<blob::Uniform_Blob<PixelT>>& output )
 {
     tmns::log::trace( ADD_CURRENT_LOC(),
-                      "Start of Method.\n  P1: ", 
+                      "Start of Method.\n  P1: ",
                       p1.to_string(),
-                      "\n  P2: ", 
+                      "\n  P2: ",
                       p2.to_string(),
                       "\n  Thickness: ",
                       thickness );
@@ -201,7 +201,7 @@ Result<void> compute_line_points( const math::Point2i&                         p
     auto normal = normal_full.normalize();
 
     // Project on each side of each coordinate
-    float half_thickness = thickness / 2.0;
+    double half_thickness = thickness / 2.0;
     auto p1_min = p1 - ( half_thickness * normal );
     auto p1_max = p1 + ( half_thickness * normal );
     auto p1_vec = p1_max - p1_min;
@@ -211,21 +211,21 @@ Result<void> compute_line_points( const math::Point2i&                         p
     auto p2_vec = p2_max - p2_min;
 
     // Iterate over each line pair
-    float length = std::max( 1.0, std::round( math::magnitude( p1_min - p1_max ) ) );
+    double length = std::max( 1.0, std::round( math::magnitude( p1_min - p1_max ) ) );
     log::trace( "length: ", length );
 
     for( int i = 0; i < length; i++ )
     {
         // Compute p1 and p2 interpolated points
-        math::Point2i p1_int = p1_min + ( p1_vec * ( (float)i / length ) );
-        math::Point2i p2_int = p2_min + ( p2_vec * ( (float)i / length ) );
+        math::Point2i p1_int = p1_min + ( p1_vec * ( static_cast<double>(i) / length ) );
+        math::Point2i p2_int = p2_min + ( p2_vec * ( static_cast<double>(i) / length ) );
 
         // Round to integer
-        math::Point2i p1_render( { (int)p1_int.x(),
-                                   (int)p1_int.y() } );
+        math::Point2i p1_render( { static_cast<int>( p1_int.x() ),
+                                   static_cast<int>( p1_int.y() ) } );
 
-        math::Point2i p2_render( { (int)p2_int.x(),
-                                   (int)p2_int.y() } );
+        math::Point2i p2_render( { static_cast<int>( p2_int.x() ),
+                                   static_cast<int>( p2_int.y() ) } );
 
         compute_line_points_thin<PixelT>( p1_render,
                                           p2_render,

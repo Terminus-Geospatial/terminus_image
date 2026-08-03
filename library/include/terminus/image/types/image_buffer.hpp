@@ -32,14 +32,23 @@ class Image_Buffer
     public:
 
         /**
-         * Construct buffer from format and array
-        */
+         * @brief Construct buffer from format and array
+         *
+         * @param format Image format
+         * @param data Raw data pointer
+         */
         Image_Buffer( Image_Format format,
                       void*        data );
 
         /**
-         * Parameterized Constructor
-        */
+         * @brief Parameterized Constructor
+         *
+         * @param data Raw data pointer
+         * @param format Image format
+         * @param cstride Column stride
+         * @param rstride Row stride
+         * @param pstride Plane stride
+         */
         Image_Buffer( void*                data,
                       const Image_Format&  format,
                       size_t               cstride,
@@ -53,78 +62,112 @@ class Image_Buffer
         virtual ~Image_Buffer() = default;
 
         /**
-         * Get raw data pointer
-        */
+         * @brief Get raw data pointer
+         *
+         * @return void* Raw data pointer
+         */
         void* data() const;
 
         /**
-         * Image Columns
-        */
-        size_t cols() const;
+         * @brief Image Columns
+         *
+         * @return int Image columns
+         */
+        int cols() const;
 
         /**
-         * Image Rows
-        */
-        size_t rows() const;
+         * @brief Image Rows
+         *
+         * @return int Image rows
+         */
+        int rows() const;
 
         /**
-         * Image Planes
-        */
-        size_t planes() const;
+         * @brief Image Planes
+         *
+         * @return int Image planes
+         */
+        int planes() const;
 
         /**
-         * Get the pixel type
-        */
+         * @brief Get the pixel type
+         *
+         * @return Pixel_Format_Enum Pixel type
+         */
         Pixel_Format_Enum pixel_type() const;
 
         /**
-         * Set the pixel-type
-        */
+         * @brief Set the pixel-type
+         *
+         * @param value New pixel type
+         */
         void set_pixel_type( Pixel_Format_Enum value );
 
         /**
-         * Get the channel type
-        */
+         * @brief Get the channel type
+         *
+         * @return Channel_Type_Enum Channel type
+         */
         Channel_Type_Enum channel_type() const;
 
         /**
-         * Get the image format
-        */
+         * @brief Get the image format
+         *
+         * @return Image_Format Copy of the underlying image format
+         */
         Image_Format format() const;
 
         /**
-         * Get reference to image format
-        */
+         * @brief Get reference to image format
+         *
+         * @return Image_Format& Mutable reference to the underlying image format
+         */
         Image_Format& format();
 
         /**
-         * Get the column stride
-        */
+         * @brief Get the column stride
+         *
+         * @return ssize_t Column stride, in bytes
+         */
         ssize_t cstride() const;
 
         /**
-         * Get the row stride
-        */
+         * @brief Get the row stride
+         *
+         * @return ssize_t Row stride, in bytes
+         */
         ssize_t rstride() const;
 
         /**
-         * Get the planar stride
-        */
+         * @brief Get the planar stride
+         *
+         * @return ssize_t Plane stride, in bytes
+         */
         ssize_t pstride() const;
 
         /**
-         * Set the pstride
-        */
+         * @brief Set the pstride
+         *
+         * @param value New plane stride, in bytes
+         */
         void set_pstride( ssize_t value );
 
         /**
-         * Get the point at a specific pixel
-        */
+         * @brief Get the point at a specific pixel
+         *
+         * @param col Pixel column
+         * @param row Pixel row
+         * @param plane Pixel plane
+         * @return void* Pointer to the pixel data at the given location
+         */
         void*  operator()( int col, int row, int plane ) const;
 
         /**
-         * Print to log-friendly string
-        */
+         * @brief Print to log-friendly string
+         *
+         * @param offset Number of spaces to indent each line
+         * @return std::string Formatted, log-friendly representation
+         */
         std::string to_string( size_t offset = 0 ) const;
 
     private:

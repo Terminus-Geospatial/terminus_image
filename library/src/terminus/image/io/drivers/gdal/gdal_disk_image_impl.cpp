@@ -89,8 +89,8 @@ Result<void> GDAL_Disk_Image_Impl::open( const std::filesystem::path& pathname )
     std::shared_ptr<GDALDataset> dataset( get_dataset_ptr().value() );
 
     m_pathname = pathname;
-    m_format.set_cols( static_cast<size_t>(dataset->GetRasterXSize()) );
-    m_format.set_rows( static_cast<size_t>(dataset->GetRasterYSize()) );
+    m_format.set_cols( dataset->GetRasterXSize() );
+    m_format.set_rows( dataset->GetRasterYSize() );
 
     // Log the metadata information
     {
@@ -152,7 +152,7 @@ Result<void> GDAL_Disk_Image_Impl::open( const std::filesystem::path& pathname )
         else
         {
             m_format.set_pixel_type( Pixel_Format_Enum::SCALAR );
-            m_format.set_planes( channel_codes.size() );
+            m_format.set_planes( static_cast<int>( channel_codes.size() ) );
         }
 
     }
@@ -218,8 +218,8 @@ Result<void> GDAL_Disk_Image_Impl::read( const Image_Buffer&  dest,
 
     // Create source fetching region
     Image_Format src_fmt = format();
-    src_fmt.set_cols( static_cast<size_t>(bbox.width()) );
-    src_fmt.set_rows( static_cast<size_t>(bbox.height()) );
+    src_fmt.set_cols( bbox.width() );
+    src_fmt.set_rows( bbox.height() );
 
     std::shared_ptr<uint8_t> src_data(new uint8_t[ src_fmt.raster_size_bytes() ]);
     Image_Buffer src(src_fmt, src_data.get());
@@ -240,8 +240,8 @@ Result<void> GDAL_Disk_Image_Impl::read( const Image_Buffer&  dest,
         if( m_color_table.empty() )
         {
             auto nchannels = num_channels( format().pixel_type() ).value();
-            for( size_t p = 0; p < format().planes();   ++p ) {
-            for( size_t c = 0; c < static_cast<size_t>(nchannels); ++c )
+            for( int p = 0; p < format().planes(); ++p ) {
+            for( int c = 0; c < nchannels; ++c )
             {
                 // Only one of channels() or planes() will be nonzero.
                 auto* band = dataset->GetRasterBand( static_cast<int>(c + p + 1) );
@@ -253,11 +253,11 @@ Result<void> GDAL_Disk_Image_Impl::read( const Image_Buffer&  dest,
                                                 bbox.width(),
                                                 bbox.height(),
                                                 ( uint8_t* ) src( 0, 0, static_cast<int>(p) ) + ch_size * c,
-                                                static_cast<int>(src.format().cols()),
-                                                static_cast<int>(src.format().rows()),
+                                                src.format().cols(),
+                                                src.format().rows(),
                                                 gdal_pix_fmt,
-                                                src.cstride(),
-                                                src.rstride() );
+                                                static_cast<int>( src.cstride() ),
+                                                static_cast<int>( src.rstride() ) );
                 if( result != CE_None )
                 {
                     logger.warn( "RasterIO problem: ",
@@ -301,8 +301,8 @@ Result<void> GDAL_Disk_Image_Impl::write( const Image_Buffer& source_buffer,
                                           bool                rescale )
 {
     auto dest_format = format();
-    dest_format.set_cols( static_cast<size_t>(bbox.width()) );
-    dest_format.set_rows( static_cast<size_t>(bbox.height()) );
+    dest_format.set_cols( bbox.width() );
+    dest_format.set_rows( bbox.height() );
 
     // Create output buffer
     std::vector<uint8_t> dest_data( dest_format.raster_size_bytes() );
@@ -338,8 +338,8 @@ Result<void> GDAL_Disk_Image_Impl::write( const Image_Buffer& source_buffer,
         }
 
         // Iterate over the pixel bands
-        for( size_t p = 0; p < dest_buffer.format().planes(); p++ ){
-        for( size_t c = 0; c < static_cast<size_t>(channels); c++ ){
+        for( int p = 0; p < dest_buffer.format().planes(); p++ ){
+        for( int c = 0; c < channels; c++ ){
 
             GDALRasterBand *band = get_dataset_ptr().value()->GetRasterBand(static_cast<int>(c+p+1));
 
@@ -348,12 +348,12 @@ Result<void> GDAL_Disk_Image_Impl::write( const Image_Buffer& source_buffer,
                                             bbox.min().y(),
                                             bbox.width(),
                                             bbox.height(),
-                                            (uint8_t*)dest_buffer(0,0,static_cast<int>(p)) + static_cast<int>(ch_size_bytes) * static_cast<int>(c),
-                                            static_cast<int>(dest_buffer.format().cols()),
-                                            static_cast<int>(dest_buffer.format().rows()),
+                                            (uint8_t*)dest_buffer(0,0,p) + static_cast<int>(ch_size_bytes) * c,
+                                            dest_buffer.format().cols(),
+                                            dest_buffer.format().rows(),
                                             gdal_pix_fmt,
-                                            dest_buffer.cstride(),
-                                            dest_buffer.rstride() );
+                                            static_cast<int>( dest_buffer.cstride() ),
+                                            static_cast<int>( dest_buffer.rstride() ) );
             if (result != CE_None)
             {
                 std::stringstream sout;
@@ -428,8 +428,8 @@ math::Size2i GDAL_Disk_Image_Impl::default_block_size() const
     // that (single-line block) only trust it if it's on the whitelist.
     if( ysize == 1 && !blocksize_whitelist( dataset->GetDriver() ) )
     {
-        xsize = static_cast<int>(format().cols());
-        ysize = static_cast<int>(format().rows());
+        xsize = format().cols();
+        ysize = format().rows();
     }
 
     return math::Size2i( { xsize, ysize } );
@@ -557,8 +557,8 @@ void GDAL_Disk_Image_Impl::initialize_write_resource_locked()
         m_write_dataset.reset();
     }
 
-    int num_bands = std::max( static_cast<int>(format().planes()),
-                              static_cast<int>(num_channels( format().pixel_type() ).value()) );
+    int num_bands = std::max( format().planes(),
+                              num_channels( format().pixel_type() ).value() );
 
     // returns Maybe driver, and whether it
     // found a ro driver when a rw one was requested
@@ -623,8 +623,8 @@ void GDAL_Disk_Image_Impl::initialize_write_resource_locked()
     GDALDataType gdal_pix_fmt = channel_type_to_gdal_pixel_format( format().channel_type() ).value();
 
     m_write_dataset.reset( driver->Create( m_pathname.c_str(),
-                                           static_cast<int>(format().cols()),
-                                           static_cast<int>(format().rows()),
+                                           format().cols(),
+                                           format().rows(),
                                            num_bands,
                                            gdal_pix_fmt,
                                            options ),

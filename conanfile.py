@@ -17,11 +17,11 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_image"
-    version = "0.0.6"
+    version = "1.0.0"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
-    url     = "https://bitbucket.org/msmith81886/terminus-cmake/src/main/"
+    url     = "https://github.com/Terminus-Geospatial/terminus_image"
     description = "High-Performance Image-Processing API"
     topics = ("terminus", "cmake", "build")
 
@@ -41,17 +41,17 @@ class ConanProject(ConanFile):
 
     def build_requirements(self):
         self.test_requires("gtest/1.17.0")
-        self.tool_requires("terminus_cmake/1.0.8")
+        self.tool_requires("terminus_cmake/1.0.10")
 
     def requirements(self):
         self.requires("boost/1.89.0")
         #self.requires("gdal/3.10.3")
         self.requires("nlohmann_json/3.11.3")
         self.requires("tomlplusplus/3.4.0")
-        self.requires("terminus_core/0.0.12")
-        self.requires("terminus_log/0.0.14")
-        self.requires("terminus_math/0.0.15")
-        self.requires("terminus_outcome/0.0.12")
+        self.requires("terminus_core/1.0.3")
+        self.requires("terminus_log/1.0.2")
+        self.requires("terminus_math/1.0.2")
+        self.requires("terminus_outcome/1.0.3")
 
     def _configure_cmake(self):
         cmake = CMake(self)

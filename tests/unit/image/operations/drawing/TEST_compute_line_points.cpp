@@ -8,7 +8,7 @@
 
 // Terminus Libraries
 #include <terminus/image/operations/drawing/compute_line_points.hpp>
-#include <terminus/image/pixel/Pixel_RGB.hpp>
+#include <terminus/image/pixel/pixel_rgb.hpp>
 
 namespace tx=tmns::image;
 
@@ -25,13 +25,13 @@ TEST( ops_drawing_compute_line_points, compute_line_points_simple )
                                                          color,
                                                          1,
                                                          output );
-    
+
     ASSERT_FALSE( result.has_error() );
     ASSERT_NE( output, nullptr );
 
     // Check the contents
     auto act_point_list = output->get_pixel_list();
-    
+
     std::vector<tmns::math::Point2i> expected_points;
     for( int i = -5; i <= 5; i++ ){ expected_points.push_back( tmns::math::Point2i( { 0, i } ) ); }
 

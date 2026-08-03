@@ -131,9 +131,9 @@ class Image_Base
         /// Returns an ImageFormat object describing the image format.
         Image_Format format() const
         {
-            Image_Format format( impl().cols(),
-                                 impl().rows(),
-                                 impl().planes(),
+            Image_Format format( static_cast<int>( impl().cols() ),
+                                 static_cast<int>( impl().rows() ),
+                                 static_cast<int>( impl().planes() ),
                                  pixel_format(),
                                  channel_type(),
                                  true );

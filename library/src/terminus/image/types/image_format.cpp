@@ -27,9 +27,9 @@ namespace tmns::image {
 /********************************/
 /*          Constructor         */
 /********************************/
-Image_Format::Image_Format( size_t            cols,
-                            size_t            rows,
-                            size_t            planes,
+Image_Format::Image_Format( int               cols,
+                            int               rows,
+                            int               planes,
                             Pixel_Format_Enum pixel_type,
                             Channel_Type_Enum channel_type,
                             bool              premultiply )
@@ -45,7 +45,7 @@ Image_Format::Image_Format( size_t            cols,
 /********************************/
 /*          Image Cols          */
 /********************************/
-size_t Image_Format::cols() const
+int Image_Format::cols() const
 {
     return m_cols;
 }
@@ -53,7 +53,7 @@ size_t Image_Format::cols() const
 /************************************/
 /*          Set Image Cols          */
 /************************************/
-void Image_Format::set_cols( size_t cols )
+void Image_Format::set_cols( int cols )
 {
     m_cols = cols;
 }
@@ -61,7 +61,7 @@ void Image_Format::set_cols( size_t cols )
 /********************************/
 /*          Image Rows          */
 /********************************/
-size_t Image_Format::rows() const
+int Image_Format::rows() const
 {
     return m_rows;
 }
@@ -69,7 +69,7 @@ size_t Image_Format::rows() const
 /************************************/
 /*          Set Image Rows          */
 /************************************/
-void Image_Format::set_rows( size_t rows )
+void Image_Format::set_rows( int rows )
 {
     m_rows = rows;
 }
@@ -85,7 +85,7 @@ math::Rect2i Image_Format::bbox() const
 /************************************/
 /*          Image Planes            */
 /************************************/
-size_t Image_Format::planes() const
+int Image_Format::planes() const
 {
     return m_planes;
 }
@@ -93,7 +93,7 @@ size_t Image_Format::planes() const
 /****************************************/
 /*          Set Image Planes            */
 /****************************************/
-void Image_Format::set_planes( size_t planes )
+void Image_Format::set_planes( int planes )
 {
     m_planes = planes;
 }
@@ -161,16 +161,16 @@ bool Image_Format::complete() const
 /*******************************************/
 /*          Get the column stride          */
 /*******************************************/
-size_t Image_Format::cstride() const
+ssize_t Image_Format::cstride() const
 {
-    return channel_size_bytes( channel_type() ).value() *
-           num_channels( pixel_type() ).value();
+    return static_cast<ssize_t>( channel_size_bytes( channel_type() ).value() *
+           static_cast<size_t>( num_channels( pixel_type() ).value() ) );
 }
 
 /*******************************************/
 /*           Get the row stride            */
 /*******************************************/
-size_t Image_Format::rstride() const
+ssize_t Image_Format::rstride() const
 {
     return cstride() * cols();
 }
@@ -178,7 +178,7 @@ size_t Image_Format::rstride() const
 /********************************************/
 /*          Get the plane stride            */
 /********************************************/
-size_t Image_Format::pstride() const
+ssize_t Image_Format::pstride() const
 {
     return rstride() * rows();
 }
@@ -188,7 +188,7 @@ size_t Image_Format::pstride() const
 /********************************************/
 size_t Image_Format::raster_size_bytes() const
 {
-    return pstride() * planes();
+    return static_cast<size_t>( pstride() * planes() );
 }
 
 /************************************************/
