@@ -15,14 +15,14 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "Block_Generator.hpp"
+#include "block_generator.hpp"
 
 // External Terminus Libraries
-#include <terminus/core/cache/Cache_Local.hpp>
+#include <terminus/core/cache/cache_local.hpp>
 #include <terminus/error.hpp>
-#include <terminus/math/Rectangle.hpp>
-#include <terminus/math/Point_Utilities.hpp>
-#include <terminus/math/Size.hpp>
+#include <terminus/math/rectangle.hpp>
+#include <terminus/math/point_utilities.hpp>
+#include <terminus/math/size.hpp>
 
 namespace tmns::image::ops::block {
 
@@ -54,13 +54,13 @@ class Block_Generator_Manager
             // Error checking
             if( m_block_size.width() <= 0 || m_block_size.height() <= 0 )
             {
-                return outcome::fail( core::error::ErrorCode::INVALID_SIZE,
+                return outcome::fail( error::Error_Code::INVALID_SIZE,
                                       "Block_Generator_Manager: Illegal block size: ",
                                       m_block_size.to_string() );
             }
             if( !m_cache_ptr )
             {
-                return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+                return outcome::fail( error::Error_Code::UNINITIALIZED,
                                       "Block_Generator_Manager: No cache provided!" );
             }
 

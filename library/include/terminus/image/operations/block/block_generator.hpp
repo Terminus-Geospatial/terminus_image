@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../../types/Image_Memory.hpp"
+#include "../../types/image_memory.hpp"
 
 // Terminus Libraries
 #include <terminus/error.hpp>

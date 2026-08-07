@@ -17,11 +17,11 @@
 // External Terminus Libraries
 #include <terminus/error.hpp>
 #include <terminus/log/utility.hpp>
-#include <terminus/outcome/Result.hpp>
+#include <terminus/outcome/result.hpp>
 
 // Terminus Libraries
-#include "../types/Image_Disk.hpp"
-#include "read_image.hpp"
+#include <terminus/image/io/read_image.hpp>
+#include <terminus/image/types/image_disk.hpp>
 
 // C++ Libraries
 #include <filesystem>

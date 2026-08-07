@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/Point.hpp>
+#include <terminus/math/point.hpp>
 
 // Terminus Image Libraries
 #include "../blob/sparse_image_view.hpp"

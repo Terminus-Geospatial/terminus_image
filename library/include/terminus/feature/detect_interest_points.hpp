@@ -15,8 +15,8 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/work/Work_Queues.hpp>
-#include <terminus/core/Session_Context.hpp>
+#include <terminus/core/work/work_queue.hpp>
+#include <terminus/core/session_context.hpp>
 
 // Terminus Feature Libraries
 #include <terminus/feature/utility/interest_detection_queue.hpp>
@@ -37,7 +37,7 @@ Result<std::vector<Interest_Point>> detect_interest_points( const image::Image_B
     // Build work queue for writing jobs in order
     auto write_pool = std::make_shared<core::work::Work_Queue_Ordered>( 1 );
 
-    interest_point_List ip_list;
+    Interest_Point_List ip_list;
 
     utility::Interest_Detection_Queue<ImageT> detect_queue( image,
                                                             detector,
@@ -75,7 +75,7 @@ Result<void> detect_interest_points( image::Image_Base<ImageT>&    image,
     auto detector = detector_factory->create_detector( detector_config );
     if( detector.has_error() )
     {
-        return outcome::fail( error::ErrorCode::DRIVER_NOT_FOUND,
+        return outcome::fail( error::Error_Code::DRIVER_NOT_FOUND,
                               "Driver is not found: ", detector.error().message() );
     }
 

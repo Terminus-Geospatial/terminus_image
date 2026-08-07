@@ -66,7 +66,7 @@ class Per_Pixel_View_Unary : public Image_Base<Per_Pixel_View_Unary<ImageT,Funct
         /**
          * Get image columns
         */
-        size_t cols() const
+        int cols() const
         {
             return m_image.cols();
         }
@@ -74,15 +74,15 @@ class Per_Pixel_View_Unary : public Image_Base<Per_Pixel_View_Unary<ImageT,Funct
         /**
          * Get image rows
         */
-        size_t rows() const
+        int rows() const
         {
             return m_image.rows();
         }
 
         /**
          * Get image planes
-         */
-        size_t planes() const
+        */
+        int planes() const
         {
             return m_image.planes();
         }
@@ -99,7 +99,7 @@ class Per_Pixel_View_Unary : public Image_Base<Per_Pixel_View_Unary<ImageT,Funct
         /**
          * Apply the functor on a single pixel
          */
-        result_type operator()( size_t x, size_t y, size_t p = 0 ) const
+        result_type operator()( int x, int y, int p = 0 ) const
         {
             return m_func( m_image( x, y, p ) );
         }

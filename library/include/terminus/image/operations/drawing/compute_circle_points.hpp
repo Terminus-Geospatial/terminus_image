@@ -16,8 +16,8 @@
 
 // Terminus Libraries
 #include <terminus/log/utility.hpp>
-#include <terminus/math/Point.hpp>
-#include <terminus/math/Size.hpp>
+#include <terminus/math/point.hpp>
+#include <terminus/math/size.hpp>
 
 // Terminus Image Libraries
 #include "compute_line_points.hpp"

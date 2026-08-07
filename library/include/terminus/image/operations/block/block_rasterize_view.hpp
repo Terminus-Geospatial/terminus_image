@@ -15,16 +15,16 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../../pixel/Pixel_Accessor_Loose.hpp"
-#include "../../types/Image_Base.hpp"
+#include "../../pixel/pixel_accessor_loose.hpp"
+#include "../../types/image_base.hpp"
 #include "../crop_image.hpp"
-#include "Block_Generator_Manager.hpp"
-#include "Block_Processor.hpp"
-#include "Block_Utilities.hpp"
+#include "block_generator_manager.hpp"
+#include "block_processor.hpp"
+#include "block_utilities.hpp"
 
 // Terminus Libraries
-#include <terminus/core/cache/Cache_Base.hpp>
-#include <terminus/math/Size.hpp>
+#include <terminus/core/cache/cache_base.hpp>
+#include <terminus/math/size.hpp>
 
 namespace tmns::image::ops {
 
@@ -79,7 +79,7 @@ class Block_Rasterize_View : public Image_Base<Block_Rasterize_View<ImageT>>
         /**
          * Number of image columns
          */
-        size_t cols() const
+        int cols() const
         {
             return m_child->cols();
         }
@@ -87,7 +87,7 @@ class Block_Rasterize_View : public Image_Base<Block_Rasterize_View<ImageT>>
         /**
          * Number of image rows
          */
-        size_t rows() const
+        int rows() const
         {
             return m_child->rows();
         }
@@ -95,7 +95,7 @@ class Block_Rasterize_View : public Image_Base<Block_Rasterize_View<ImageT>>
         /**
          * Number of image planes
          */
-        size_t planes() const
+        int planes() const
         {
             return m_child->planes();
         }
@@ -111,9 +111,9 @@ class Block_Rasterize_View : public Image_Base<Block_Rasterize_View<ImageT>>
         /**
          * Rasterize a single pixel.  Not recommended.
          */
-        result_type operator()( size_t x,
-                                size_t y,
-                                size_t p = 0 ) const
+        result_type operator()( int x,
+                                int y,
+                                int p = 0 ) const
         {
             if ( m_cache_ptr )
             {
@@ -128,7 +128,7 @@ class Block_Rasterize_View : public Image_Base<Block_Rasterize_View<ImageT>>
                 }
 
                 // Otherwise, figure out first what block to fetch
-                auto block_index   = m_block_manager.get_block_index( tmns::math::Point2i( { (int)x, (int)y } ) );
+                auto block_index   = m_block_manager.get_block_index( tmns::math::Point2i( { x, y } ) );
                 const auto& handle = m_block_manager.block( block_index );
 
                 auto start_pixel = m_block_manager.get_block_start_pixel( block_index );

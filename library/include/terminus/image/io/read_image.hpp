@@ -17,13 +17,13 @@
 // External Terminus Libraries
 #include <terminus/error.hpp>
 #include <terminus/log/utility.hpp>
-#include <terminus/outcome/Result.hpp>
+#include <terminus/outcome/result.hpp>
 
 // Terminus Libraries
-#include "../types/Image_Memory.hpp"
-#include "drivers/Disk_Driver_Manager.hpp"
-#include "drivers/Memory_Driver_Manager.hpp"
-#include "Image_Resource_Disk.hpp"
+#include "../types/image_memory.hpp"
+#include "drivers/disk_driver_manager.hpp"
+#include "drivers/memory_driver_manager.hpp"
+#include "image_resource_disk.hpp"
 
 // C++ Libraries
 #include <filesystem>

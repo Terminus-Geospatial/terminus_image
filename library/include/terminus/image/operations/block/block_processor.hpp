@@ -18,7 +18,7 @@
 #include <terminus/core/work/Thread.hpp>
 
 // Terminus Image Libraries
-#include <terminus/image/utility/Log_Utilities.hpp>
+#include <terminus/image/utility/log_utilities.hpp>
 
 namespace tmns::image::ops::block {
 

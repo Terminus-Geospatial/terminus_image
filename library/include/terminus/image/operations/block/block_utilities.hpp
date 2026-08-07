@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/Size.hpp>
+#include <terminus/math/size.hpp>
 
 
 namespace tmns::image::ops::block {
@@ -29,23 +29,25 @@ namespace tmns::image::ops::block {
  * @returns Block size represented as Size object
 */
 template<typename PixelT>
-math::Size2i get_default_block_size( size_t rows,
-                                     size_t cols,
-                                     size_t planes = 1 )
+math::Size2i get_default_block_size( int rows,
+                                     int cols,
+                                     int planes = 1 )
 {
     const size_t default_block_size_bytes = 2 * 1024 * 1024; // 2 megabytes
 
     // Compute rough block size
-    size_t block_rows = default_block_size_bytes / ( planes * cols * sizeof(PixelT) );
+    size_t block_rows = default_block_size_bytes / ( static_cast<size_t>( planes ) *
+                                                     static_cast<size_t>( cols ) *
+                                                     sizeof(PixelT) );
 
     // If too small, move to 1
     if( block_rows < 1 ) block_rows = 1;
 
     // If too large, clamp
     else if( block_rows > rows ) block_rows = rows;
-    
-    return math::Size2i( { (int) cols,
-                           (int) block_rows } );
+
+    return math::Size2i( { cols,
+                           static_cast<int>( block_rows ) } );
 }
 
 

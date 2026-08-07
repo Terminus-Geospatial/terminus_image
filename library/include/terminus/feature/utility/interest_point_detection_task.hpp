@@ -37,12 +37,12 @@ class Interest_Point_Detection_Task : public core::work::Task,
          * Constructor
          */
         Interest_Point_Detection_Task( const image::Image_Base<ImageT>&  image,
-                                       detector_Base::ptr_t              detector,
+                                       Detector_Base::ptr_t              detector,
                                        const math::Rect2i&               bbox,
                                        int                               desired_num_ip,
                                        int                               id,
                                        int                               max_id,
-                                       interest_point_List&              global_list,
+                                       Interest_Point_List&              global_list,
                                        core::work::Work_Queue_Ordered&   write_queue )
             : m_image( image.impl() ),
               m_detector( detector ),
@@ -109,7 +109,7 @@ class Interest_Point_Detection_Task : public core::work::Task,
         ImageT m_image;
 
         /// @brief Feature Detector Instance
-        detector_Base::ptr_t m_detector;
+        Detector_Base::ptr_t m_detector;
 
         /// @brief Region of image to render
         math::Rect2i  m_bbox;
@@ -124,7 +124,7 @@ class Interest_Point_Detection_Task : public core::work::Task,
         int m_max_id;
 
         /// @brief  List of global points
-        interest_point_List& m_global_points;
+        Interest_Point_List& m_global_points;
 
         /// @brief  Work Queue for Writing
         core::work::Work_Queue_Ordered& m_write_queue;

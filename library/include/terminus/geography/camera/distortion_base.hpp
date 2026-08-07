@@ -16,7 +16,7 @@
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/math/Point.hpp>
+#include <terminus/math/point.hpp>
 
 // C++ Libraries
 #include <memory>

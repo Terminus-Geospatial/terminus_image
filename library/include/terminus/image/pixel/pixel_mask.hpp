@@ -15,14 +15,14 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/image/pixel/Channel_Range.hpp>
-#include <terminus/math/types/Compound_Types.hpp>
-#include <terminus/math/types/Fundamental_Types.hpp>
+#include <terminus/image/pixel/channel_range.hpp>
+#include <terminus/math/types/compound_types.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
 
 namespace tmns {
 namespace image {
 /**
- * Wraps any pixel-type with a "valid" channel.  Math operations applied to 
+ * Wraps any pixel-type with a "valid" channel.  Math operations applied to
  * invalid pixels will themselves return invalid.
 */
 template <typename PixelT>
@@ -134,7 +134,7 @@ class Pixel_Mask : public Pixel_Base<Pixel_Mask<PixelT> >
         /**
          * Toggle the valid of the valid flag
          */
-        void toggle() 
+        void toggle()
         {
             if( m_valid )
             {
@@ -206,7 +206,7 @@ class Pixel_Mask : public Pixel_Base<Pixel_Mask<PixelT> >
                 compound_select_channel<const channel_type&>( m_child, i );
             }
         }
-   
+
         /**
          * Get a specific channel
          * Note:  1 past the last channel is the valid flag
@@ -242,10 +242,10 @@ class Pixel_Mask : public Pixel_Base<Pixel_Mask<PixelT> >
         }
 
     private:
-    
+
         // Child Pixel Data
         PixelT m_child;
-        
+
         /// Validity Flag
         channel_type m_valid { Channel_Range<channel_type>::min() };
 
@@ -346,7 +346,7 @@ void toggle( Pixel_Mask<PixelT>& pixel )
 }
 
 /**
- * Strip the pixel mask.  For non Pixel_Mask types, 
+ * Strip the pixel mask.  For non Pixel_Mask types,
  * this simply returns itself.
 */
 template <typename PixelT>
@@ -356,7 +356,7 @@ PixelT& remove_mask( PixelT& pixel )
 }
 
 /**
- * Strip the pixel mask.  For non Pixel_Mask types, 
+ * Strip the pixel mask.  For non Pixel_Mask types,
  * this simply returns itself.
 */
 template <typename PixelT>
@@ -469,7 +469,7 @@ std::enable_if_t<math::Is_Scalar_Or_Compound<PixelT>::value,double>
             accum += compound_select_channel<channel_type const&>( arg, i );
         }
         return accum / num_channels;
-    } 
+    }
     else
     {
         return 0;
@@ -561,7 +561,7 @@ class Binary_Compound_Functor<FunctorT,
          * Constructor
         */
         Binary_Compound_Functor() : func() {}
-        
+
         /**
          * Constructor
         */
@@ -590,7 +590,7 @@ class Binary_Compound_Functor<FunctorT,
         template <typename Argument1T,
                   typename Argument2T>
         typename result<Binary_Compound_Functor(Argument1T,Argument2T)>::type
-            operator()( const Argument1T& arg1, 
+            operator()( const Argument1T& arg1,
                         const Argument2T& arg2 ) const
         {
             typedef typename result<Binary_Compound_Functor(Argument1T,Argument2T)>::type result_type;
@@ -694,7 +694,7 @@ class Binary_Compound_Functor<FunctorT,
                   typename Argument2T>
         struct Helper<true,5,ResultT,Argument1T,Argument2T>
         {
-            static ResultT construct( const FunctorT&   func, 
+            static ResultT construct( const FunctorT&   func,
                                       const Argument1T& arg1,
                                       const Argument2T& arg2 )
             {
@@ -722,17 +722,17 @@ class Binary_Compound_Functor<FunctorT,
 template <typename FunctorT,
           typename ChildPixel1T,
           typename ChildPixel2T>
-class Binary_In_Place_Compound_Functor<FunctorT, 
+class Binary_In_Place_Compound_Functor<FunctorT,
                                        Pixel_Mask<ChildPixel1T>,
                                        Pixel_Mask<ChildPixel2T> >
 {
     public:
-    
+
         /**
          * Default Constructor
         */
         Binary_In_Place_Compound_Functor() = default;
-        
+
         Binary_In_Place_Compound_Functor( const FunctorT& func ) : func(func) {}
 
         template <typename ArgsT>
@@ -749,7 +749,7 @@ class Binary_In_Place_Compound_Functor<FunctorT,
         template <typename Argument1T,
                   typename Argument2T>
         typename result<Binary_In_Place_Compound_Functor(Argument1T,Argument2T)>::type
-            operator()( Argument1T&       arg1, 
+            operator()( Argument1T&       arg1,
                         const Argument2T& arg2 ) const
         {
             return Helper<math::Is_Compound<Argument1T>::value,
@@ -1026,7 +1026,7 @@ class Unary_In_Place_Compound_Functor<FunctorT, Pixel_Mask<ChildPixelT> >
     public:
 
         typedef typename std::add_lvalue_reference<FunctorT>::type func_ref;
-    
+
         /**
          * Default Constructor
          */
@@ -1042,7 +1042,7 @@ class Unary_In_Place_Compound_Functor<FunctorT, Pixel_Mask<ChildPixelT> >
         */
         template <typename ArgsT> struct result {};
 
-        
+
         template <typename F,
                   typename ArgumentT>
         struct result<F(ArgumentT)>
@@ -1152,7 +1152,7 @@ struct Arg_Arg_Masked_Safe_Quotient_Functor : math::Binary_Return_Template_Type<
                     const Pixel_Mask<Argument2T>& arg2 ) const
     {
         if( arg2.child() == Argument2T() ) // If arg2 == 0
-        { 
+        {
             if ( is_valid(arg1) && is_valid( arg2 ) ) // If both inputs are valid
             {
                 typename math::Quotient_Type<Pixel_Mask<Argument1T>,
@@ -1192,7 +1192,7 @@ struct Val_Arg_Masked_Safe_Quotient_Functor : math::Unary_Return_Binary_Template
           {
               // If both inputs are valid
               if( is_valid( arg ) && is_valid( m_value ) )
-              { 
+              {
                   typename math::Quotient_Type<ValueT,Pixel_Mask<ArgumentT> >::type temp;
                   validate( temp );
                   return temp;
@@ -1208,7 +1208,7 @@ struct Val_Arg_Masked_Safe_Quotient_Functor : math::Unary_Return_Binary_Template
               return ( m_value / arg );
           }
       }
-  
+
     private:
 
         const ValueT m_value;
@@ -1224,7 +1224,7 @@ struct Arg_Arg_In_Place_Masked_Safe_Quotient_Functor : math::Binary_Return_1st_T
     {
         if ( arg2.child() == Argument2T() )
         {
-            if( is_valid( arg1 ) && 
+            if( is_valid( arg1 ) &&
                 is_valid( arg2 ) ) // Inputs are both valid
             {
                 // Return zero -> Need to pass in a zero pixel, the default Pixel_Mask constructor sets invalid
@@ -1288,7 +1288,7 @@ template <typename PixelT,
         return compound_apply( math::Val_Arg_Sum_Functor<ScalarT>( masked_scalar.child() ), px );
     }
     else
-    { 
+    {
         return compound_apply( Val_Arg_Sum_Functor<ScalarT>( masked_scalar.child() ),
                                                              pixel.impl() );
     }
@@ -1355,7 +1355,7 @@ template <typename PixelT,
         return compound_apply( math::Val_Arg_Difference_Functor<ScalarT>( masked_scalar.child() ), px );
     }
     else
-    { 
+    {
         return compound_apply( math::Val_Arg_Difference_Functor<ScalarT>( masked_scalar.child() ),
                                                                           pixel.impl() );
     }
@@ -1425,7 +1425,7 @@ template <typename PixelT,
         return compound_apply( math::Val_Arg_Product_Functor<ScalarT>( masked_scalar.child()), px );
     }
     else
-    { 
+    {
         return compound_apply( math::Val_Arg_Product_Functor<ScalarT>( masked_scalar.child() ),
                                                                        pixel.impl() );
     }
@@ -1495,7 +1495,7 @@ template <typename PixelT,
         return compound_apply( Val_Arg_Quotient_Functor<ScalarT>( masked_scalar.child() ), px );
     }
     else
-    { 
+    {
         return compound_apply( Val_Arg_Quotient_Functor<ScalarT>( masked_scalar.child() ),
                                pixel.impl() );
     }

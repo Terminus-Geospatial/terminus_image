@@ -69,9 +69,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         /**
          * @brief Image Columns
          *
-         * @return size_t Number of columns
+         * @return int Number of columns
          */
-        size_t cols() const
+        int cols() const
         {
             return m_under_image.cols();
         }
@@ -79,9 +79,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         /**
          * @brief Image Rows
          *
-         * @return size_t Number of rows
+         * @return int Number of rows
          */
-        size_t rows() const
+        int rows() const
         {
             return m_under_image.rows();
         }
@@ -89,9 +89,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
         /**
          * @brief Image Planes
          *
-         * @return size_t Number of planes (always 1 for sparse images)
+         * @return int Number of planes (always 1 for sparse images)
          */
-        size_t planes() const
+        int planes() const
         {
             return 1;
         }
@@ -114,9 +114,9 @@ class Sparse_Image_View : public Image_Base<Sparse_Image_View<ImageT,BlobT>>
          * @param plane Plane index
          * @return Pixel value at the specified location
          */
-        result_type operator()( size_t col,
-                                size_t row,
-                                size_t plane ) const
+        result_type operator()( int col,
+                                int row,
+                                int plane ) const
         {
             // Iterate over each blob, checking if it contains the pixel
             for( const auto& blob : m_blobs )

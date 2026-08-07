@@ -19,7 +19,7 @@
 #include <string>
 
 // Terminus Libraries
-#include <terminus/math/Size.hpp>
+#include <terminus/math/size.hpp>
 
 namespace tmns::feature {
 

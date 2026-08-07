@@ -15,12 +15,12 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/utility/Subtask_Progress_Callback.hpp>
-#include <terminus/math/Point_Utilities.hpp>
+#include <terminus/core/utility/subtask_progress_callback.hpp>
+#include <terminus/math/point_utilities.hpp>
 
 // Terminus Image Libraries
 #include "../operations/select_plane.hpp"
-#include "../types/Image_Memory.hpp"
+#include "../types/image_memory.hpp"
 
 // C++ Libraries
 #include <sstream>
@@ -89,7 +89,7 @@ Result<void> write_image( Image_Resource_Base::ptr_t dst,
         std::stringstream sout;
         sout << "filename must contain * when writing a vector of images";
         tmns::log::error( sout.str() );
-        return outcome::fail( core::error::ErrorCode::INVALID_CONFIGURATION,
+        return outcome::fail( error::Error_Code::INVALID_CONFIGURATION,
                               sout.str() );
     }
 
@@ -124,7 +124,7 @@ Result<void> write_image( Image_Resource_Base::ptr_t         resource,
         std::stringstream sout;
         sout << "Cannot write an empty image to a resource.";
         tmns::log::error( sout.str() );
-        return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+        return outcome::fail( error::Error_Code::UNINITIALIZED,
                               sout.str() );
     }
 
@@ -132,7 +132,7 @@ Result<void> write_image( Image_Resource_Base::ptr_t         resource,
     progress_callback.report_progress(0);
     if( progress_callback.abort_requested() )
     {
-        return outcome::fail( core::error::ErrorCode::ABORTED,
+        return outcome::fail( error::Error_Code::ABORTED,
                               "Aborted by ProgressCallback" );
     }
 
@@ -211,7 +211,7 @@ Result<void> write_image_block( Image_Resource_Base::ptr_t         resource,
         std::stringstream sout;
         sout << "Cannot write an empty image to a resource.";
         tmns::log::error( sout.str() );
-        return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+        return outcome::fail( error::Error_Code::UNINITIALIZED,
                               sout.str() );
     }
 
@@ -220,7 +220,7 @@ Result<void> write_image_block( Image_Resource_Base::ptr_t         resource,
     progress_callback.report_progress(0);
     if( progress_callback.abort_requested() )
     {
-        return outcome::fail( core::error::ErrorCode::ABORTED,
+        return outcome::fail( error::Error_Code::ABORTED,
                               "Aborted by ProgressCallback" );
     }
 

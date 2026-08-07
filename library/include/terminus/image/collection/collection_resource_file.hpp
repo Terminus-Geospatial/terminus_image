@@ -15,12 +15,12 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCode.hpp>
+#include <terminus/error/error_code.hpp>
 
 // Terminus Image Libraries
-#include "../io/read_image_disk.hpp"
-#include "file/File_Collection_Utilities.hpp"
-#include "Collection_Resource_Base.hpp"
+#include <terminus/image/collection/collection_resource_base.hpp>
+#include <terminus/image/collection/file/file_collection_utilities.hpp>
+#include <terminus/image/io/read_image_disk.hpp>
 
 // C++ Libraries
 #include <filesystem>
@@ -76,7 +76,7 @@ class Collection_Resource_File : public Collection_Resource_Base<Collection_Reso
                 tmns::log::debug( "Loading image: ", image_path.native() );
                 auto res = io::read_image_disk<PixelT>( image_path,
                                                         disk_driver_manager );
-                
+
                 // If the operation fails, log it, but still move on
                 if( res.has_error() )
                 {
@@ -103,12 +103,12 @@ class Collection_Resource_File : public Collection_Resource_Base<Collection_Reso
 
         iter_type begin()
         {
-            return m_images.begin(); 
+            return m_images.begin();
         }
 
         citer_type cbegin() const
         {
-            return m_images.cbegin(); 
+            return m_images.cbegin();
         }
 
         iter_type end()

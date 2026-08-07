@@ -50,7 +50,7 @@ class ConanProject(ConanFile):
         self.requires("tomlplusplus/3.4.0")
         self.requires("terminus_core/1.0.3")
         self.requires("terminus_log/1.0.2")
-        self.requires("terminus_math/1.0.2")
+        self.requires("terminus_math/1.0.3")
         self.requires("terminus_outcome/1.0.3")
 
     def _configure_cmake(self):

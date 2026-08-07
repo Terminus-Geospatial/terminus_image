@@ -100,17 +100,17 @@ class Crop_View : public Image_Base<Crop_View<ImageT>>
         /**
          * Get the number of image columns
         */
-        size_t cols() const { return m_di; }
+        int cols() const { return m_di; }
 
         /**
          * Get the number of image rows
         */
-        size_t rows() const { return m_dj; }
+        int rows() const { return m_dj; }
 
         /**
          * Get the number of image planes
         */
-        size_t planes() const { return m_child.planes(); }
+        int planes() const { return m_child.planes(); }
 
         /**
          * Get the image data origin
@@ -125,7 +125,7 @@ class Crop_View : public Image_Base<Crop_View<ImageT>>
          */
         result_type operator()( offset_type i,
                                 offset_type j,
-                                size_t p = 0 ) const
+                                int p = 0 ) const
         {
             return m_child(m_ci + i, m_cj + j, p);
         }
@@ -201,10 +201,10 @@ class Crop_View : public Image_Base<Crop_View<ImageT>>
  */
 template <typename ImageT>
 ops::Crop_View<ImageT> crop_image( const Image_Base<ImageT>& image,
-                                   size_t                    ulx,
-                                   size_t                    uly,
-                                   size_t                    width,
-                                   size_t                    height )
+                                   int                       ulx,
+                                   int                       uly,
+                                   int                       width,
+                                   int                       height )
 {
     return ops::Crop_View<ImageT>( image.impl(),
                                    ulx,

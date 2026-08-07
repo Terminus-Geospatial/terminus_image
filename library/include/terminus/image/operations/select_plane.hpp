@@ -49,7 +49,7 @@ class Select_Plane_View : public Image_Base<Select_Plane_View<ImageT> >
         /**
          * Get the image columns
         */
-        size_t cols() const
+        int cols() const
         {
             return m_child.cols();
         }
@@ -57,7 +57,7 @@ class Select_Plane_View : public Image_Base<Select_Plane_View<ImageT> >
         /**
          * Get the image rows
         */
-        size_t rows() const
+        int rows() const
         {
             return m_child.rows();
         }
@@ -65,7 +65,7 @@ class Select_Plane_View : public Image_Base<Select_Plane_View<ImageT> >
         /**
          * Get the image planes
         */
-        size_t planes() const
+        int planes() const
         {
             return 1;
         }
@@ -81,7 +81,7 @@ class Select_Plane_View : public Image_Base<Select_Plane_View<ImageT> >
         /**
          * Function Operator
         */
-        result_type operator()( size_t i, size_t j, size_t p = 0 ) const
+        result_type operator()( int i, int j, int p = 0 ) const
         {
             return m_child( i, j, m_plane + p );
         }

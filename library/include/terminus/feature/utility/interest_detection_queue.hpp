@@ -15,7 +15,7 @@
 #pragma once
 
 /// Feature Detector
-#include <terminus/feature/detector_Base.hpp>
+#include <terminus/feature/detector_base.hpp>
 #include <terminus/feature/utility/interest_point_detection_task.hpp>
 
 namespace tmns::feature::utility {
@@ -42,7 +42,7 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
         Interest_Detection_Queue( const image::Image_Base<ImageT>&       image,
                                   Detector_Base::ptr_t                   detector,
                                   core::work::Work_Queue_Ordered::ptr_t  write_queue,
-                                  interest_point_List&                   ip_list,
+                                  Interest_Point_List&                   ip_list,
                                   const math::Size2i&                    tile_size,
                                   int                                    desired_num_ip = 0 )
              : m_image( image.impl() ),
@@ -121,7 +121,7 @@ class Interest_Detection_Queue : public core::work::Thread_Pool
         core::work::Work_Queue_Ordered::ptr_t  m_write_queue;
 
         /// @brief Interest Point List
-        interest_point_List& m_ip_list;
+        Interest_Point_List& m_ip_list;
 
         /// @brief Bounding Boxes
         std::vector<math::Rect2i> m_bboxes;

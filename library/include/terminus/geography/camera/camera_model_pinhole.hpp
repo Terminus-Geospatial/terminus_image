@@ -18,8 +18,8 @@
 #include <terminus/geography/camera/camera_model_base.hpp>
 #include <terminus/geography/camera/distortion_base.hpp>
 #include <terminus/geography/camera/distortion_null.hpp>
-#include <terminus/math/Point.hpp>
-#include <terminus/math/Size.hpp>
+#include <terminus/math/point.hpp>
+#include <terminus/math/size.hpp>
 
 // C++ Libraries
 #include <array>

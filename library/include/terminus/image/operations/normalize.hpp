@@ -16,8 +16,8 @@
 
 // Terminus Libraries
 #include <terminus/image/pixel/pixel_cast_utilities.hpp>
-#include <terminus/image/per_pixel_views/per_pixel_view_unary.hpp>
-#include <terminus/image/statistics/channel_operations.hpp>
+#include <terminus/image/operations/per_pixel_views/per_pixel_view_unary.hpp>
+#include <terminus/image/operations/statistics/channel_operations.hpp>
 
 namespace tmns::image::ops {
 

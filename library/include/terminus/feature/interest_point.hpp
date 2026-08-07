@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/Point.hpp>
+#include <terminus/math/point.hpp>
 #include <terminus/math/vector.hpp>
 
 // C++ Libraries

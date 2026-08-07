@@ -16,7 +16,7 @@
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/log/Logger.hpp>
+#include <terminus/log/logger.hpp>
 
 // Terminus Feature Libraries
 #include <terminus/image/types/image_base.hpp>

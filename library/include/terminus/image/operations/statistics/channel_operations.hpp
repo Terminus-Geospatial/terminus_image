@@ -15,10 +15,10 @@
 #pragma once
 
 // Terminus Image Libraries
-#include <terminus/image/pixel/Channel_Cast_Utilities.hpp>
-#include <terminus/image/pixel/Pixel_Cast_Utilities.hpp>
+#include <terminus/image/pixel/channel_cast_utilities.hpp>
+#include <terminus/image/pixel/pixel_cast_utilities.hpp>
 #include <terminus/image/types/for_each_pixel.hpp>
-#include <terminus/math/types/Math_Functors.hpp>
+#include <terminus/math/types/math_functors.hpp>
 
 namespace tmns {
 namespace image::ops {
@@ -30,7 +30,7 @@ template <typename AccumulatorT>
 class Channel_Accumulator : public AccumulatorT
 {
     public:
-    
+
         template <typename ArgumentT>
         void operator()( const ArgumentT& pix )
         {
@@ -43,7 +43,7 @@ class Channel_Accumulator : public AccumulatorT
 }; // End of Channel_Accumulator class
 
 /**
- * Locate the minimum value of of all channels stored in all planes of the 
+ * Locate the minimum value of of all channels stored in all planes of the
  * image
 */
 template <class ImageT>
@@ -128,7 +128,7 @@ double mean_channel_value( const Image_Base<ImageT>& image )
  * computes the weighted standard deviation, using the alpha channel as a weight
  * and assuming pre-multiplied pixel values.  This function throws an ArgumentErr()
  * exception if the image has zero size or is completely transparent.
- * 
+ *
  * Note: This function computes the total stanadard deviation, not the sample standard
  * deviation as was computed by previous versions.  If you need the sample standard
  * deviation, just multiply the result by sqrt(num_samples/(num_samples-1)), where
