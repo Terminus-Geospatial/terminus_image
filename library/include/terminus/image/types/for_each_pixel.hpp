@@ -15,10 +15,10 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "Image_Base.hpp"
+#include "image_base.hpp"
 
 // Terminus Libraries
-#include <terminus/core/utility/Progress_Callback.hpp>
+#include <terminus/core/utility/progress_callback.hpp>
 
 namespace tmns::image {
 
@@ -34,11 +34,11 @@ void for_each_pixel_( const Image_Base<ImageT>&         image_,
     typedef typename ImageT::pixel_accessor pixel_accessor;
     pixel_accessor plane_acc = image.origin();
     for( int plane = image.planes(); plane; --plane )
-    { 
+    {
         // Loop through planes
         pixel_accessor row_acc = plane_acc;
         for( int row = 0; row < image.rows(); ++row ) // Loop through rows
-        { 
+        {
             progress.report_fractional_progress( row, image.rows() );
             pixel_accessor col_acc = row_acc;
             for( int col = image.cols(); col; --col ) // Loop through columns
@@ -125,7 +125,7 @@ template <typename Image1T,
 void for_each_pixel( const Image_Base<Image1T>& image1,
                      const Image_Base<Image2T>& image2,
                      FunctorT&                  func )
-{ 
+{
     for_each_pixel_<Image1T,Image2T,FunctorT>( image1, image2, func );
 }
 
@@ -165,7 +165,7 @@ void for_each_pixel_( const Image_Base<Image1T>&  image1_,
         tmns::log::error( sout.str() );
         throw std::runtime_error( sout.str() );
     }
-    
+
     typedef typename Image1T::pixel_accessor pixel_accessor_1;
     typedef typename Image2T::pixel_accessor pixel_accessor_2;
     typedef typename Image3T::pixel_accessor pixel_accessor_3;

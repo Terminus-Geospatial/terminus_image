@@ -7,7 +7,7 @@
 
 // Terminus Libraries
 #include <terminus/image/io/read_image_disk.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 // OpenCV Libraries
 #include <opencv2/features2d.hpp>

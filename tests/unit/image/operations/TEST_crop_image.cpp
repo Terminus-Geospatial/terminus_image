@@ -7,9 +7,9 @@
 
 // Terminus Libraries
 #include <terminus/image/operations/crop_image.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
+#include <terminus/math/rectangle.hpp>
 
 // Terminus Unit-Test Libraries
 #include "../../UNIT_TEST_ONLY/Prerasterization_Test_View.hpp"

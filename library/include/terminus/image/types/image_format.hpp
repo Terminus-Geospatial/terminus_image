@@ -19,7 +19,7 @@
 #include <terminus/image/pixel/pixel_format_enum.hpp>
 
 /// Other Terminus Libraries
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/math/rectangle.hpp>
 
 namespace tmns::image {
 
@@ -95,20 +95,6 @@ class Image_Format
          * @return math::Rect2i Bounding box
          */
         math::Rect2i bbox() const;
-
-        /**
-         * @brief Get the number of image planes
-         *
-         * @return int Number of image planes
-         */
-        int planes() const;
-
-        /**
-         * @brief Set the number of image planes
-         *
-         * @param planes Number of image planes
-         */
-        void set_planes( int planes );
 
         /**
          * @brief Get the image pixel type

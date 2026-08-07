@@ -1,12 +1,12 @@
 /**
- * @file    TEST_Image_Resource_Disk_GDAL.cpp
+ * @file    TEST_image_resource_disk_gdal.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/io/drivers/gdal/Image_Resource_Disk_GDAL.hpp>
+#include <terminus/image/io/drivers/gdal/image_resource_disk_gdal.hpp>
 #include <terminus/log/utility.hpp>
 
 namespace tx = tmns::image;

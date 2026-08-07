@@ -1,13 +1,13 @@
 /**
- * @file    TEST_Compound_Types.cpp
+ * @file    TEST_compound_types.cpp
  * @author  Marvin Smith
  * @date    7/23/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/types/Compound_Types.hpp>
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
+#include <terminus/math/types/compound_types.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
 
 // C++ Libraries
 #include <type_traits>
@@ -74,7 +74,7 @@ TEST( Compound_Types, Compound_Name )
 {
     // Check Compound Names
     ASSERT_EQ( tmx::Compound_Name<tmns::image::PixelRGBA_u8>::name(),  "uint8_t" );
-    
+
 }
 
 

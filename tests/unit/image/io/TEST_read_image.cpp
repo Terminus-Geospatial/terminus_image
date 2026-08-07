@@ -1,5 +1,5 @@
 /**
- * @file    TEST_ImageIO.cpp
+ * @file    TEST_read_image.cpp
  * @author  Marvin Smith
  * @date    7/7/2023
  */
@@ -8,10 +8,10 @@
 // Terminus Libraries
 #include <terminus/log/utility.hpp>
 #include <terminus/image/io/read_image.hpp>
-#include <terminus/image/pixel/Channel_Types.hpp>
-#include <terminus/image/pixel/Pixel_RGB.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/pixel/channel_types.hpp>
+#include <terminus/image/pixel/pixel_rgb.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 /********************************************/
 /*          Read Image From Disk            */

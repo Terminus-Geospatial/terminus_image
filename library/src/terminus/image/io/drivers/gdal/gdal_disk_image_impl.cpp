@@ -252,7 +252,7 @@ Result<void> GDAL_Disk_Image_Impl::read( const Image_Buffer&  dest,
                                                 bbox.min().y(),
                                                 bbox.width(),
                                                 bbox.height(),
-                                                ( uint8_t* ) src( 0, 0, static_cast<int>(p) ) + ch_size * c,
+                                                ( uint8_t* ) src( 0, 0, p ) + ch_size * static_cast<size_t>( c ),
                                                 src.format().cols(),
                                                 src.format().rows(),
                                                 gdal_pix_fmt,
@@ -348,7 +348,7 @@ Result<void> GDAL_Disk_Image_Impl::write( const Image_Buffer& source_buffer,
                                             bbox.min().y(),
                                             bbox.width(),
                                             bbox.height(),
-                                            (uint8_t*)dest_buffer(0,0,p) + static_cast<int>(ch_size_bytes) * c,
+                                            (uint8_t*)dest_buffer(0,0,p) + ch_size_bytes * static_cast<size_t>( c ),
                                             dest_buffer.format().cols(),
                                             dest_buffer.format().rows(),
                                             gdal_pix_fmt,
@@ -761,7 +761,7 @@ void GDAL_Disk_Image_Impl::process_metadata( log::Logger&                 logger
         logger.trace( sout.str() );
     }
 
-    char** metadata = dataset->GetMetadata();
+    CSLConstList metadata = dataset->GetMetadata();
     logger.trace( "Count: ", CSLCount(metadata) );
 
     if( CSLCount(metadata) > 0 )
@@ -777,7 +777,7 @@ void GDAL_Disk_Image_Impl::process_metadata( log::Logger&                 logger
 
     for( const auto& domain : domain_list )
     {
-        char** dmetadata = dataset->GetMetadata( domain.c_str() );
+        CSLConstList dmetadata = dataset->GetMetadata( domain.c_str() );
         logger.trace( "Count: ", CSLCount( dmetadata ) );
 
         if( CSLCount( dmetadata ) > 0 && domain != "json:ISIS3" )

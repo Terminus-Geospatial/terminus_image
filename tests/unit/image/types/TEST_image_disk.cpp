@@ -1,14 +1,14 @@
 /**
- * @file    TEST_Image_Disk.cpp
+ * @file    TEST_image_disk.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_Gray.hpp>
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
-#include <terminus/image/types/Image_Disk.hpp>
+#include <terminus/image/pixel/pixel_gray.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/image/types/image_disk.hpp>
 #include <terminus/log/utility.hpp>
 
 namespace tx = tmns::image;

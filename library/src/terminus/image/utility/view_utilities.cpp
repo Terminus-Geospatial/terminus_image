@@ -15,7 +15,7 @@
 #include <terminus/image/utility/view_utilities.hpp>
 
 // OpenCV Libraries
-#include <opencv4/opencv2/highgui.hpp>
+#include <opencv2/highgui.hpp>
 
 // Terminus Image Libraries
 #include "opencv_utilities.hpp"

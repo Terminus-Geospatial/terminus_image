@@ -1,13 +1,13 @@
 /**
- * @file    TEST_Pixel_Cast_Utilities.cpp
+ * @file    TEST_pixel_cast_utilities.cpp
  * @author  Marvin Smith
  * @date    8/2/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Image Libraries
-#include <terminus/image/pixel/Pixel_Cast_Utilities.hpp>
-#include <terminus/image/pixel/Pixel_Gray.hpp>
+#include <terminus/image/pixel/pixel_cast_utilities.hpp>
+#include <terminus/image/pixel/pixel_gray.hpp>
 
 namespace tx = tmns::image;
 

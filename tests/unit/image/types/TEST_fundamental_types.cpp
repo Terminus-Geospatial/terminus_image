@@ -1,13 +1,13 @@
 /**
- * @file    TEST_Fundamental_Types.cpp
+ * @file    TEST_fundamental_types.cpp
  * @author  Marvin Smith
  * @date    7/23/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
-#include <terminus/math/types/Fundamental_Types.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
 
 /******************************************/
 /*      Test the Is-Scalar Type-Trait     */

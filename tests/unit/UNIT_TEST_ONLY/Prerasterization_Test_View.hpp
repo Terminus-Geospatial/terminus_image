@@ -6,9 +6,9 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/image/types/Image_Base.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/image/types/image_base.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/math/rectangle.hpp>
 
 // C++ Libraries
 #include <stdexcept>

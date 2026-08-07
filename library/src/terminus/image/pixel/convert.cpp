@@ -282,7 +282,7 @@ template <class T>
 void channel_average( T* src, T* dest, int len )
 {
     typename math::Accumulator_Type<T>::type accum = typename math::Accumulator_Type<T>::type();
-    for( int32_t i=0; i<len; ++i ) accum += src[i];
+    for( int32_t i=0; i<len; ++i ) accum += static_cast<typename math::Accumulator_Type<T>::type>( src[i] );
     *dest = static_cast<T>( accum / len );
 }
 
@@ -324,6 +324,14 @@ Channel_Average_Map_Entry _average_f64( &channel_average<double> );
 //   Applies the Alpha Channel to the rest of the channels:
 typedef void (*channel_premultiply_func)(void* src, void* dst, int len);
 
+/**
+ * @brief Premultiplies the alpha channel to the rest of the channels for integer types.
+ *
+ * @tparam T The type of the channels.
+ * @param src The source channels.
+ * @param dst The destination channels.
+ * @param len The length of the channels.
+ */
 template <class T>
 void channel_premultiply_int( T* src, T* dst, int32_t len )
 {
@@ -332,11 +340,19 @@ void channel_premultiply_int( T* src, T* dst, int32_t len )
     dst[len-1] = src[len-1];
 }
 
+/**
+ * @brief Premultiplies the alpha channel to the rest of the channels for floating point types.
+ *
+ * @tparam T The type of the channels.
+ * @param src The source channels.
+ * @param dst The destination channels.
+ * @param len The length of the channels.
+ */
 template <class T>
 void channel_premultiply_float( T* src, T* dst, int len )
 {
-    double scale = (double)(src[len-1]);
-    for( int i=0; i<len-1; ++i ) dst[i] = T( src[i] * scale );
+    T scale = src[len-1];
+    for( int i=0; i<len-1; ++i ) dst[i] = src[i] * scale;
     dst[len-1] = src[len-1];
 }
 
@@ -344,9 +360,19 @@ void channel_premultiply_float( T* src, T* dst, int len )
 
 std::map<Channel_Type_Enum,channel_premultiply_func>* channel_premultiply_map = 0;
 
+/**
+ * @brief Entry class for the channel premultiply map.
+ */
 class Channel_Premultiply_Map_Entry
 {
       public:
+
+      /**
+       * @brief Constructor for the channel premultiply map entry.
+       *
+       * @tparam T The type of the channels.
+       * @param func The function to use for premultiplying the channels.
+       */
       template <class T>
       Channel_Premultiply_Map_Entry( void (*func)( T*, T*, int32_t ) )
       {
@@ -377,6 +403,14 @@ Channel_Premultiply_Map_Entry _premultiply_f64( &channel_premultiply_float<doubl
 ///   Removes the premultiply of alpha to other channels:
 typedef void (*channel_unpremultiply_func)( void* src, void* dst, int len );
 
+/**
+ * @brief Unpremultiplies the alpha channel from the rest of the channels for integer types.
+ *
+ * @tparam T The type of the channels.
+ * @param src The source channels.
+ * @param dst The destination channels.
+ * @param len The length of the channels.
+ */
 template <class T>
 void channel_unpremultiply_int( T* src, T* dst, int len )
 {
@@ -385,11 +419,19 @@ void channel_unpremultiply_int( T* src, T* dst, int len )
     dst[len-1] = src[len-1];
 }
 
+/**
+ * @brief Unpremultiplies the alpha channel from the rest of the channels for floating point types.
+ *
+ * @tparam T The type of the channels.
+ * @param src The source channels.
+ * @param dst The destination channels.
+ * @param len The length of the channels.
+ */
 template <class T>
 void channel_unpremultiply_float( T* src, T* dst, int len )
 {
-    double scale = (double)(src[len-1]);
-    for( int i=0; i<len-1; ++i ) dst[i] = T( src[i] / scale );
+    T scale = src[len-1];
+    for( int i=0; i<len-1; ++i ) dst[i] = src[i] / scale;
     dst[len-1] = src[len-1];
 }
 
@@ -398,10 +440,19 @@ void channel_unpremultiply_float( T* src, T* dst, int len )
 std::map< Channel_Type_Enum,
           channel_unpremultiply_func >* channel_unpremultiply_map = 0;
 
+/**
+ * @brief Entry class for the channel unpremultiply map.
+ */
 class Channel_Unpremultiply_Map_Entry
 {
     public:
 
+      /**
+       * @brief Constructor for the channel unpremultiply map entry.
+       *
+       * @tparam T The type of the channels.
+       * @param func The function to use for unpremultiplying the channels.
+       */
       template <class T>
       Channel_Unpremultiply_Map_Entry( void (*func)( T*, T*, int32_t ) )
       {

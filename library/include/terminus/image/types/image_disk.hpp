@@ -15,11 +15,11 @@
 #pragma once
 
 // Terminus Image Libraries
-#include "../utility/Log_Utilities.hpp"
-#include "../io/Image_Resource_Disk.hpp"
-#include "Image_Base.hpp"
-#include "Image_Resource_Base.hpp"
-#include "Image_Resource_View.hpp"
+#include <terminus/image/io/image_resource_disk.hpp>
+#include <terminus/image/types/image_base.hpp>
+#include <terminus/image/types/image_resource_base.hpp>
+#include <terminus/image/types/image_resource_view.hpp>
+#include <terminus/image/utility/log_utilities.hpp>
 
 namespace tmns::image {
 
@@ -67,7 +67,7 @@ class Image_Disk : public Image_Base<Image_Disk<PixelT>>
         /**
          * Get the number of columns
          */
-        size_t cols() const
+        int cols() const
         {
             return m_impl.cols();
         }
@@ -75,7 +75,7 @@ class Image_Disk : public Image_Base<Image_Disk<PixelT>>
         /**
          * Get the number of rows.
          */
-        size_t rows() const
+        int rows() const
         {
             return m_impl.rows();
         }
@@ -83,7 +83,7 @@ class Image_Disk : public Image_Base<Image_Disk<PixelT>>
         /**
          * Get the number of planes
          */
-        size_t planes() const
+        int planes() const
         {
             return m_impl.planes();
         }
@@ -96,9 +96,9 @@ class Image_Disk : public Image_Base<Image_Disk<PixelT>>
             return m_impl.origin();
         }
 
-        result_type operator()( size_t x,
-                                size_t y,
-                                size_t p = 0 ) const
+        result_type operator()( int x,
+                                int y,
+                                int p = 0 ) const
         {
             return m_impl(x,y,p);
         }
@@ -119,7 +119,7 @@ class Image_Disk : public Image_Base<Image_Disk<PixelT>>
         void rasterize( const DestT&        dest,
                         const math::Rect2i& bbox ) const
         {
-            tmns::log::trace( LOG_IMAGE_TAG(), "start of rasterize. bbox: ", 
+            tmns::log::trace( LOG_IMAGE_TAG(), "start of rasterize. bbox: ",
                                                bbox.to_string()  );
             m_impl.rasterize( dest, bbox );
             tmns::log::trace( LOG_IMAGE_TAG(), "end of rasterize" );

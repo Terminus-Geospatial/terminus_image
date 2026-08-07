@@ -9,7 +9,7 @@
 // Terminus Libraries
 #include <terminus/image/io/read_image_disk.hpp>
 #include <terminus/image/io/write_image.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 /*****************************************************/
 /*      Test Read and Write Small RGBA JPG to PNG    */

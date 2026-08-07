@@ -15,11 +15,11 @@
 #pragma once
 
 // Terminus Libraries
+#include <terminus/math/types/compound_types.hpp>
 #include <terminus/image/types/compounds/binary_compound_functor.hpp>
 #include <terminus/image/types/compounds/binary_in_place_compound_functor.hpp>
 #include <terminus/image/types/compounds/unary_compound_functor.hpp>
 #include <terminus/image/types/compounds/unary_in_place_compound_functor.hpp>
-#include <terminus/math/types/compound_types.hpp>
 
 namespace tmns::image {
 

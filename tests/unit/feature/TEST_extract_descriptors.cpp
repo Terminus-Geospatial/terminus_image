@@ -9,12 +9,12 @@
 #include <filesystem>
 
 // Terminus Libraries
-#include <terminus/feature/drivers/ocv/config/Detector_Config_OCV_ORB.hpp>
+#include <terminus/feature/drivers/ocv/config/detector_config_ocv_orb.hpp>
 #include <terminus/feature/detect_interest_points.hpp>
 #include <terminus/feature/extract_descriptors.hpp>
 #include <terminus/image/io/read_image_disk.hpp>
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 // Unit-Test Libraries
 #include "../UNIT_TEST_ONLY/Test_Environment.hpp"
@@ -49,7 +49,7 @@ TEST( extract_features, image_disk_example_01_ocv_orb )
     auto result = tf::detect_interest_points( disk_image,
                                               detector_config,
                                               session_context );
-    
+
     if( result.has_error() )
     {
         tmns::log::error( "Test about to fail: ",
@@ -67,11 +67,11 @@ TEST( extract_features, image_disk_example_01_ocv_orb )
     auto result_dr = tf::extract_descriptors( disk_image,
                                               detector_config,
                                               session_context );
-    
+
     ASSERT_FALSE( result_dr.has_error() );
     if( Test_Environment::use_gui() )
     {
-        tx::utility::view_image( "Image", 
+        tx::utility::view_image( "Image",
                                  disk_image,
                                  0,
                                  true,

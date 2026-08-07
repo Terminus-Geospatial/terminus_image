@@ -15,11 +15,11 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_Cast_Utilities.hpp>
-#include <terminus/image/pixel/Pixel_Mask.hpp>
+#include <terminus/image/pixel/pixel_cast_utilities.hpp>
+#include <terminus/image/pixel/pixel_mask.hpp>
 #include <terminus/image/types/for_each_pixel.hpp>
-#include <terminus/math/types/Math_Functors.hpp>
-#include <terminus/math/types/Functors.hpp>
+#include <terminus/math/types/math_functors.hpp>
+#include <terminus/math/types/functors.hpp>
 
 // C++ Libraries
 #include <vector>
@@ -33,7 +33,7 @@ template <typename ValueT>
 class EW_Min_Max_Accumulator : public math::Return_Fixed_Type<void>
 {
     public:
-    
+
         EW_Min_Max_Accumulator() = default;
 
         /**
@@ -85,7 +85,7 @@ class EW_Min_Max_Accumulator : public math::Return_Fixed_Type<void>
             }
             else
             {
-                return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+                return outcome::fail( error::Error_Code::UNINITIALIZED,
                                       "Accumulator is uninitialized." );
             }
         }
@@ -101,7 +101,7 @@ class EW_Min_Max_Accumulator : public math::Return_Fixed_Type<void>
             }
             else
             {
-                return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+                return outcome::fail( error::Error_Code::UNINITIALIZED,
                                       "Accumulator is uninitialized." );
             }
         }
@@ -150,14 +150,14 @@ class EW_Std_Dev_Accumulator : public math::Return_Fixed_Type<void>
         {
             if( m_num_samples <= 0 )
             {
-                return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+                return outcome::fail( error::Error_Code::UNINITIALIZED,
                                       "No samples provided yet to accumulator" );
             }
-            
+
             ValueT result;
             for( size_t i = 0; m_sum.size(); i++ )
             {
-                result[i] = sqrt( m_sum_2[i] / m_num_samples - ( m_sum[i] / m_num_samples ) 
+                result[i] = sqrt( m_sum_2[i] / m_num_samples - ( m_sum[i] / m_num_samples )
                                   * ( m_sum[i] / m_num_samples ) );
             }
 
@@ -304,7 +304,7 @@ typename std::enable_if_t<std::negation_v<typename math::Is_Compound<typename Un
 */
 template <typename ImageT>
 void min_max_pixel_values( const Image_Base<ImageT>& image,
-                           typename std::enable_if_t<math::Is_Compound<typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::value>::value, 
+                           typename std::enable_if_t<math::Is_Compound<typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::value>::value,
                            typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::type>::type &min,
                            typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::type        &max )
 {
@@ -320,7 +320,7 @@ void min_max_pixel_values( const Image_Base<ImageT>& image,
 */
 template <typename ImageT>
 void min_max_pixel_values( const Image_Base<ImageT>& image,
-                           typename std::enable_if_t<std::negation_v<typename math::Is_Compound<typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::type>::value>, 
+                           typename std::enable_if_t<std::negation_v<typename math::Is_Compound<typename Unmasked_Pixel_Type<typename ImageT::pixel_type>::type>::value>,
                                                      typename pix::Pixel_Channel_Type<typename ImageT::pixel_type>::type>::type& min,
                            typename pix::Pixel_Channel_Type<typename ImageT::pixel_type>::type        &max ) {
     min_max_channel_values( image, min, max );
@@ -343,7 +343,7 @@ typename pix::Pixel_Channel_Cast<typename Unmasked_Pixel_Type<typename ImageT::p
 
 /**
  * Get the mean pixel value
- * 
+ *
  * This is the method for unmasked pxiel values
 */
 template <typename ImageT>
@@ -435,7 +435,7 @@ typename pix::Pixel_Without_Alpha<typename pix::Pixel_Channel_Cast<typename Unma
             std::stringstream sout;
             sout << "weighted_mean_pixel_value(): no weighted samples";
             tmns::log::error( sout.str() );
-            throw std::runtime_error( sout.str() );            
+            throw std::runtime_error( sout.str() );
         }
         mean /= weight;
     }

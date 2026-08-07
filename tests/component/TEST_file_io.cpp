@@ -8,11 +8,11 @@
 #include <filesystem>
 
 // Terminus Libraries
-#include <terminus/core/utility/Terminal_Progress_Callback.hpp>
+#include <terminus/core/utility/terminal_progress_callback.hpp>
 #include <terminus/log/configure.hpp>
 #include <terminus/image/io/read_image_disk.hpp>
 #include <terminus/image/io/write_image.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 namespace tx = tmns::image;
 

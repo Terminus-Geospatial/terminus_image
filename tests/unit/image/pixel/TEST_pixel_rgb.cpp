@@ -1,10 +1,10 @@
 /**
- * @file    TEST_Pixel_RGB.hpp
+ * @file    TEST_pixel_rgb.cpp
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_RGB.hpp>
+#include <terminus/image/pixel/pixel_rgb.hpp>
 
 namespace tx = tmns::image;
 

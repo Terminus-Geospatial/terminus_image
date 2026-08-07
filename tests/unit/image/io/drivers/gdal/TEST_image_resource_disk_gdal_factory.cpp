@@ -1,12 +1,12 @@
 /**
- * @file    TEST_Image_Resource_Disk_GDAL_Factory.cpp
+ * @file    TEST_image_resource_disk_gdal_factory.cpp
  * @author  Marvin Smith
  * @date    7/16/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/io/drivers/gdal/Image_Resource_Disk_GDAL_Factory.hpp>
+#include <terminus/image/io/drivers/gdal/image_resource_disk_gdal_factory.hpp>
 
 
 /********************************************************************/

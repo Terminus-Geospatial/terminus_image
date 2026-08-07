@@ -11,9 +11,9 @@
 #include <terminus/image/io/write_image.hpp>
 #include <terminus/image/operations/normalize.hpp>
 #include <terminus/image/operations/statistics/pixel_operations.hpp>
-#include <terminus/image/pixel/Pixel_RGB.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/pixel/pixel_rgb.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 // Test Libraries
 #include "../../UNIT_TEST_ONLY/Test_Environment.hpp"
@@ -95,7 +95,7 @@ TEST( io_read_image_disk, read_disk_isis_cube )
 
     // Print metadata
     tmns::log::debug( "Image Metadata:\n", image.metadata()->to_log_string() );
-    
+
 
     ASSERT_FALSE( result.has_error() );
 

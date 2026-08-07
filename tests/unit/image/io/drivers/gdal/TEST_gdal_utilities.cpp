@@ -1,5 +1,5 @@
 /**
- * @file    TEST_GDAL_Utilities.cpp
+ * @file    TEST_gdal_utilities.cpp
  * @author  Marvin Smith
  * @date    7/15/2023
 */
@@ -9,8 +9,8 @@
 #include <gdal.h>
 
 // Terminus Libraries
-#include <terminus/image/io/drivers/gdal/GDAL_Utilities.hpp>
-#include <terminus/image/io/drivers/gdal/Image_Resource_Disk_GDAL.hpp>
+#include <terminus/image/io/drivers/gdal/gdal_utilities.hpp>
+#include <terminus/image/io/drivers/gdal/image_resource_disk_gdal.hpp>
 
 using namespace tmns::image;
 

@@ -23,7 +23,7 @@
 #include <terminus/image/types/pixel_iterator.hpp>
 
 // Terminus Libraries
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/math/rectangle.hpp>
 
 namespace tmns::image {
 
@@ -63,7 +63,7 @@ class Image_Base
         /**
          * Get the number of columns in the image.
         */
-        size_t cols() const
+        int cols() const
         {
             return impl().cols();
         }
@@ -71,29 +71,29 @@ class Image_Base
         /**
          * Get the number of rows in the image
         */
-        size_t rows() const
+        int rows() const
         {
             return impl().rows();
         }
 
         /**
-         * Get the number of channels in the image
+         * @brief Get the number of channels in the image
         */
-        size_t channels() const
+        int channels() const
         {
-            return math::Compound_Channel_Count<typename ImplT::pixel_type>::value;
+            return static_cast<int>( math::Compound_Channel_Count<typename ImplT::pixel_type>::value );
         };
 
         /**
-         * Get the number of planes in the image
+         * @brief Get the number of planes in the image
         */
-        size_t planes() const
+        int planes() const
         {
             return impl().planes();
         }
 
         /**
-         * Create a Bounding Box for the full image dimensions.  Nice
+         * @brief Create a Bounding Box for the full image dimensions.  Nice
          * helper script for APIs that need math::Rect2i inputs.
         */
         virtual math::Rect2i full_bbox() const
@@ -102,7 +102,7 @@ class Image_Base
         }
 
         /**
-         * Get the Pixel-Format Enum from the Pixel-Type
+         * @brief Get the Pixel-Format Enum from the Pixel-Type
         */
         Pixel_Format_Enum pixel_format() const
         {
@@ -110,7 +110,7 @@ class Image_Base
         }
 
         /**
-         * Get the channel-type from the image's pixel type
+         * @brief Get the channel-type from the image's pixel type
          *
          * Note, if you ever get UNKNOWN returned from this method, see Channel_Type_ID<> specification.
          * One likely scenario is you didn't register a template specialization of that class, for that channel-type.
@@ -128,12 +128,14 @@ class Image_Base
         }
 
 
-        /// Returns an ImageFormat object describing the image format.
+        /**
+         * @brief Returns an ImageFormat object describing the image format.
+        */
         Image_Format format() const
         {
-            Image_Format format( static_cast<int>( impl().cols() ),
-                                 static_cast<int>( impl().rows() ),
-                                 static_cast<int>( impl().planes() ),
+            Image_Format format( impl().cols(),
+                                 impl().rows(),
+                                 impl().planes(),
                                  pixel_format(),
                                  channel_type(),
                                  true );
@@ -142,7 +144,7 @@ class Image_Base
         }
 
         /**
-         * Get the list of interest points
+         * @brief Get the list of interest points
          */
         feature::Interest_Point_List const& interest_points() const
         {
@@ -150,7 +152,7 @@ class Image_Base
         }
 
         /**
-         * Get the list of interest points
+         * @brief Get the list of interest points
          */
         feature::Interest_Point_List& interest_points()
         {
@@ -158,7 +160,7 @@ class Image_Base
         }
 
         /**
-         * Get the internal metadata
+         * @brief Get the internal metadata
          */
         meta::Metadata_Container_Base::ptr_t metadata() const
         {
@@ -177,13 +179,16 @@ class Image_Base
         }
 
         /**
-         * Get this class name
+         * @brief Get this class name
         */
         static std::string class_name()
         {
             return "Image_Base";
         }
 
+        /**
+         * @brief Get the full name of this class
+         */
         static std::string full_name()
         {
             return "Image_Base<" + ImplT::class_name() + ">";

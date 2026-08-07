@@ -15,7 +15,7 @@
 #include "opencv_utilities.hpp"
 
 // OpenCV Libraries
-#include <opencv4/opencv2/core.hpp>
+#include <opencv2/core.hpp>
 
 // Terminus Libraries
 #include <terminus/error.hpp>

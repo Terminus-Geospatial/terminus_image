@@ -6,8 +6,8 @@
 find_package( GTest REQUIRED )
 include( GoogleTest )
 
-include_directories( ${CMAKE_SOURCE_DIR}/include )
-include_directories( ${CMAKE_SOURCE_DIR}/src )
+include_directories( ${CMAKE_SOURCE_DIR}/library/include )
+include_directories( ${CMAKE_SOURCE_DIR}/library/src )
 
 set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
@@ -16,31 +16,33 @@ add_executable( ${TEST}
     TEST_tomlplusplus.cpp
     feature/TEST_detect_interest_points.cpp
     feature/TEST_extract_descriptors.cpp
-    feature/drivers/ocv/TEST_Detector_OCV_GFTT.cpp
-    feature/drivers/ocv/TEST_Detector_OCV_ORB.cpp
+    feature/drivers/ocv/TEST_detector_ocv_gftt.cpp
+    feature/drivers/ocv/TEST_detector_ocv_orb.cpp
     feature/drivers/ocv/TEST_ocv_gftt.cpp
     feature/drivers/ocv/TEST_ocv_orb.cpp
-    geography/camera/TEST_Camera_Model_Factory.cpp
-    image/collection/TEST_Collection_Resource_File.cpp
+    geography/camera/TEST_camera_model_factory.cpp
+    image/collection/TEST_collection_resource_file.cpp
     image/io/TEST_read_image_disk.cpp
 #    image/io/TEST_read_image.cpp
     image/io/TEST_read_write_battery.cpp
-    image/io/drivers/gdal/TEST_GDAL_Codes.cpp
-    image/io/drivers/gdal/TEST_GDAL_Utilities.cpp
-    image/io/drivers/gdal/TEST_Image_Resource_Disk_GDAL.cpp
-    image/io/drivers/gdal/TEST_Image_Resource_Disk_GDAL_Factory.cpp
+    image/io/drivers/gdal/TEST_gdal_codes.cpp
+    image/io/drivers/gdal/TEST_gdal_utilities.cpp
+    image/io/drivers/gdal/TEST_image_resource_disk_gdal.cpp
+    image/io/drivers/gdal/TEST_image_resource_disk_gdal_factory.cpp
     image/operations/drawing/TEST_compute_line_points.cpp
     image/operations/drawing/TEST_compute_circle_points.cpp
     image/operations/drawing/TEST_drawing_functions.cpp
     image/operations/TEST_crop_image.cpp
     image/operations/TEST_select_plane.cpp
+    image/pixel/TEST_channel_cast_utilities.cpp
+    image/pixel/TEST_channel_premultiply.cpp
     image/pixel/TEST_convert.cpp
-    image/pixel/TEST_Pixel_Cast_Utilities.cpp
-    image/types/TEST_Compound_Types.cpp
-    image/types/TEST_Image_Disk.cpp
-    image/types/TEST_Image_Resource_View.cpp
-    image/types/TEST_Fundamental_Types.cpp
-    image/types/TEST_Image_Memory.cpp
+    image/pixel/TEST_pixel_cast_utilities.cpp
+    image/types/TEST_compound_types.cpp
+    image/types/TEST_image_disk.cpp
+    image/types/TEST_image_resource_view.cpp
+    image/types/TEST_fundamental_types.cpp
+    image/types/TEST_image_memory.cpp
     UNIT_TEST_ONLY/Image_Datastore.cpp
     UNIT_TEST_ONLY/Image_Datastore.hpp
     UNIT_TEST_ONLY/Options.cpp

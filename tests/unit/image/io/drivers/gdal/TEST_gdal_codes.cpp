@@ -1,12 +1,12 @@
 /**
- * @file    TEST_GDAL_Codes.cpp
+ * @file    TEST_gdal_codes.cpp
  * @author  Marvin Smith
  * @date    7/15/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/io/drivers/gdal/GDAL_Codes.hpp>
+#include <terminus/image/io/drivers/gdal/gdal_codes.hpp>
 
 /***************************************************/
 /*   Test of the GDAL Color Codes                  */

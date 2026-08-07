@@ -1,13 +1,13 @@
 /**
- * @file    TEST_Image_Memory.cpp
+ * @file    TEST_image_memory.cpp
  * @author  Marvin Smith
  * @date    7/28/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
+#include <terminus/image/types/image_memory.hpp>
 
 namespace tx = tmns::image;
 

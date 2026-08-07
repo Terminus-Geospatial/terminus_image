@@ -1,12 +1,12 @@
 /**
- * @file    TEST_Detector_OCV_GFTT.cpp
+ * @file    TEST_detector_ocv_gftt.cpp
  * @author  Marvin Smith
  * @date    8/6/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/feature/drivers/ocv/Detector_OCV_GFTT.hpp>
+#include <terminus/feature/drivers/ocv/detector_ocv_gftt.hpp>
 #include <terminus/image/io/read_image_disk.hpp>
 
 namespace tf = tmns::feature;

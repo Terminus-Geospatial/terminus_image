@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/Point.hpp>
+#include <terminus/math/point.hpp>
 
 // Terminus Image Libraries
 #include <terminus/image/operations/rasterize.hpp>
@@ -82,7 +82,7 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
          * method fills everything in the "official" way. Well, we don't
          * set them here, but we let the initializers do the work.
          */
-        Image_Memory( size_t cols, size_t rows, size_t planes = 1 )
+        Image_Memory( int cols, int rows, int planes = 1 )
         {
             set_size( cols, rows, planes );
         }
@@ -126,7 +126,8 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
                     log::error( sout.str() );
                     throw std::runtime_error( sout.str() );
                 }
-                planes = static_cast<int>( std::max( resource.planes(), resource.channels() ) );
+                planes = std::max( resource.planes(),
+                                   resource.channels() );
             }
 
             // Allocate Memory
@@ -177,17 +178,17 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
         /**
          * Get the number of rows in the image
         */
-        size_t rows() const { return m_rows; }
+        int rows() const { return m_rows; }
 
         /**
          * Get the number of columns in the image
          */
-        size_t cols() const { return m_cols; }
+        int cols() const { return m_cols; }
 
         /**
          * Get the number of planes in the image
          */
-        size_t planes() const { return m_planes; }
+        int planes() const { return m_planes; }
 
         /**
          * Get the image origin
@@ -201,9 +202,9 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
         /**
          * Return specific pixel position
          */
-        result_type operator()( size_t col,
-                                size_t row,
-                                size_t plane = 0 ) const
+        result_type operator()( int col,
+                                int row,
+                                int plane = 0 ) const
         {
             return *( m_origin + col + row * m_rstride + plane * m_pstride );
         }
@@ -212,38 +213,47 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
          * Return specific pixel position
          */
         result_type operator()( const tmns::math::Point2i& loc,
-                                size_t                     plane = 0 ) const
+                                int                        plane = 0 ) const
         {
             return this->operator()( loc.x(), loc.y(), plane );
         }
 
         /**
-         * Returns an ImageBuffer describing the image data.
+         * @brief Returns an ImageBuffer describing the image data.
+         *
+         * @return Image_Buffer Image buffer describing the image data
          */
         Image_Buffer buffer() const
         {
             Image_Buffer buffer( data(),
                                  base_type::format(),
                                  sizeof(PixelT),
-                                 sizeof(PixelT) * cols(),
-                                 sizeof(PixelT) * cols() * rows() );
+                                 static_cast<size_t>( sizeof(PixelT) ) * static_cast<size_t>( cols() ),
+                                 static_cast<size_t>( sizeof(PixelT) ) * static_cast<size_t>( cols() ) * static_cast<size_t>( rows() ) );
             return buffer;
         }
 
         /**
-         * Get a pointer to the top-left corner of the first channel.
-        */
+         * @brief Get a pointer to the top-left corner of the first channel.
+         *
+         * @return pixel_type* Pointer to the top-left corner of the first channel
+         */
         pixel_type* data() const
         {
             return m_data.get();
         }
 
         /**
-         * Resize the image, allocating new memory if the size has changed.
-        */
-        Result<void> set_size( size_t cols,
-                               size_t rows,
-                               size_t planes = 1 )
+         * @brief Resize the image, allocating new memory if the size has changed.
+         *
+         * @param cols Number of columns
+         * @param rows Number of rows
+         * @param planes Number of planes
+         * @return Result<void> Success or failure
+         */
+        Result<void> set_size( int cols,
+                               int rows,
+                               int planes = 1 )
         {
             // Check if already the correct size
             if( cols == m_cols && rows == m_rows && planes == m_planes )
@@ -257,7 +267,8 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
             static const size_t MAX_TOTAL_PIXELS = 6400000000;
 
             // Don't oversize
-            if( cols >= MAX_PIXEL_SIZE && rows >= MAX_PIXEL_SIZE )
+            if( static_cast<size_t>( cols ) >= MAX_PIXEL_SIZE &&
+                static_cast<size_t>( rows ) >= MAX_PIXEL_SIZE )
             {
                 std::stringstream sout;
                 sout << "Will not allocate more than " << MAX_PIXEL_SIZE-1
@@ -265,7 +276,7 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
                 return outcome::fail( error::Error_Code::OUT_OF_BOUNDS,
                                       sout.str() );
             }
-            if( planes >= MAX_PLANE_COUNT )
+            if( static_cast<size_t>( planes ) >= MAX_PLANE_COUNT )
             {
                 std::stringstream sout;
                 sout << "Will not allocate more than " << MAX_PLANE_COUNT-1
@@ -274,7 +285,9 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
                                       sout.str() );
             }
 
-            uintmax_t num_pixels = cols * rows * planes;
+            uintmax_t num_pixels = static_cast<uintmax_t>( cols ) *
+                                   static_cast<uintmax_t>( rows ) *
+                                   static_cast<uintmax_t>( planes );
             if( num_pixels >= MAX_TOTAL_PIXELS )
             {
                 std::stringstream sout;
@@ -291,7 +304,7 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
             else
             {
                 // I like this catch because we can wrap the result and not throw
-                std::shared_ptr<PixelT[]> data( new (std::nothrow) PixelT[num_pixels] );
+                std::shared_ptr<PixelT[]> data( new (std::nothrow) PixelT[ static_cast<size_t>( num_pixels ) ] );
 
                 if( !data )
                 {
@@ -309,8 +322,8 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
             m_rows    = rows;
             m_planes  = planes;
             m_origin  = m_data.get();
-            m_rstride = cols;
-            m_pstride = rows*cols;
+            m_rstride = static_cast<ssize_t>( cols );
+            m_pstride = static_cast<ssize_t>( rows ) * static_cast<ssize_t>( cols );
 
             return outcome::ok();
         }
@@ -377,19 +390,22 @@ class Image_Memory : public Image_Base<Image_Memory<PixelT>>
 
     private:
 
-        /// Pixel Data
+        /// @brief Pixel Data
         std::shared_ptr<PixelT[]> m_data;
 
-        /// Image Traits
-        size_t m_rows { 0 };
-        size_t m_cols { 0 };
-        size_t m_planes { 0 };
+        /// @brief Image dimensions
+        int m_rows { 0 };
+        int m_cols { 0 };
+        int m_planes { 0 };
 
-        /// Pixel Origin
+        /// @brief Pixel Origin
         PixelT* m_origin { nullptr };
 
-        size_t m_rstride { 0 };
-        size_t m_pstride { 0 };
+        /// @brief Row stride
+        ssize_t m_rstride { 0 };
+
+        /// @brief Plane stride
+        ssize_t m_pstride { 0 };
 
 }; // End of Image_Memory Class
 

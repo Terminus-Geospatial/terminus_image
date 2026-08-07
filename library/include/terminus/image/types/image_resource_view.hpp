@@ -15,17 +15,17 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/concurrency/Mutex.hpp>
+#include <terminus/core/concurrency/mutex.hpp>
 #include <terminus/image/io/read_image.hpp>
-#include <terminus/image/operations/block/Block_Rasterize_View.hpp>
+#include <terminus/image/operations/block/block_rasterize_view.hpp>
 #include <terminus/image/operations/crop_image.hpp>
-#include <terminus/image/pixel/Pixel_Accessor_Loose.hpp>
-#include <terminus/image/pixel/Pixel_Format_Enum.hpp>
-#include <terminus/image/pixel/Pixel_Format_ID.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/image/types/Image_Resource_Base.hpp>
-#include <terminus/math/types/Fundamental_Types.hpp>
-#include <terminus/outcome/Result.hpp>
+#include <terminus/image/pixel/pixel_accessor_loose.hpp>
+#include <terminus/image/pixel/pixel_format_enum.hpp>
+#include <terminus/image/pixel/pixel_format_id.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/image/types/image_resource_base.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
+#include <terminus/outcome/result.hpp>
 
 namespace tmns::image {
 
@@ -80,17 +80,17 @@ class Image_Resource_View : public Image_Base<Image_Resource_View<PixelT>>
         /**
          * Get Image Cols
         */
-        inline size_t cols() const { return m_resource->cols(); }
+        inline int cols() const { return static_cast<int>(m_resource->cols()); }
 
         /**
          * Get Image Rows
          */
-        inline size_t rows() const { return m_resource->rows(); }
+        inline int rows() const { return static_cast<int>(m_resource->rows()); }
 
         /**
          * Get image planes
          */
-        inline size_t planes() const { return m_planes; }
+        inline int planes() const { return m_planes; }
 
         /**
          * Return the pixel at the specified location.
@@ -103,7 +103,7 @@ class Image_Resource_View : public Image_Base<Image_Resource_View<PixelT>>
 
             // Create output image memory object
             Image_Memory<PixelT> dest_image( 1, 1, m_planes );
-            io::read_image( dest_image, 
+            io::read_image( dest_image,
                             m_resource,
                             math::Rect2i( x, y, 1, 1 ) );
             return dest_image( 0, 0, plane );

@@ -71,9 +71,9 @@ class Read_Image_Resource_Base
         /**
          * @brief Get the number of channels in the image
          *
-         * @return size_t Number of channels
+         * @return int Number of channels
          */
-        virtual size_t channels() const;
+        virtual int channels() const;
 
         /**
          * @brief Get a full-size image bounding box

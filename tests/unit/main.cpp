@@ -16,6 +16,16 @@
 
 int main(int argc, char* argv[], char* envp[] )
 {
+    // Parse gtest flags first.  If we are only listing tests, skip the
+    // heavier Terminus runtime initialization that gtest discovery does
+    // not need.
+    ::testing::InitGoogleTest(&argc, argv);
+
+    if( ::testing::GTEST_FLAG(list_tests) )
+    {
+        return RUN_ALL_TESTS();
+    }
+
     // Parse Command-Line Options
     auto options = Options::parse_command_line( argc, argv, envp );
 
@@ -31,16 +41,15 @@ int main(int argc, char* argv[], char* envp[] )
     auto image_datastore = Image_Datastore::load( options.get_test_image_config_path() );
     if( !image_datastore )
     {
-        tmns::log::warn( "Unable to find image datastore at ", 
-                         options.get_test_image_config_path(), 
+        tmns::log::warn( "Unable to find image datastore at ",
+                         options.get_test_image_config_path(),
                          " expect to skip test which require large images." );
     }
-    
+
     // Create test environment
     Test_Environment::initialize( image_datastore,
-                                  options.use_gui() ); 
+                                  options.use_gui() );
 
-    ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
 

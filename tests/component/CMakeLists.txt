@@ -2,6 +2,9 @@
 #    Author:  Marvin Smith
 #    Date:    7/22/2023
 
+include_directories( ${CMAKE_SOURCE_DIR}/library/include )
+include_directories( ${CMAKE_SOURCE_DIR}/library/src )
+
 function( add_component_test SUFFIX FILE )
     set( TEST test_comp_${PROJECT_NAME}_${SUFFIX} )
     add_executable( ${TEST} ${FILE} )

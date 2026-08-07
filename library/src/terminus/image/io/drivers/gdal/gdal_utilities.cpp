@@ -213,7 +213,7 @@ std::pair<GDALDriver*, bool> gdal_get_driver_locked( const std::filesystem::path
 
         if (need_create)
         {
-            char** metadata = driver->GetMetadata();
+            CSLConstList metadata = driver->GetMetadata();
             if( !CSLFetchBoolean( metadata, GDAL_DCAP_CREATE, FALSE ) )
             {
                 get_master_gdal_logger().warn( "GDAL driver ", gdal_string, " does not support create." );

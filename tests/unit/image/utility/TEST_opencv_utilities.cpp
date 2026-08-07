@@ -1,5 +1,5 @@
 /**
- * @file    TEST_OpenCV_Utilities.cpp
+ * @file    TEST_opencv_utilities.cpp
  * @author  Marvin Smith
  * @date    8/11/2023
 */

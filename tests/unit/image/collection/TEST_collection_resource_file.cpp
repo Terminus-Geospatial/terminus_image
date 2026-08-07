@@ -1,12 +1,12 @@
 /**
- * @file    TEST_Collection_Resource_File.cpp
+ * @file    TEST_collection_resource_file.cpp
  * @author  Marvin Smith
  * @date    8/26/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/image/collection/Collection_Resource_File.hpp>
+#include <terminus/image/collection/collection_resource_file.hpp>
 
 // C++ Libraries
 #include <filesystem>

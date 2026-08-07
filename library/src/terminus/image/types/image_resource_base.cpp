@@ -46,9 +46,9 @@ int Read_Image_Resource_Base::planes() const
 /********************************************************/
 /*          Get the number of image channels            */
 /********************************************************/
-size_t Read_Image_Resource_Base::channels() const
+int Read_Image_Resource_Base::channels() const
 {
-    return static_cast<size_t>( num_channels( pixel_type() ).assume_value() );
+    return num_channels( pixel_type() ).assume_value();
 }
 
 /************************************************/

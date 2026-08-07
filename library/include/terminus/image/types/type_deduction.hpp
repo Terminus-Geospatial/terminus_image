@@ -25,7 +25,7 @@
 #include <boost/type_traits.hpp>
 
 // Terminus Libraries
-#include "Compound_Types.hpp"
+#include "compounds/compound_types.hpp"
 
 namespace tmns::image {
 
@@ -174,7 +174,7 @@ template <typename Argument1T,
 struct Promote_Type_Specialization_Helper_2<Argument1T, Argument2T, true>
 {
     typedef typename Compound_Channel_Cast<Argument1T,
-                                           typename Promote_Type_Specialization<typename Compound_Channel_Type<Argument1T>::type, 
+                                           typename Promote_Type_Specialization<typename Compound_Channel_Type<Argument1T>::type,
                                                                                 typename Compound_Channel_Type<Argument2T>::type>::type>::type type;
 }; // End of Promote_Type_Specialization_Helper_2 struct
 
@@ -238,28 +238,28 @@ struct Sum_Type_Specialization : public Promote_Type_Specialization<Argument1T,A
 /**
  * Type for performing Difference with
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Difference_Type_Specialization : public Promote_Type_Specialization<Argument1T,Argument2T> {};
 
 /**
  * Type for performing multiplication
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Product_Type_Specialization : public Promote_Type_Specialization<Argument1T,Argument2T> {};
 
 /**
  * Type for performing division
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Quotient_Type_Specialization : public Promote_Type_Specialization<Argument1T,Argument2T> {};
 
 /**
  * Promotion specialization which removes the const component
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Promote_Type
 {
@@ -270,7 +270,7 @@ struct Promote_Type
 /**
  * Summation type which removes const
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Sum_Type
 {
@@ -281,7 +281,7 @@ struct Sum_Type
 /**
  * Difference type which removes const
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Difference_Type
 {
@@ -292,7 +292,7 @@ struct Difference_Type
 /**
  * Product type which removes const
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Product_Type
 {
@@ -303,7 +303,7 @@ struct Product_Type
 /**
  * Division type which strips the const
 */
-template <typename Argument1T, 
+template <typename Argument1T,
           typename Argument2T>
 struct Quotient_Type
 {

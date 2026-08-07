@@ -1,12 +1,12 @@
 /**
- * @file    TEST_Detector_OCV_ORB.cpp
+ * @file    TEST_detector_ocv_orb.cpp
  * @author  Marvin Smith
  * @date    8/27/2023
 */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/feature/drivers/ocv/Detector_OCV_ORB.hpp>
+#include <terminus/feature/drivers/ocv/detector_ocv_orb.hpp>
 #include <terminus/image/io/read_image_disk.hpp>
 
 namespace tf = tmns::feature;

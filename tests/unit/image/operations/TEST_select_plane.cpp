@@ -7,8 +7,8 @@
 
 // Terminus Libraries
 #include <terminus/image/operations/select_plane.hpp>
-#include <terminus/image/types/Image_Memory.hpp>
-#include <terminus/image/utility/View_Utilities.hpp>
+#include <terminus/image/types/image_memory.hpp>
+#include <terminus/image/utility/view_utilities.hpp>
 
 namespace tx = tmns::image;
 

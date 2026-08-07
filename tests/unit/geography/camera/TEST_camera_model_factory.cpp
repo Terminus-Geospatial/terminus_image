@@ -1,15 +1,15 @@
 /**
- * @file    TEST_Camera_Model_Factory.cpp
+ * @file    TEST_camera_model_factory.cpp
  * @author  Marvin Smith
  * @date    9/23/2023
  */
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/geography/camera/Camera_Model_Factory.hpp>
+#include <terminus/geography/camera/camera_model_factory.hpp>
 #include <terminus/log/utility.hpp>
 #include <terminus/image/io/read_image_disk.hpp>
-#include <terminus/image/pixel/Pixel_RGBA.hpp>
+#include <terminus/image/pixel/pixel_rgba.hpp>
 
 // Unit-Test Libraries
 #include "../../UNIT_TEST_ONLY/Test_Environment.hpp"
@@ -39,7 +39,7 @@ TEST( geo_cam_Camera_Model_Factory, create_from_metadata_isis3 )
     tmns::log::trace( ADD_CURRENT_LOC(), "End of read_image_disk" );
 
     // Build camera model from the metadata
-    auto camera_res = tmns::geo::cam::Camera_Model_Factory::create_from_metadata( result.value().metadata() );
+    auto camera_res = tmns::geo::cam::camera_model_factory::create_from_metadata( result.value().metadata() );
 
     ASSERT_FALSE( camera_res.has_error() );
 
