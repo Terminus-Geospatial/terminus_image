@@ -17,7 +17,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_image"
-    version = "1.0.0"
+    version = "1.0.3"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -48,10 +48,10 @@ class ConanProject(ConanFile):
         #self.requires("gdal/3.10.3")
         self.requires("nlohmann_json/3.11.3")
         self.requires("tomlplusplus/3.4.0")
-        self.requires("terminus_core/1.0.3")
-        self.requires("terminus_log/1.0.2")
-        self.requires("terminus_math/1.0.3")
-        self.requires("terminus_outcome/1.0.3")
+        self.requires("terminus_core/1.0.3",transitive_headers=True, transitive_libs=True)
+        self.requires("terminus_log/1.0.2", transitive_headers=True, transitive_libs=True)
+        self.requires("terminus_math/1.0.4", transitive_headers=True, transitive_libs=True)
+        self.requires("terminus_outcome/1.0.3", transitive_headers=True, transitive_libs=True)
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -89,5 +89,5 @@ class ConanProject(ConanFile):
 
     def export_sources(self):
 
-        for p in [ "CMakeLists.txt", "include/*", "src/*", "test/*", "README.md" ]:
+        for p in [ "CMakeLists.txt", "include/*", "src/*", "tests/*", "README.md" ]:
             copy( self, p, self.recipe_folder, self.export_sources_folder )

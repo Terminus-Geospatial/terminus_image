@@ -1,0 +1,17 @@
+Find*
+ZLIB*
+module*
+terminus*.cmake
+libback*
+example
+*.sh
+CMakeFiles
+CMakeCache.txt
+Makefile
+CMakeUserPresets.json
+CMakePresets.json
+B*
+Ic*
+cmake_*
+cmakedeps*
+conan_tool*

@@ -45,6 +45,22 @@ endif()
 # Bring in CMake helpers for TERMINUS projects
 include( terminus_cmake )
 
+#----------------------------------------#
+#-          Update Version File         -#
+#----------------------------------------#
+# Get the current date
+string(TIMESTAMP PROJECT_BUILD_DATE "%Y-%m-%d %H:%M:%S" )
+
+execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE TERMINUS_IMAGE_GIT_COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+configure_file( ${CMAKE_SOURCE_DIR}/templates/exports.hpp.in
+                ${CMAKE_BINARY_DIR}/library/include/terminus/image/exports.hpp )
+
 #-------------------------------------#
 #-     Add Manual CMake Scripts      -#
 #-------------------------------------#
@@ -71,3 +87,4 @@ if( TERMINUS_IMAGE_ENABLE_TESTS )
 endif()
 
 install( DIRECTORY library/include/terminus DESTINATION include)
+install( DIRECTORY ${PROJECT_BINARY_DIR}/library/include/terminus DESTINATION include )
