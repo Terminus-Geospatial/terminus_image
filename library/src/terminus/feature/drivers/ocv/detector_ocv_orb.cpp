@@ -241,7 +241,7 @@ Result<void> Detector_OCV_ORB::perform_feature_extraction( const image::Image_Bu
         output_ips.back().descriptors().clear();
         for( int c = 0; c < descriptors.cols; c++ )
         {
-            output_ips.back().descriptors().push_back( descriptors.at<float>( static_cast<int>(x), c ) );
+            output_ips.back().descriptors().push_back( static_cast<float>( descriptors.at<uchar>( static_cast<int>(x), c ) ) );
         }
     }
 

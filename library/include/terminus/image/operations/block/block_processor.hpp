@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/work/Thread.hpp>
+#include <terminus/core/work/thread.hpp>
 
 // Terminus Image Libraries
 #include <terminus/image/utility/log_utilities.hpp>

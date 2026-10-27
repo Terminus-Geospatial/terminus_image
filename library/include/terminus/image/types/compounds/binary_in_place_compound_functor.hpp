@@ -25,13 +25,28 @@ template <typename FunctorT,
 class Binary_In_Place_Compound_Functor
 {
     public:
-    
-        Binary_In_Place_Compound_Functor() = default;
-        Binary_In_Place_Compound_Functor( const FunctorT& func ) : func(func) {}
 
+        /**
+         * @brief Default constructor.
+         */
+        Binary_In_Place_Compound_Functor() = default;
+
+        /**
+         * @brief Constructor with functor.
+         *
+         * @param functor Functor to use.
+         */
+        Binary_In_Place_Compound_Functor( const FunctorT& functor ) : func(functor) {}
+
+        /**
+         * @brief Result type for the functor.
+         */
         template <typename ArgsT>
         struct result {};
 
+        /**
+         * @brief Result type for the functor with two arguments.
+         */
         template <typename F,
                   typename Argument1T,
                   typename Argument2T>
@@ -51,7 +66,7 @@ class Binary_In_Place_Compound_Functor
                           Argument1T,
                           Argument2T>::apply( func, arg1, arg2 );
         }
-    
+
     private:
 
         // The general multi-channel case

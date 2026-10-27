@@ -16,6 +16,8 @@
 
 // C++ Libraries
 #include <algorithm>
+#include <cctype>
+#include <string>
 
 // Terminus Libraries
 #include <terminus/log/utility.hpp>
@@ -30,11 +32,16 @@ bool Image_Resource_Disk_GDAL_Factory::is_read_image_supported( const std::files
     // Check if file exists
     if( std::filesystem::exists( pathname ) )
     {
-        // Get the extension
-        auto ext = pathname.extension();
+        // Normalize extensions because externally produced imagery commonly
+        // uses uppercase or mixed-case suffixes (for example, Landsat .TIF).
+        std::string extension = pathname.extension().string();
+        std::transform( extension.begin(), extension.end(), extension.begin(),
+                        []( unsigned char character ) {
+                            return static_cast<char>( std::tolower( character ) );
+                        } );
         if( std::find( m_supported_extensions.begin(),
                        m_supported_extensions.end(),
-                       ext.native() )
+                       extension )
             != m_supported_extensions.end() )
         {
             return true;
@@ -48,11 +55,14 @@ bool Image_Resource_Disk_GDAL_Factory::is_read_image_supported( const std::files
 /********************************************************/
 bool Image_Resource_Disk_GDAL_Factory::is_write_image_supported( const std::filesystem::path& pathname ) const
 {
-    // Get the extension
-    auto ext = pathname.extension();
+    std::string extension = pathname.extension().string();
+    std::transform( extension.begin(), extension.end(), extension.begin(),
+                    []( unsigned char character ) {
+                        return static_cast<char>( std::tolower( character ) );
+                    } );
     if( std::find( m_supported_extensions.begin(),
                    m_supported_extensions.end(),
-                   ext.native() )
+                   extension )
         != m_supported_extensions.end() )
     {
         return true;

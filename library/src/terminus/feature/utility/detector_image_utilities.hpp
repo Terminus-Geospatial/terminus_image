@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/log/Logger.hpp>
+#include <terminus/log/logger.hpp>
 
 // Terminus Image Libraries
 #include <terminus/image/pixel/convert.hpp>

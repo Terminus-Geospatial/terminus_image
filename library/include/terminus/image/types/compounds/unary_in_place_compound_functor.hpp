@@ -26,10 +26,10 @@ class Unary_In_Place_Compound_Functor
     public:
 
         typedef typename std::add_lvalue_reference<FunctorT>::type func_ref;
-    
+
         Unary_In_Place_Compound_Functor() = default;
 
-        Unary_In_Place_Compound_Functor( func_ref func ) : func(func) {}
+        Unary_In_Place_Compound_Functor( func_ref functor ) : func(functor) {}
 
         template <class ArgsT>
         struct result {};

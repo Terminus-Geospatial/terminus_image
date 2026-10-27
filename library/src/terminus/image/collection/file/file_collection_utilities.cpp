@@ -55,9 +55,11 @@ Result<void> parse_toml_collection_file( const std::filesystem::path&         in
                 // increment each element with visit()
                 list_node.as_array()->for_each([&](auto&& el)
                 {
-                    std::string element = el.as_string()->get();
-
-                    image_list.push_back( element );
+                    if( auto str = el.as_string(); !!str )
+                    {
+                        std::string element = str->get();
+                        image_list.push_back( element );
+                    }
                 });
             }
         }
@@ -74,10 +76,11 @@ Result<void> parse_toml_collection_file( const std::filesystem::path&         in
                 try
                 {
                     // Get the key
-                    pathname = image_node["pathname"].as_string()->get();;
-
-                    image_list.push_back( pathname );
-
+                    if( auto pn = image_node["pathname"].as_string(); !!pn )
+                    {
+                        pathname = pn->get();
+                        image_list.push_back( pathname );
+                    }
                 }
                 catch ( std::exception& e )
                 {
@@ -87,13 +90,18 @@ Result<void> parse_toml_collection_file( const std::filesystem::path&         in
         }
 
         // Check for global intrinsics
-        if( !!collection_node["intrinsic"] )
+        if( !!collection_node["intrinsic"] && collection_node["intrinsic"].is_table() )
         {
-            tbl = *collection_node["intrinsic"].as_table();
-            auto intrinsic_res = load_intrinsics( tbl );
+            auto intrinsic_tbl = *collection_node["intrinsic"].as_table();
+            auto intrinsic_res = load_intrinsics( intrinsic_tbl );
             if( !intrinsic_res.has_error() )
             {
                 global_intrinsics = intrinsic_res.value();
+            }
+            else
+            {
+                tmns::log::error( "Failed to load collection intrinsics: ",
+                                  intrinsic_res.error().message() );
             }
         }
     }

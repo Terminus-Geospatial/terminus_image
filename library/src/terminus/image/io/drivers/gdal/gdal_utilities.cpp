@@ -15,7 +15,7 @@
 #include "gdal_utilities.hpp"
 
 // External Terminus Libraries
-#include <terminus/log/Logger.hpp>
+#include <terminus/log/logger.hpp>
 
 // Terminus Libraries
 #include <terminus/image/io/drivers/gdal/gdal_codes.hpp>

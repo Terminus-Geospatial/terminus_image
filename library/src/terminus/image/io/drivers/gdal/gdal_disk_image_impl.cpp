@@ -28,9 +28,148 @@
 
 // GDAL Libraries
 #include <gdal.h>
+#include <ogr_spatialref.h>
 
+// C++ Libraries
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <cstring>
+#include <vector>
 
 namespace tmns::image::io::gdal {
+
+namespace {
+
+using Corner = std::pair<double,double>;
+
+/**
+ * @brief Reproject a list of (x, y) points from a source CRS to WGS84.
+ */
+Result<std::vector<Corner>> reproject_to_wgs84( const std::vector<Corner>& points,
+                                                const std::string&         source_crs )
+{
+    OGRSpatialReference src_srs;
+    if( src_srs.SetFromUserInput( source_crs.c_str() ) != OGRERR_NONE )
+    {
+        return tmns::outcome::fail( tmns::error::Error_Code::INVALID_INPUT,
+                                      "Unable to parse source CRS: ", source_crs );
+    }
+    // Force traditional GIS order (easting/longitude, northing/latitude) on both
+    // SRSes.  The caller supplies projected (x, y) corners from the geo-transform,
+    // so the source must also be in (easting, northing) order.  GDAL 3.x
+    // otherwise honours each CRS's native axis order, which for EPSG:4326 is
+    // (latitude, longitude) and would silently swap the output.
+    src_srs.SetAxisMappingStrategy( OAMS_TRADITIONAL_GIS_ORDER );
+
+    OGRSpatialReference dst_srs;
+    dst_srs.SetWellKnownGeogCS( "WGS84" );
+    dst_srs.SetAxisMappingStrategy( OAMS_TRADITIONAL_GIS_ORDER );
+
+    OGRCoordinateTransformation* transform = OGRCreateCoordinateTransformation( &src_srs, &dst_srs );
+    if( transform == nullptr )
+    {
+        return tmns::outcome::fail( tmns::error::Error_Code::INVALID_INPUT,
+                                      "Unable to create WGS84 coordinate transformation" );
+    }
+
+    std::vector<Corner> output = points;
+    for( auto& p : output )
+    {
+        if( !transform->Transform( 1, &p.first, &p.second ) )
+        {
+            OGRCoordinateTransformation::DestroyCT( transform );
+            return tmns::outcome::fail( tmns::error::Error_Code::CONVERSION_ERROR,
+                                          "Coordinate transformation failed" );
+        }
+    }
+
+    OGRCoordinateTransformation::DestroyCT( transform );
+    return tmns::outcome::ok<std::vector<Corner>>( std::move( output ) );
+}
+
+/**
+ * @brief Compute the WGS84 footprint and GSD from a GDAL dataset.
+ */
+void insert_geospatial_metadata( log::Logger&                 logger,
+                                 std::shared_ptr<GDALDataset> dataset,
+                                 meta::Metadata_Container_Base::ptr_t container )
+{
+    const char* projection = dataset->GetProjectionRef();
+    if( projection != nullptr && std::strlen( projection ) > 0 )
+    {
+        container->insert( "gdal.projection", projection );
+    }
+
+    std::array<double, 6> gt {};
+    if( dataset->GetGeoTransform( gt.data() ) != CE_None )
+    {
+        logger.trace( "Dataset has no geo-transform" );
+        return;
+    }
+
+    for( size_t i = 0; i < gt.size(); ++i )
+    {
+        container->insert( "gdal.geo_transform." + std::to_string( i ), gt[i] );
+    }
+
+    const int cols = dataset->GetRasterXSize();
+    const int rows = dataset->GetRasterYSize();
+
+    std::vector<Corner> corners = {
+        { 0.0,   0.0 },
+        { cols,  0.0 },
+        { cols,  rows },
+        { 0.0,   rows }
+    };
+
+    std::vector<Corner> geo_corners;
+    geo_corners.reserve( corners.size() );
+    for( const auto& c : corners )
+    {
+        geo_corners.emplace_back( gt[0] + gt[1] * c.first + gt[2] * c.second,
+                                  gt[3] + gt[4] * c.first + gt[5] * c.second );
+    }
+
+    if( projection != nullptr && std::strlen( projection ) > 0 )
+    {
+        auto reproject_res = reproject_to_wgs84( geo_corners, projection );
+        if( reproject_res.has_error() )
+        {
+            logger.error( "Unable to reproject footprint to WGS84: ",
+                          reproject_res.error().details() );
+        }
+        else
+        {
+            geo_corners = reproject_res.value();
+        }
+    }
+
+    double min_lon = geo_corners[0].first;
+    double max_lon = geo_corners[0].first;
+    double min_lat = geo_corners[0].second;
+    double max_lat = geo_corners[0].second;
+    for( const auto& p : geo_corners )
+    {
+        min_lon = std::min( min_lon, p.first );
+        max_lon = std::max( max_lon, p.first );
+        min_lat = std::min( min_lat, p.second );
+        max_lat = std::max( max_lat, p.second );
+    }
+
+    container->insert( "gdal.footprint.min_lon", min_lon );
+    container->insert( "gdal.footprint.min_lat", min_lat );
+    container->insert( "gdal.footprint.max_lon", max_lon );
+    container->insert( "gdal.footprint.max_lat", max_lat );
+
+    const double pixel_area = std::abs( gt[1] * gt[5] );
+    if( pixel_area > 0.0 )
+    {
+        container->insert( "gdal.gsd_meters", std::sqrt( pixel_area ) );
+    }
+}
+
+} // end of anonymous namespace
 
 /********************************/
 /*          Constructor         */
@@ -221,7 +360,7 @@ Result<void> GDAL_Disk_Image_Impl::read( const Image_Buffer&  dest,
     src_fmt.set_cols( bbox.width() );
     src_fmt.set_rows( bbox.height() );
 
-    std::shared_ptr<uint8_t> src_data(new uint8_t[ src_fmt.raster_size_bytes() ]);
+    std::shared_ptr<uint8_t[]> src_data(new uint8_t[ src_fmt.raster_size_bytes() ]);
     Image_Buffer src(src_fmt, src_data.get());
 
     {
@@ -815,6 +954,8 @@ void GDAL_Disk_Image_Impl::process_metadata( log::Logger&                 logger
     logger.trace( "Image Size: ", dataset->GetRasterXSize(), " cols, ",
                   dataset->GetRasterYSize(), " rows, ", dataset->GetRasterCount(),
                   " channels" );
+
+    insert_geospatial_metadata( logger, dataset, m_metadata );
 }
 
 } // End of tmns::image::io::gdal namespace

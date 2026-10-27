@@ -52,15 +52,6 @@ void channel_convert_uint8_to_uint16( uint8_t* src, uint16_t* dest )
   *dest = uint16_t( *src ) * (65535/255);
 }
 
-/// Convert a float in the range -1 to +1 to an integer type.
-template <class SrcT, class DestT>
-void channel_convert_float_to_int( SrcT* src, DestT* dest )
-{
-  if( *src > SrcT(1.0) ) *dest = boost::integer_traits<DestT>::const_max;
-  else if( *src < SrcT(0.0) ) *dest = DestT(0);
-  else *dest = DestT( *src * boost::integer_traits<DestT>::const_max );
-}
-
 /// Pointers to two maps:  <type pair> -> conversion function
 /// - One is for rescaling conversions, the other for non-rescaling.
 std::map< std::pair< Channel_Type_Enum, Channel_Type_Enum >, channel_convert_func >*  channel_convert_map         = nullptr;
@@ -335,8 +326,8 @@ typedef void (*channel_premultiply_func)(void* src, void* dst, int len);
 template <class T>
 void channel_premultiply_int( T* src, T* dst, int32_t len )
 {
-    double scale = src[len-1] / (double)(boost::integer_traits<T>::const_max);
-    for( int i=0; i<len-1; ++i ) dst[i] = T( round(src[i] * scale) );
+    double scale = static_cast<double>( src[len-1] ) / static_cast<double>( boost::integer_traits<T>::const_max );
+    for( int i=0; i<len-1; ++i ) dst[i] = T( round( static_cast<double>( src[i] ) * scale ) );
     dst[len-1] = src[len-1];
 }
 
@@ -414,8 +405,8 @@ typedef void (*channel_unpremultiply_func)( void* src, void* dst, int len );
 template <class T>
 void channel_unpremultiply_int( T* src, T* dst, int len )
 {
-    double scale = src[len-1] / (double)(boost::integer_traits<T>::const_max);
-    for( int i=0; i<len-1; ++i ) dst[i] = T( round(src[i] / scale) );
+    double scale = static_cast<double>( src[len-1] ) / static_cast<double>( boost::integer_traits<T>::const_max );
+    for( int i=0; i<len-1; ++i ) dst[i] = T( round( static_cast<double>( src[i] ) / scale ) );
     dst[len-1] = src[len-1];
 }
 
@@ -590,7 +581,7 @@ Result<void> convert( const Image_Buffer&  dst,
         const Image_Format& srcf = src.format();
         const Image_Format& dstf = dst.format();
 
-        bool src_alpha = ( srcf.pixel_type() == Pixel_Format_Enum::GRAYA || dstf.pixel_type() == Pixel_Format_Enum::RGBA );
+        bool src_alpha = ( srcf.pixel_type() == Pixel_Format_Enum::GRAYA || srcf.pixel_type() == Pixel_Format_Enum::RGBA );
         bool dst_alpha = ( dstf.pixel_type() == Pixel_Format_Enum::GRAYA || dstf.pixel_type() == Pixel_Format_Enum::RGBA );
         unpremultiply_src = ( src_alpha && srcf.premultiply() && !dstf.premultiply() );
         premultiply_src   = ( src_alpha && !dst_alpha && !srcf.premultiply() );

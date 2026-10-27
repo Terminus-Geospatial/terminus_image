@@ -33,7 +33,7 @@ Result<void> compute_circle_points( const tmns::math::Point2i&                  
                                     const PixelT&                               color,
                                     int                                         thickness,
                                     int                                         max_circle_segment_length,
-                                    std::shared_ptr<blob::Uniform_Blob<PixelT>> output )
+                                    std::shared_ptr<blob::Uniform_Blob<PixelT>>& output )
 {
     tmns::log::trace( ADD_CURRENT_LOC(),
                       "Start of Method.\n  Center: ",

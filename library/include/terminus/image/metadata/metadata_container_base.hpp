@@ -80,12 +80,13 @@ class Metadata_Container_Base
         template <typename ValueT>
         Result<ValueT> get( const std::string& key_name ) const
         {
-            if( m_tree.count( key_name ) <= 0 )
+            auto value = m_tree.get_optional<ValueT>( key_name );
+            if( !value )
             {
                 return outcome::fail( error::Error_Code::NOT_FOUND,
                                       "Unable to find key '", key_name, "'" );
             }
-            return outcome::ok<ValueT>( m_tree.get<ValueT>( key_name ) );
+            return outcome::ok<ValueT>( value.value() );
         }
 
         /**

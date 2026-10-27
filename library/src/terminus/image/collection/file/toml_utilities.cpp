@@ -36,7 +36,7 @@ Result<geo::cam::camera_model_base::ptr_t> load_intrinsics( toml::table view )
         return outcome::fail( error::Error_Code::UNDEFINED,
                               "No 'type' code is present." );
     }
-    std::string type_str = *view["type"].value<std::string>();
+    std::string type_str = *view["camera_type"].value<std::string>();
     std::transform( type_str.begin(),
                     type_str.end(),
                     type_str.begin(),
@@ -79,7 +79,7 @@ Result<geo::cam::camera_model_base::ptr_t> load_intrinsics( toml::table view )
             {
                 for (const auto& value : *array)
                 {
-                    x_axis[idx++] = *value.value<double>();
+                    y_axis[idx++] = *value.value<double>();
                 }
             }
             idx = 0;
@@ -87,7 +87,7 @@ Result<geo::cam::camera_model_base::ptr_t> load_intrinsics( toml::table view )
             {
                 for (const auto& value : *array)
                 {
-                    x_axis[idx++] = *value.value<double>();
+                    z_axis[idx++] = *value.value<double>();
                 }
             }
 
@@ -136,7 +136,7 @@ Result<geo::cam::camera_model_base::ptr_t> load_intrinsics( toml::table view )
                 }
                 if( !!view["t2"] )
                 {
-                    t.push_back( *view["t1"].value<double>() );
+                    t.push_back( *view["t2"].value<double>() );
                 }
 
                 double phi_radians = *view["phi_radians"].value<double>();

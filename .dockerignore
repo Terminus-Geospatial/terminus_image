@@ -1,0 +1,28 @@
+# Build artifacts
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# Git and IDE
+.git/
+.github/
+.gitignore
+.vscode/
+.idea/
+.windsurf/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS and temp files
+.DS_Store
+*.tmp
+*.swp
+*~
+*.log

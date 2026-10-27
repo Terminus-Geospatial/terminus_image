@@ -200,32 +200,36 @@ Result<void> compute_line_points( const math::Point2i&                         p
     // Convert to unit length
     auto normal = normal_full.normalize();
 
-    // Project on each side of each coordinate
-    double half_thickness = thickness / 2.0;
-    auto p1_min = p1 - ( half_thickness * normal );
-    auto p1_max = p1 + ( half_thickness * normal );
-    auto p1_vec = p1_max - p1_min;
+    // Project on each side of each coordinate.  Use concrete Point2d types so we
+    // materialize the vector expressions immediately; otherwise the expression
+    // template functors would hold references to temporaries that go out of
+    // scope before the loop below uses them.
+    const double half_thickness = thickness / 2.0;
+    const math::Point2d p1_min = p1 - ( half_thickness * normal );
+    const math::Point2d p1_max = p1 + ( half_thickness * normal );
+    const math::Point2d p1_vec = p1_max - p1_min;
 
-    auto p2_min = p2 - ( half_thickness * normal );
-    auto p2_max = p2 + ( half_thickness * normal );
-    auto p2_vec = p2_max - p2_min;
+    const math::Point2d p2_min = p2 - ( half_thickness * normal );
+    const math::Point2d p2_max = p2 + ( half_thickness * normal );
+    const math::Point2d p2_vec = p2_max - p2_min;
 
     // Iterate over each line pair
-    double length = std::max( 1.0, std::round( math::magnitude( p1_min - p1_max ) ) );
+    const double length = std::max( 1.0, std::round( math::magnitude( p1_min - p1_max ) ) );
     log::trace( "length: ", length );
 
     for( int i = 0; i < length; i++ )
     {
-        // Compute p1 and p2 interpolated points
-        math::Point2i p1_int = p1_min + ( p1_vec * ( static_cast<double>(i) / length ) );
-        math::Point2i p2_int = p2_min + ( p2_vec * ( static_cast<double>(i) / length ) );
+        // Materialize the interpolated offsets before converting to integer
+        // points.  This avoids nested expression templates whose temporaries may
+        // be destroyed while the Point2i constructor still evaluates them.
+        const math::Point2d p1_double = p1_min + ( p1_vec * ( static_cast<double>(i) / length ) );
+        const math::Point2d p2_double = p2_min + ( p2_vec * ( static_cast<double>(i) / length ) );
 
-        // Round to integer
-        math::Point2i p1_render( { static_cast<int>( p1_int.x() ),
-                                   static_cast<int>( p1_int.y() ) } );
+        math::Point2i p1_render( { static_cast<int>( p1_double.x() ),
+                                  static_cast<int>( p1_double.y() ) } );
 
-        math::Point2i p2_render( { static_cast<int>( p2_int.x() ),
-                                   static_cast<int>( p2_int.y() ) } );
+        math::Point2i p2_render( { static_cast<int>( p2_double.x() ),
+                                  static_cast<int>( p2_double.y() ) } );
 
         compute_line_points_thin<PixelT>( p1_render,
                                           p2_render,

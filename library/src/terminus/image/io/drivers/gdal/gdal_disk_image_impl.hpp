@@ -26,9 +26,9 @@
 
 // External Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/log/Logger.hpp>
-#include <terminus/math/Rectangle.hpp>
-#include <terminus/math/Size.hpp>
+#include <terminus/log/logger.hpp>
+#include <terminus/math/rectangle.hpp>
+#include <terminus/math/size.hpp>
 
 // Terminus Libraries
 #include <terminus/image/metadata/metadata_container_base.hpp>

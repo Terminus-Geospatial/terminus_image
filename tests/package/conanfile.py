@@ -10,13 +10,13 @@ from conan.tools.build import can_run
 class ImagePackageTestConan( ConanFile ):
 
     name = "terminus_image_test"
-    version = "1.0.3"
+    version = "1.0.5"
     description = "Test for Terminus Image Package"
 
     settings = "os", "compiler", "build_type", "arch"
 
     def requirements(self):
-        self.requires("terminus_image/1.0.3")
+        self.requires("terminus_image/1.0.7")
 
     def _configure_cmake(self):
         cmake = CMake(self)

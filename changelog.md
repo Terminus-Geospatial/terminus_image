@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2026-10-05
+
+### Fixed
+
+- Fixed GDAL footprint coordinate axis order: set `OAMS_TRADITIONAL_GIS_ORDER` on both source and destination SRS in `reproject_to_wgs84()`, preventing GDAL 3.x from silently swapping longitude/latitude when reprojecting from projected CRSes (e.g. UTM) to WGS84.
+- Case-insensitive file extension matching in `Image_Resource_Disk_GDAL_Factory` for both read and write paths, allowing uppercase/mixed-case suffixes like `.TIF`.
+- Fixed `Metadata_Container_Base::get()` to use `get_optional()` for nested path lookup instead of `count()`, which only checks immediate children.
+- Added regression tests for flat, nested, and missing metadata paths.
+- Fixed `num_channels()` returning 3 instead of 4 for RGBA/GENERIC_4_CHANNEL pixel formats.
+- Fixed `convert()` alpha detection using `dstf` instead of `srcf` for RGBA check.
+- Fixed ORB descriptor extraction using `float` instead of `uchar` for descriptor matrix access.
+- Fixed dangling-reference risk in `compute_line_points` by materializing expression-template temporaries into concrete `Point2d` values.
+- Null-safety improvements in TOML collection file parser.
+
+### Changed
+
+- Removed `TEST_collection_resource_file.cpp` (test fixture no longer available).
+- Updated `terminus_core` to `1.0.6`, `terminus_math` to `1.0.8`.
+
+## [1.0.6] - 2026-09-27
+
+### Added
+- GDAL loader now extracts geospatial metadata (CRS, geo-transform, WGS84 footprint, GSD) and stores it in the image resource's `Metadata_Container`, accessible via `Image_Resource_Disk_GDAL::create(path)->metadata()` or through `Image_Disk`/`Image_Base`.
+- Added metadata keys: `gdal.projection`, `gdal.geo_transform.0..5`, `gdal.footprint.{min_lon,min_lat,max_lon,max_lat}`, `gdal.gsd_meters`.
+
+## [1.0.5] - 2026-08-17
+
+### Changed
+- Bumped version to force a new upload to the Conan remote; no functional changes.
+- Updated `terminus_core` dependency to `1.0.5`, `terminus_log` dependency to `1.0.4`, `terminus_math` dependency to `1.0.6`, and `terminus_outcome` dependency to `1.0.5`.
+
+## [1.0.4] - 2026-08-15
+
+### Added
+
+- Added `docker/Dockerfile.rhel10.build` for building, testing, and uploading the package on RHEL 10.
+- Added `.dockerignore` to reduce the Docker build context size.
+
 ## [1.0.3] - 2026-08-14
 
 ### Fixed

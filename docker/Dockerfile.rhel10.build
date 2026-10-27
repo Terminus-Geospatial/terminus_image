@@ -1,0 +1,40 @@
+############################# INTELLECTUAL PROPERTY RIGHTS #############################
+##                                                                                    ##
+##                           Copyright (c) 2026 Terminus LLC                          ##
+##                                All Rights Reserved.                                ##
+##                                                                                    ##
+##          Use of this source code is governed by LICENSE in the repo root.          ##
+##                                                                                    ##
+############################# INTELLECTUAL PROPERTY RIGHTS #############################
+#
+#    File:    Dockerfile.rhel10.build
+#    Author:  Marvin Smith
+#    Date:    8/15/2026
+#
+#    Purpose:  RHEL 10 build and upload image for terminus_image.
+#
+#              Requires the terminus-build-centos10 image and a Conan remote
+#              with the package's dependencies (or enough sources to build
+#              them).
+#
+
+# syntax=docker/dockerfile:1
+
+FROM terminus-build-centos10:latest
+
+ARG CONAN_REMOTE=terminus-conan
+ARG CONAN_LOGIN_USERNAME=demo
+ARG CONAN_PASSWORD=demo
+
+WORKDIR /src
+COPY . /src/terminus_image
+
+# Build both Debug and Release configurations, run the Release tests, then upload.
+RUN cd /src/terminus_image && \
+    conan-build.sh -c -B && \
+    conan-build.sh -r -c -B && \
+    cd build && ctest --output-on-failure && \
+    pkg_name="$(conan inspect .. | grep '^name:' | awk '{print $2}')" && \
+    pkg_version="$(conan inspect .. | grep '^version:' | awk '{print $2}')" && \
+    conan remote login "${CONAN_REMOTE}" "${CONAN_LOGIN_USERNAME}" -p "${CONAN_PASSWORD}" && \
+    conan upload "${pkg_name}/${pkg_version}" -r "${CONAN_REMOTE}" -c

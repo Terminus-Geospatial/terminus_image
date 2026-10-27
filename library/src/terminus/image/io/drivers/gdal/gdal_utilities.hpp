@@ -15,8 +15,8 @@
 #pragma once
 
 // External Terminus Libraries
-#include <terminus/log/Logger.hpp>
-#include <terminus/outcome/Result.hpp>
+#include <terminus/log/logger.hpp>
+#include <terminus/outcome/result.hpp>
 
 // Terminus Libraries
 #include <terminus/image/pixel/channel_type_enum.hpp>

@@ -15,7 +15,7 @@
 #include <terminus/feature/interest_point.hpp>
 
 // Terminus Libraries
-#include <terminus/math/Point_Utilities.hpp>
+#include <terminus/math/point_utilities.hpp>
 
 namespace tmns::feature {
 

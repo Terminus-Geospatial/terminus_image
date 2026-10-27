@@ -21,7 +21,6 @@ add_executable( ${TEST}
     feature/drivers/ocv/TEST_ocv_gftt.cpp
     feature/drivers/ocv/TEST_ocv_orb.cpp
     geography/camera/TEST_camera_model_factory.cpp
-    image/collection/TEST_collection_resource_file.cpp
     image/io/TEST_read_image_disk.cpp
 #    image/io/TEST_read_image.cpp
     image/io/TEST_read_write_battery.cpp
@@ -29,6 +28,7 @@ add_executable( ${TEST}
     image/io/drivers/gdal/TEST_gdal_utilities.cpp
     image/io/drivers/gdal/TEST_image_resource_disk_gdal.cpp
     image/io/drivers/gdal/TEST_image_resource_disk_gdal_factory.cpp
+    image/metadata/TEST_metadata_container_base.cpp
     image/operations/drawing/TEST_compute_line_points.cpp
     image/operations/drawing/TEST_compute_circle_points.cpp
     image/operations/drawing/TEST_drawing_functions.cpp
@@ -61,11 +61,11 @@ gtest_discover_tests( ${TEST} )
 
 #  Copy Unit-Test Data
 file( COPY ${CMAKE_SOURCE_DIR}/data/unit-test-data/collection
-      DESTINATION ${CMAKE_BINARY_DIR}/data )
+      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data )
 
 file( COPY ${CMAKE_SOURCE_DIR}/data/unit-test-data/images
-      DESTINATION ${CMAKE_BINARY_DIR}/data )
+      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data )
 
 file( COPY ${CMAKE_SOURCE_DIR}/data/unit-test-data/test_images.ini
-      DESTINATION ${CMAKE_BINARY_DIR}/data )
+      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data )
 

@@ -14,6 +14,9 @@
 */
 #pragma once
 
+// C++ Standard Libraries
+#include <limits>
+
 // Terminus Libraries
 #include <terminus/error.hpp>
 
@@ -27,6 +30,22 @@ template <class SrcT, class DestT>
 void channel_convert_int_to_float( SrcT* src, DestT* dest )
 {
   *dest = DestT(*src) * ( DestT( 1.0 ) / static_cast<DestT>( std::numeric_limits<SrcT>::max() ) );
+}
+
+/**
+ * @brief Convert a float in the range 0 to +1 to an integer type.
+ *
+ * @tparam SrcT  Source type (float or double)
+ * @tparam DestT Destination type (int or uint)
+ * @param  src   Source pointer
+ * @param  dest  Destination pointer
+ */
+template <class SrcT, class DestT>
+void channel_convert_float_to_int( SrcT* src, DestT* dest )
+{
+    if( *src > SrcT(1.0) ) *dest = std::numeric_limits<DestT>::max();
+    else if( *src < SrcT(0.0) ) *dest = DestT(0);
+    else *dest = DestT( static_cast<double>(*src) * static_cast<double>( std::numeric_limits<DestT>::max() ) );
 }
 
 /**

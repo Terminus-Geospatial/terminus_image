@@ -68,7 +68,7 @@ Result<int> num_channels( Pixel_Format_Enum value )
 
         case Pixel_Format_Enum::RGBA:
         case Pixel_Format_Enum::GENERIC_4_CHANNEL:
-            return outcome::ok<int>( 3 );
+            return outcome::ok<int>( 4 );
 
         case Pixel_Format_Enum::UNKNOWN:
             return outcome::fail( error::Error_Code::INVALID_PIXEL_TYPE );
